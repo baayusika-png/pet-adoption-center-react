@@ -1,0 +1,210 @@
+/* ==========================
+  Home Page Hero Section
+========================== */
+.hero {
+  padding: 80px 8%;
+  background-color: #f8f2eb;
+  margin-bottom: 50px;
+}
+
+.hero-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 60px;
+}
+
+.hero-text {
+  flex: 1;
+}
+
+.hero-text h1 {
+  font-size: 60px;
+  color: #222;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.hero-text span {
+  color: #c67b30;
+}
+
+.hero-text p {
+  font-size: 18px;
+  color: #000;
+  line-height: 1.8;
+  margin-bottom: 35px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 15px 35px;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-primary {
+  background: #f8b77a;
+  color: #8e4e14;
+}
+
+.btn-secondary {
+  background: #c8ead0;
+  color: #3b6849;
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+}
+
+.hero-image {
+  flex: 1;
+}
+
+.hero-image img {
+  width: 100%;
+  border-radius: 20px;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================
+  Pets Page Hero Section
+========================== */
+.pets-page {
+  padding: 60px 8%;
+  background-color: #f8f2eb;
+}
+
+.pets-hero {
+  margin-bottom: 50px;
+}
+
+.pets-hero h1 {
+  font-size: 36px;
+  color: #222;
+  margin-bottom: 10px;
+}
+
+.pets-hero p {
+  color: #8e4e14;
+  font-size: 18px;
+}
+
+.filter-section {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 60px;
+}
+
+.search-bar {
+  flex: 1;
+  padding: 18px 25px;
+  border: none;
+  border-radius: 15px;
+  background: #fff;
+  font-size: 16px;
+  outline: none;
+}
+
+.breed-filter{
+  width: 170px;
+  border: none;
+  border-radius: 15px;
+  padding: 18px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.breed-filter {
+  background: #cef0da;
+  color: #396949;
+}
+
+/* ==========================
+  Adopt Page Hero Section
+========================== */
+.adopt-hero {
+  text-align: center;
+  padding: 50px 20px 40px;
+}
+
+.adopt-hero h1 {
+  color: #8e4e14;
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.adopt-hero p {
+  color: #555;
+  max-width: 620px;
+  margin: 0 auto;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.content {
+  display: flex;
+  gap: 40px;
+  max-width: 1150px;
+  margin: 0 auto 60px;
+  padding: 0 20px;
+}
+
+.adoptImage {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  flex: 0 0 300px;
+}
+
+.adoptImage img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* ==========================
+  Contact Page Hero Section
+========================== */
+.contact-hero {
+  text-align: center;
+  padding: 55px 20px 40px;
+}
+
+.contact-badge {
+  display: inline-block;
+  background-color: #cfe0cf;
+  color: #3f6b46;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 10px 26px;
+  border: 1px solid #3f6b46;
+  border-radius: 20px;
+  margin-bottom: 25px;
+}
+
+.contact-hero h2 {
+  color: #1a1a1a;
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.contact-hero p {
+  color: #8e4e14;
+  max-width: 560px;
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 1.5;
+}
