@@ -27,6 +27,8 @@ function Navbar() {
           </li>
         </ul>
 
+        <i class="bx bx-menu menu-icon" id="menuIcon"></i>
+
         <Link to="/adopt" className="btn-nav">
           Adopt Now
         </Link>
