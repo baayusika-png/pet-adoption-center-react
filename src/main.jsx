@@ -11,6 +11,7 @@ import "./css/hero.css";
 import "./css/cards.css";
 import "./css/animation.css";
 import "./css/responsive.css";
+import "./css/form.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
