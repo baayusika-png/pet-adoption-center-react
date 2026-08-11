@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import "../css/footer.css";
 
 import facebook from "../assets/images/facebook.png";
 import tiktok from "../assets/images/tiktok.png";
