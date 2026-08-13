@@ -17,7 +17,7 @@ const petsData = [
     gender: "Female",
     image: polishRabbit,
     description:
-      "Meet Layla, gentle female Polish Rabbit with the softest fur and kindest eyes. She loves quiet moments, gentle pets and hopping around safe spaces where she can explore. She is healthy, affectionate and ready to bring joy to her forever home. Adopt Lyala today and let her hop straight into your heart.",
+      "Meet Layla, gentle female Polish Rabbit with the softest fur and kindest eyes.\n\nShe loves quiet moments, gentle pets and hopping around safe spaces where she can explore.\n\nShe is healthy, affectionate and ready to bring joy to her forever home.\n\nAdopt Layla today and let her hop straight into your heart.",
   },
 
   {
@@ -28,18 +28,18 @@ const petsData = [
     gender: "Male",
     image: goldenRetriever,
     description:
-      "Meet Milo, handsome Golden Retriever with a heart as brigh ad his golden fur. He is friendly, intelligent and loves to play fetch in the backyard. He is healthy, well-mannered and ready to bring endless joy and tail wags to his forever home. Adopt Milo today and let him fill your home with love.",
+      "Meet Milo, handsome Golden Retriever with a heart as bright as his golden fur.\n\nHe is friendly, intelligent, and loves to play fetch in the backyard.\n\nHe is healthy, well-mannered and ready to bring endless joy and tail wags to his forever home.\n\nAdopt Milo today and let him fill your home with love.",
   },
 
   {
     id: 3,
     name: "Luna",
-    breed: "Pomerain",
+    breed: "Pomeranian",
     age: "3 years",
     gender: "Female",
     image: pomerian,
     description:
-      "Meet Luna, charming Pomerian with fluffy fur and bright personality. Her cheerdul spirit makes a wonderful companion for families and individual alike. Luna is affectionate, healthy and always ready to showerr you with love and cuddles. Adopt Luna today and let her bring joy and sparkle into your home.",
+      "Meet Luna, charming Pomeranian with fluffy fur and a bright personality.\n\nHer cheerful spirit makes a wonderful companion for families and individuals alike.\n\nLuna is affectionate, healthy and always ready to shower you with love and cuddles.\n\nAdopt Luna today and let her bring joy and sparkle into your home.",
   },
 
   {
@@ -50,7 +50,7 @@ const petsData = [
     gender: "Male",
     image: whiteRabbit,
     description:
-      "Meet Bella male White Rabbit with calm and loving nature. He enjoys soft pets, exploring cozy spaces and relaxing in a safe environment where he feels at home. Bella is healthy affectionate and ready to bring warmth and happiness to his forever family. Adopt Bella today and let him hop into your heart wth love.",
+      "Meet Bella, a gentle male White Rabbit with a calm and loving nature.\n\nHe enjoys soft pets, exploring cozy spaces and relaxing in a safe environment where he feels at home.\n\nBella is healthy, affectionate and ready to bring warmth and happiness to his forever family.\n\nAdopt Bella today and let him hop into your heart with love.",
   },
 
   {
@@ -61,7 +61,7 @@ const petsData = [
     gender: "Female",
     image: britishShorthair,
     description:
-      "Meet Nemo a female Briish Shorthair with a plush coat and striking eyes that will melt your heart. Calm, affectionate and intelligent she enjoys cozy naps, gentle play and being close to her favourite humans. Nemo is healthy, well-mannered, and ready to bring warmth and companionship to her forever home. Adopt Nemo today and let her grace your life with love.",
+      "Meet Nemo, a beautiful female British Shorthair with a plush coat and striking eyes.\n\nCalm, affectionate and intelligent, she enjoys cozy naps, gentle play and being close to her favorite humans.\n\nNemo is healthy, well-mannered and ready to bring warmth and companionship to her forever home.\n\nAdopt Nemo today and let her grace your life with love.",
   },
 
   {
@@ -72,7 +72,7 @@ const petsData = [
     gender: "Female",
     image: calicoTabby,
     description:
-      "Meet Whisker female Calico Tabby with a striking coat and a gentle, affectionate nature. She enjoys cozy nap in sunny spots, playful moments with toys, and quite companionship with her favorite humans. Whisker is loving and ready to bring warmth and happiness to her forver home. Adopt Whisker today and let her brighten your life with purs and love.",
+      "Meet Whisker, a lovely female Calico Tabby with a striking coat and gentle personality.\n\nShe enjoys cozy naps in sunny spots, playful moments with toys and quiet companionship with her favorite humans.\n\nWhisker is loving, healthy and ready to bring warmth and happiness to her forever home.\n\nAdopt Whisker today and let her brighten your life with purrs and love.",
   },
 
   {
@@ -83,7 +83,7 @@ const petsData = [
     gender: "Male",
     image: brownTabby,
     description:
-      "Meet Leo male Brown Tabby with striking markings and a wram, gentle personality. He enjoys playful adventures, cozy naps in sunny spots and spending time with his favorite humans. Leo is affectionate, healthy and ready to bring companionship and joy to his forever home. Adopt Leo today and let him be your loyal friend for life.",
+      "Meet Leo, a handsome male Brown Tabby with striking markings and a warm personality.\n\nHe enjoys playful adventures, cozy naps in sunny spots and spending time with his favorite humans.\n\nLeo is affectionate, healthy and ready to bring companionship and joy to his forever home.\n\nAdopt Leo today and let him be your loyal friend for life.",
   },
 
   {
@@ -94,7 +94,7 @@ const petsData = [
     gender: "Male",
     image: europeanHamster,
     description:
-      "Meet Charlie a delightful male European Hamster with a curious nature and playful spirit. He enjoys exploring tunnels, nibbling on treats and keeping himself busy with fun activities in his habitat. Charlie is healthy, easy to care for and ready to bring joy and entertainment to his forever family. Adopt Charlie today and let him brighten your days with his tiny charm.",
+      "Meet Charlie, a delightful male European Hamster with a curious nature and playful spirit.\n\nHe enjoys exploring tunnels, nibbling on treats and keeping himself busy with fun activities in his habitat.\n\nCharlie is healthy, easy to care for and ready to bring joy and entertainment to his forever family.\n\nAdopt Charlie today and let him brighten your days with his tiny charm.",
   },
 
   {
@@ -105,7 +105,7 @@ const petsData = [
     gender: "Male",
     image: americanGuineaPig,
     description:
-      "Meet Mochi a lovable male American Guinea Pig with a soft coat and a gentle, curious personality. He enjoys munching on fresh veggies, exploring hisn habitat, and squeakig happily when it's time for treats. Mochi is healthy, easy to care for and ready to bring joy and companionship to his forever family. Adopt Mochi today and let him brighten your home with his cheerful spirit.",
+      "Meet Mochi, a lovable male American Guinea Pig with a soft coat and a gentle, curious personality.\n\nHe enjoys munching on fresh veggies, exploring his habitat and squeaking happily when it's time for treats.\n\nMochi is healthy, easy to care for and ready to bring joy and companionship to his forever family.\n\nAdopt Mochi today and let him brighten your home with his cheerful spirit.",
   },
 ];
 

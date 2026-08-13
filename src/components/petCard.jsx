@@ -1,4 +1,4 @@
-function PetCard({ pet }) {
+function PetCard({ pet, onAdopt }) {
   return (
     <div className="animal-card">
       <div className="animal-image">
@@ -16,7 +16,10 @@ function PetCard({ pet }) {
           {pet.breed} • {pet.age} • {pet.gender}
         </p>
 
-        <button className="adopt-btn">
+        <button
+          className="adopt-btn"
+          onClick={() => onAdopt(pet)}
+        >
           <i className="bx bx-home"></i>
           Adopt Me
         </button>

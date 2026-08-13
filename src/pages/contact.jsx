@@ -13,7 +13,7 @@ function Contact() {
       </section>
 
       <section className="contact-section">
-        <ContactForm />
+         <ContactForm />
 
         <div className="contact-info">
           <div className="info-box">
