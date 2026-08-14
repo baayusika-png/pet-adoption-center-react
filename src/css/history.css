@@ -1,0 +1,143 @@
+.history-page {
+  width: 90%;
+  margin: auto;
+  padding: 60px 0;
+}
+
+.back-btn {
+  margin-bottom: 30px;
+}
+
+.back-btn a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #9b5a17;
+  font-size: 18px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.back-btn a:hover {
+  color: #7d4510;
+}
+
+.history-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.history-header h1 {
+  font-size: 48px;
+  color: #9b5a17;
+  margin-bottom: 15px;
+}
+
+.history-header p {
+  width: 650px;
+  margin: auto;
+  color: #000;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.history-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.application-section {
+  flex: 2;
+}
+
+.application-section h2 {
+  color: #9b5a17;
+  font-size: 34px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.history-card {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+}
+
+.history-card img {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.history-info {
+  margin-left: 25px;
+}
+
+.history-info h3 {
+  margin: 0;
+  color: #333;
+}
+
+.details {
+  margin-top: 10px;
+  color: gray;
+}
+
+.status {
+  margin-top: 15px;
+  color: #9b5a17;
+  font-weight: 600;
+}
+
+.next-section {
+  flex: 1;
+  background: #fdf1de;
+  border-radius: 20px;
+  padding: 30px;
+  height: fit-content;
+}
+
+.next-section h3 {
+  color: #9b5a17;
+  margin-bottom: 30px;
+}
+
+.step {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 22px;
+}
+
+.number {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  color: #9b5a17;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.step h4 {
+  margin: 0;
+  color: #333;
+}
+
+.step p {
+  margin-top: 8px;
+  color: #777;
+  line-height: 1.5;
+  font-size: 14px;
+}

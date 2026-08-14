@@ -12,6 +12,9 @@ import "./css/cards.css";
 import "./css/animation.css";
 import "./css/responsive.css";
 import "./css/form.css";
+import "./css/login.css";
+import "./css/register.css"
+import "./css/history.css"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>

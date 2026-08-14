@@ -513,3 +513,152 @@
     margin-top: 20px;
   }
 }
+
+/* ==========================
+   Footer Responsive Styles
+========================== */
+/* Tablet */
+
+@media (max-width: 1024px) {
+  .history-page {
+    width: 95%;
+    padding: 40px 0;
+  }
+
+  .history-header h1 {
+    font-size: 40px;
+  }
+
+  .history-header p {
+    width: 100%;
+    max-width: 600px;
+    font-size: 15px;
+  }
+
+  .history-content {
+    flex-direction: column;
+    gap: 35px;
+  }
+
+  .application-section h2 {
+    font-size: 30px;
+  }
+
+  .history-card {
+    padding: 18px;
+  }
+
+  .history-card img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .history-info {
+    margin-left: 20px;
+  }
+
+  .next-section {
+    width: 100%;
+    padding: 25px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .history-page {
+    width: 92%;
+    padding: 30px 0;
+  }
+
+  .back-btn {
+    margin-bottom: 20px;
+  }
+
+  .back-btn a {
+    font-size: 16px;
+    gap: 8px;
+  }
+
+  .back-btn svg {
+    font-size: 18px;
+  }
+
+  .history-header {
+    margin-bottom: 40px;
+  }
+
+  .history-header h1 {
+    font-size: 34px;
+  }
+
+  .history-header p {
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .application-section h2 {
+    font-size: 26px;
+    text-align: center;
+  }
+
+  .history-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 18px;
+  }
+
+  .history-card img {
+    width: 100%;
+    height: 220px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+  }
+
+  .history-info {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .history-info h3 {
+    font-size: 22px;
+  }
+
+  .details {
+    font-size: 15px;
+  }
+
+  .status {
+    font-size: 15px;
+  }
+
+  .next-section {
+    padding: 22px;
+  }
+
+  .next-section h3 {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .step {
+    gap: 15px;
+    margin-bottom: 22px;
+  }
+
+  .step h4 {
+    font-size: 18px;
+  }
+
+  .step p {
+    font-size: 14px;
+  }
+
+  .number {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+}

@@ -39,27 +39,42 @@ header {
 
 .nav-links a.active {
   color: #c67b30;
-  font-weight: 600;
   text-decoration: underline;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 18px;
 }
 
 .btn-nav {
   text-decoration: none;
   background: #ffc292;
   color: #8e4e14;
-  padding: 12px 30px;
+  padding: 12px 32px;
+  border-radius: 35px;
   font-weight: 600;
-  border-radius: 30px;
   transition: 0.3s;
 }
 
 .btn-nav:hover {
-  transform: translateY(-3px);
+  background: #ffb26d;
+  transform: translateY(-2px);
 }
 
-.menu-icon{
-  display:none;
-  font-size:32px;
-  color:#8e4e14;
-  cursor:pointer;
+.btn-nav.secondary {
+  background: #c8ead0;
+  color: #3b6849;
+}
+
+.btn-nav.secondary:hover {
+  background: #88af91;
+}
+
+.menu-icon {
+  display: none;
+  font-size: 28px;
+  color: #8e4e14;
+  cursor: pointer;
 }

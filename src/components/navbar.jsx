@@ -1,7 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
-import "../css/navbar.css";
+import { FaBars } from "react-icons/fa";
+import { useState } from "react";
 
 function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <header>
       <nav className="navbar">
@@ -9,29 +12,45 @@ function Navbar() {
           <h2>Adopt Me</h2>
         </div>
 
-        <ul className="nav-links" id="navLinks">
+        <ul className={isOpen ? "nav-links active" : "nav-links"}>
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/" onClick={() => setIsOpen(false)}>
+              Home
+            </NavLink>
           </li>
 
           <li>
-            <NavLink to="/pets">Pets</NavLink>
+            <NavLink to="/pets" onClick={() => setIsOpen(false)}>
+              Pets
+            </NavLink>
           </li>
 
           <li>
-            <NavLink to="/adopt">Adopt</NavLink>
+            <NavLink to="/adopt" onClick={() => setIsOpen(false)}>
+              Adopt
+            </NavLink>
           </li>
 
           <li>
-            <NavLink to="/contact">Contact</NavLink>
+            <NavLink to="/contact" onClick={() => setIsOpen(false)}>
+              Contact
+            </NavLink>
           </li>
         </ul>
 
-        <i className="bx bx-menu menu-icon" id="menuIcon"></i>
+        <div className="menu-icon" onClick={() => setIsOpen(!isOpen)}>
+          <FaBars />
+        </div>
 
-        <Link to="/adopt" className="btn-nav">
-          Adopt Now
-        </Link>
+        <div className="nav-buttons">
+          <Link to="/login" className="btn-nav">
+            Login
+          </Link>
+
+          <Link to="/register" className="btn-nav secondary">
+            Register
+          </Link>
+        </div>
       </nav>
     </header>
   );
