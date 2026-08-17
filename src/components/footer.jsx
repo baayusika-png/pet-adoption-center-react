@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-
-import facebook from "../assets/images/facebook.png";
+import { FaPaw, FaCopyright } from "react-icons/fa";
+import facebook from "../assets/images/facebook.jpg";
 import tiktok from "../assets/images/tiktok.png";
 import insta from "../assets/images/insta.png";
 
@@ -9,9 +9,15 @@ function Footer() {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-box brand">
-          <h2>AdoptMe</h2>
+          <h2 className="footer-logo">
+            <FaPaw />
+            AdoptMe
+          </h2>
           <p>Every paw deserve a loving home.</p>
-          <p className="copyright">2026 Adopt Me. All rights reserved.</p>
+          <p className="copyright">
+            {" "}
+            <FaCopyright /> 2026 Adopt Me. All rights reserved.
+          </p>
         </div>
 
         <div className="footer-box links">

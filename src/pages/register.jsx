@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaUser, FaEnvelope, FaLock, FaArrowRight } from "react-icons/fa";
+import {
+  FaUser,
+  FaEnvelope,
+  FaLock,
+  FaArrowRight,
+  FaPaw,
+} from "react-icons/fa";
 
-import petImage from "../assets/images/happyCat&Dog.png";
+import petImage from "../assets/images/registerImage.jpg";
 
 function Register() {
   const navigate = useNavigate();
@@ -54,16 +60,15 @@ function Register() {
   return (
     <div className="register-page">
       <div className="register-card">
-        {/* LEFT */}
-
         <div className="register-left">
           <img src={petImage} alt="pets" />
         </div>
 
-        {/* RIGHT */}
-
         <div className="register-right">
-          <h1>AdoptMe</h1>
+          <h2 className="register-logo">
+            <FaPaw />
+            AdoptMe
+          </h2>
 
           <h2>Create an Account</h2>
 

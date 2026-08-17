@@ -15,9 +15,24 @@ header {
   align-items: center;
 }
 
+.logo {
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
 .logo h2 {
   color: #8e4e14;
   font-size: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .nav-links {

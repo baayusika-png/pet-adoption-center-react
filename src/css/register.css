@@ -17,21 +17,18 @@
 }
 
 .register-left {
-  width: 48%;
-  background: linear-gradient(135deg, #fff4e9, #e6dcca);
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 60px;
+  width: 50%;
+  border-right: 1px solid #ddd;
 }
 
 .register-left img {
   width: 100%;
-  max-width: 460px;
-  border-radius: 8px;
-  background: white;
-  padding: 25px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+  height: 100%;
+  object-fit: cover;
 }
 
 .register-right {
@@ -44,6 +41,18 @@
   color: #9b5a1b;
   font-size: 46px;
   margin-bottom: 5px;
+}
+
+.register-logo {
+  display: flex;
+  align-items: center;
+  color: #9b5a1b;
+  justify-content: center;
+  gap: 8px;
+}
+
+.register-logo svg {
+  font-size: 28px;
 }
 
 .register-right h2 {

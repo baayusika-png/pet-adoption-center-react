@@ -7,12 +7,21 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-
 }
 
 .footer-box h2 {
   color: #8e4e14;
   margin-bottom: 15px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-logo svg {
+  font-size: 24px;
 }
 
 .footer-box h3 {
@@ -59,6 +68,9 @@
   margin-top: 30px;
   font-size: 13px;
   color: #8e4e14;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .social-icons {

@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { FaBars } from "react-icons/fa";
+import { FaBars, FaPaw } from "react-icons/fa";
 import { useState } from "react";
 
 function Navbar() {
@@ -8,9 +8,12 @@ function Navbar() {
   return (
     <header>
       <nav className="navbar">
-        <div className="logo">
-          <h2>Adopt Me</h2>
-        </div>
+        <Link to="/" className="logo">
+          <h2>
+            <FaPaw />
+            AdoptMe
+          </h2>
+        </Link>
 
         <ul className={isOpen ? "nav-links active" : "nav-links"}>
           <li>
