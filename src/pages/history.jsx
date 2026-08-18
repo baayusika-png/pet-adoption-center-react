@@ -1,4 +1,3 @@
-import adoptionHistory from "../data/adoptionHistory";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 
@@ -23,22 +22,6 @@ function History() {
       <div className="history-content">
         <div className="application-section">
           <h2>Your Adoption Application</h2>
-
-          {adoptionHistory.map((pet) => (
-            <div className="history-card" key={pet.id}>
-              <img src={pet.image} alt={pet.name} />
-
-              <div className="history-info">
-                <h3>{pet.name}</h3>
-
-                <p className="details">
-                  {pet.breed} • {pet.age} • {pet.gender}
-                </p>
-
-                <p className="status">{pet.status}</p>
-              </div>
-            </div>
-          ))}
         </div>
         <div className="next-section">
           <h3>What Happens Next?</h3>

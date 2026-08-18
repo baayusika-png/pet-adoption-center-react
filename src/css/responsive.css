@@ -225,7 +225,7 @@
 ========================== */
 /* Tablet */
 
-@media (max-width: 992px) {
+@media (max-width: 1024px) {
   /* Index Pets */
 
   .pets-grid {
@@ -236,6 +236,36 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+  }
+
+  .pets-section {
+    padding: 50px 5%;
+  }
+
+  .pets-header {
+    gap: 20px;
+  }
+
+  .pets-grid {
+    gap: 20px;
+  }
+
+  .pet-card {
+    flex: 0 0 calc((100% - 40px) / 3);
+  }
+
+  .pet-image {
+    height: 260px;
+  }
+
+  .carousel-arrow {
+    width: 55px;
+    height: 55px;
+    right: -10px;
+  }
+
+  .carousel-arrow svg {
+    font-size: 22px;
   }
 
   /* Why Adopt */
@@ -276,12 +306,55 @@
     font-size: 28px;
   }
 
+  .pets-section {
+    padding: 45px 4%;
+  }
+
+  .pets-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .pets-header h2 {
+    font-size: 28px;
+  }
+
+  .pets-header .subtitle {
+    font-size: 14px;
+  }
+
+  .explore-pets {
+    font-size: 14px;
+  }
+
   .pets-grid {
-    grid-template-columns: 1fr;
+    gap: 18px;
+    padding-right: 35px;
   }
 
   .pet-card {
-    width: 100%;
+    flex: 0 0 calc((100% - 18px) / 2);
+  }
+
+  .pet-image {
+    height: 240px;
+  }
+
+  .pet-type {
+    padding: 16px;
+    font-size: 17px;
+  }
+
+  .carousel-arrow {
+    width: 50px;
+    height: 50px;
+    right: -8px;
+  }
+
+  .carousel-arrow svg {
+    font-size: 20px;
   }
 
   /* Why Adopt */
@@ -347,75 +420,60 @@
    Form Responsive Styles
 ========================== */
 /* Tablet */
-
-@media (max-width: 992px) {
-  /* Adopt */
-
-  .content {
-    flex-direction: column;
-  }
-
-  .adoptImage {
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px;
-  }
-
+@media (max-width: 1024px) {
+  /* Adopt Form */
   .adopt-form .form-card {
-    width: 100%;
-    padding: 35px;
-  }
-
-  /* Contact */
-
-  .contact-section {
-    flex-direction: column;
-    gap: 40px;
-  }
-
-  .contact-form,
-  .contact-info {
-    width: 100%;
-  }
-}
-/* Mobile */
-
-@media (max-width: 768px) {
-  /* Adopt */
-
-  .adopt-form .form-card {
-    padding: 25px;
+    padding: 35px 40px;
   }
 
   .adopt-form .form-row {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .adopt-form .question {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    gap: 20px;
   }
 
   .adopt-form .options {
     gap: 20px;
   }
 
-  .adopt-form .confirm-row {
-    align-items: flex-start;
+  @media (max-width: 1024px) {
+    /* Contact Section */
+    .contact-section {
+      flex-direction: column;
+      gap: 40px;
+      padding: 50px 6%;
+    }
+
+    .contact-form,
+    .contact-info {
+      width: 100%;
+    }
+
+    .contact-form .form-card {
+      padding: 35px 40px;
+    }
+
+    .info-box {
+      gap: 15px;
+      margin-bottom: 28px;
+    }
+
+    .info-box > svg {
+      width: 50px;
+      height: 50px;
+      padding: 13px;
+    }
+
+    .hours-card {
+      padding: 20px;
+    }
   }
+}
 
-  .adopt-form .submit-btn {
-    width: 100%;
-  }
-
-  /* Contact */
-
+/* Mobile */
+@media (max-width: 767px) {
   .contact-section {
     flex-direction: column;
-    padding: 40px 20px;
-    gap: 35px;
+    gap: 30px;
+    padding: 40px 5%;
   }
 
   .contact-form,
@@ -424,7 +482,7 @@
   }
 
   .contact-form .form-card {
-    padding: 25px;
+    padding: 25px 20px;
   }
 
   .form-row {
@@ -433,13 +491,14 @@
   }
 
   .info-box {
-    gap: 15px;
+    gap: 12px;
+    margin-bottom: 25px;
   }
 
-  .info-box i {
+  .info-box > svg {
     width: 45px;
     height: 45px;
-    font-size: 22px;
+    padding: 12px;
   }
 
   .hours-card {
@@ -511,154 +570,5 @@
 
   .copyright {
     margin-top: 20px;
-  }
-}
-
-/* ==========================
-   Footer Responsive Styles
-========================== */
-/* Tablet */
-
-@media (max-width: 1024px) {
-  .history-page {
-    width: 95%;
-    padding: 40px 0;
-  }
-
-  .history-header h1 {
-    font-size: 40px;
-  }
-
-  .history-header p {
-    width: 100%;
-    max-width: 600px;
-    font-size: 15px;
-  }
-
-  .history-content {
-    flex-direction: column;
-    gap: 35px;
-  }
-
-  .application-section h2 {
-    font-size: 30px;
-  }
-
-  .history-card {
-    padding: 18px;
-  }
-
-  .history-card img {
-    width: 100px;
-    height: 100px;
-  }
-
-  .history-info {
-    margin-left: 20px;
-  }
-
-  .next-section {
-    width: 100%;
-    padding: 25px;
-  }
-}
-
-/* Mobile */
-
-@media (max-width: 768px) {
-  .history-page {
-    width: 92%;
-    padding: 30px 0;
-  }
-
-  .back-btn {
-    margin-bottom: 20px;
-  }
-
-  .back-btn a {
-    font-size: 16px;
-    gap: 8px;
-  }
-
-  .back-btn svg {
-    font-size: 18px;
-  }
-
-  .history-header {
-    margin-bottom: 40px;
-  }
-
-  .history-header h1 {
-    font-size: 34px;
-  }
-
-  .history-header p {
-    width: 100%;
-    font-size: 14px;
-    line-height: 1.6;
-  }
-
-  .application-section h2 {
-    font-size: 26px;
-    text-align: center;
-  }
-
-  .history-card {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 18px;
-  }
-
-  .history-card img {
-    width: 100%;
-    height: 220px;
-    border-radius: 15px;
-    margin-bottom: 15px;
-  }
-
-  .history-info {
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .history-info h3 {
-    font-size: 22px;
-  }
-
-  .details {
-    font-size: 15px;
-  }
-
-  .status {
-    font-size: 15px;
-  }
-
-  .next-section {
-    padding: 22px;
-  }
-
-  .next-section h3 {
-    font-size: 24px;
-    text-align: center;
-  }
-
-  .step {
-    gap: 15px;
-    margin-bottom: 22px;
-  }
-
-  .step h4 {
-    font-size: 18px;
-  }
-
-  .step p {
-    font-size: 14px;
-  }
-
-  .number {
-    width: 32px;
-    height: 32px;
-    font-size: 14px;
-    flex-shrink: 0;
   }
 }

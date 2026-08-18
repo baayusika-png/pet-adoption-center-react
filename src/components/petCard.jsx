@@ -1,14 +1,16 @@
+import {FaHome} from "react-icons/fa";
+
 function PetCard({ pet, onAdopt }) {
   return (
     <div className="animal-card">
       <div className="animal-image">
-        <img src={pet.image} alt={pet.name} className="animal-photo" />
+        <img src={pet.image} alt={pet.pet_name} className="animal-photo" />
         <span className="badge vaccinated">Vaccinated</span>
       </div>
 
       <div className="card-body">
         <div className="card-top">
-          <span className="animal-name">{pet.name}</span>
+          <span className="animal-name">{pet.pet_name}</span>
           <span className="badge available">Available</span>
         </div>
 
@@ -20,7 +22,7 @@ function PetCard({ pet, onAdopt }) {
           className="adopt-btn"
           onClick={() => onAdopt(pet)}
         >
-          <i className="bx bx-home"></i>
+          <FaHome />
           Adopt Me
         </button>
       </div>

@@ -1,10 +1,50 @@
+import { useEffect, useRef, useState } from "react";
 import heroImage from "../assets/images/happy_dogs.png";
-import dog1 from "../assets/images/pets/dog1.webp";
-import dog2 from "../assets/images/pets/dog2.jpg";
-import dog3 from "../assets/images/pets/dog3.jpg";
-import cat1 from "../assets/images/pets/cat.jpg";
+
+import {
+  FaHeart,
+  FaSmile,
+  FaHome,
+  FaBandAid,
+  FaChevronRight,
+} from "react-icons/fa";
+
+import { getCategories } from "../services/categoryService";
 
 function Home() {
+  const [categories, setCategories] = useState([]); //To store category data
+  const petsGridRef = useRef(null); //To acess pet grid DOM element
+
+  //To fetch categories when component loads
+  useEffect(() => {
+    getCategories()
+      //stores fetched categories in the state
+      .then((data) => {
+        setCategories(data);
+      })
+      //shows error if the request fails
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  function handleWheel(e) {
+    //converts mouse wheel scrolling into horizontal scrolling
+    if (petsGridRef.current) {
+      petsGridRef.current.scrollLeft += e.deltaY; //scroll the pets grid horizontally
+    }
+  }
+
+  function scrollRight() {
+    //scroll the pets grid to right
+
+    //check if the pets grid element exists
+    if (petsGridRef.current) {
+      //moves the grid 350 px to the right
+      petsGridRef.current.scrollLeft += 350;
+    }
+  }
+
   return (
     <>
       <section className="hero">
@@ -13,10 +53,11 @@ function Home() {
             <h1>
               Find Your New Best Friend <span>Today!</span>
             </h1>
+
             <p>
               Adopting a pet means opening your heart to unconditional love,
-              ifelong companionship and countless jouyful moments. When you
-              choose adoption, you're not giving an animal home you're giving
+              lifelong companionship and countless joyful moments. When you
+              choose adoption, you're not giving an animal home, you're giving
               them a family, a future and a chance to thrive.
             </p>
 
@@ -45,40 +86,41 @@ function Home() {
           </div>
 
           <a href="/pets" className="explore-pets">
-            Explore More Pets <i className="bx bx-right-arrow-alt"></i>
+            Explore More Pets
+            <i className="bx bx-right-arrow-alt"></i>
           </a>
         </div>
 
-        <div className="pets-grid">
-          <div className="pet-card">
-            <img src={dog1} className="pet-image" />
-            <div className="pet-breed">Luna</div>
+        <div className="pets-carousel">
+          <div className="pets-grid" ref={petsGridRef} onWheel={handleWheel}>
+            {categories.map((category) => (
+              <div className="pet-card" key={category.id}>
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  className="pet-image"
+                />
+
+                <div className="pet-type">{category.name}</div>
+              </div>
+            ))}
           </div>
 
-          <div className="pet-card">
-            <img src={cat1} className="pet-image" />
-            <div className="pet-breed">Whisker</div>
-          </div>
-
-          <div className="pet-card">
-            <img src={dog2} className="pet-image" />
-            <div className="pet-breed">Milo</div>
-          </div>
-
-          <div className="pet-card">
-            <img src={dog3} className="pet-image" />
-            <div className="pet-breed">Neko</div>
-          </div>
+          <button className="carousel-arrow" onClick={scrollRight}>
+            <FaChevronRight />
+          </button>
         </div>
       </section>
 
       <section className="adopt">
         <div className="adopt-header">
           <h2>Why Adopt?</h2>
+
           <p>
             Adopting a pet saves a life and fills your home with unconditional
             love.
           </p>
+
           <p>
             Every adoption is a chance to create a happier future - for them and
             for you.
@@ -88,28 +130,34 @@ function Home() {
         <div className="adopt-container">
           <div className="adopt-card">
             <div className="icon orange">
-              <i class="bx bx-heart"></i>
+              <FaHeart />
             </div>
+
             <h3>Save Lives</h3>
+
             <p>
-              Adoption rescuses animals from shelters an gives them a second
+              Adoption rescues animals from shelters and gives them a second
               life.
             </p>
           </div>
 
           <div className="adopt-card">
             <div className="icon green">
-              <i class="bx bx-happy"></i>
+              <FaSmile />
             </div>
+
             <h3>Companionship & Joy</h3>
+
             <p>Adopted pets bring unconditional love, loyalty and happiness.</p>
           </div>
 
           <div className="adopt-card">
             <div className="icon orange">
-              <i class="bx bxs-home-heart"></i>
+              <FaHome />
             </div>
+
             <h3>Support Shelter</h3>
+
             <p>
               Helps reduce overcrowding and supports animal welfare
               organizations.
@@ -118,11 +166,13 @@ function Home() {
 
           <div className="adopt-card">
             <div className="icon green">
-              <i class="bx bx-band-aid"></i>
+              <FaBandAid />
             </div>
+
             <h3>Health & Preparedness</h3>
+
             <p>
-              Most adopted pets are vaccinated, spayed/neuttered, and health
+              Most adopted pets are vaccinated, spayed/neutered, and health
               checked.
             </p>
           </div>

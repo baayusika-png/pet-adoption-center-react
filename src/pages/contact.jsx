@@ -1,4 +1,11 @@
 import ContactForm from "../components/contactForm";
+import {
+  FaMapMarkerAlt,
+  FaPhone,
+  FaEnvelope,
+  FaGlobe,
+  FaClock,
+} from "react-icons/fa";
 
 function Contact() {
   return (
@@ -13,11 +20,11 @@ function Contact() {
       </section>
 
       <section className="contact-section">
-         <ContactForm />
+        <ContactForm />
 
         <div className="contact-info">
           <div className="info-box">
-            <i class="bx bx-map"></i>
+             <FaMapMarkerAlt />
             <div>
               <h3>Address</h3>
               <p>Newroad, Pokhara</p>
@@ -26,7 +33,7 @@ function Contact() {
           </div>
 
           <div class="info-box">
-            <i class="bx bx-phone"></i>
+            <FaPhone />
             <div>
               <h3>Call us Directly</h3>
               <p>+(977) 983546382</p>
@@ -34,7 +41,7 @@ function Contact() {
           </div>
 
           <div class="info-box">
-            <i class="bx bx-envelope"></i>
+              <FaEnvelope />
             <div>
               <h3>Email Address</h3>
               <p>adoptMe@gmail.com</p>
@@ -42,7 +49,7 @@ function Contact() {
           </div>
 
           <div class="info-box">
-            <i class="bx bx-globe"></i>
+            <FaGlobe />
             <div>
               <h3>Follow Us</h3>
               <p>adoptMe-pkr</p>
@@ -51,7 +58,7 @@ function Contact() {
 
           <div className="hours-card">
             <div className="hours-title">
-              <i class="bx bx-time-five"></i>
+                <FaClock />
               Visiting Hours
             </div>
 
