@@ -47,6 +47,11 @@
   font-family: inherit;
 }
 
+.adopt-form .form-group select {
+  width: 100%;
+  cursor: pointer;
+}
+
 .adopt-form .form-group textarea {
   resize: vertical;
   min-height: 90px;

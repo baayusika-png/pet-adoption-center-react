@@ -42,8 +42,8 @@
   color: #47220a;
 }
 
-.explore-pets i {
-  font-size: 20px;
+.explore-pets svg {
+  font-size: 15px;
   margin-left: 5px;
   vertical-align: middle;
   transition: transform 0.3s ease;
@@ -52,6 +52,14 @@
 .pets-carousel {
   position: relative;
   width: 100%;
+}
+
+.carousel-left {
+  left: -25px;
+}
+
+.carousel-right {
+  right: 10px;
 }
 
 .pets-grid {
@@ -307,6 +315,13 @@
 
 .badge.vaccinated {
   background-color: #b08a6f;
+  color: #3e1d04;
+}
+
+.badge.not-vaccinated {
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
 }
 
 .card-body {
@@ -328,12 +343,31 @@
   font-weight: 700;
   color: #1a1a1a;
 }
+
 .badge.available {
-  background-color: #8a9a8c;
+  background-color: #d4edda;
+  color: #155724;
   white-space: nowrap;
   position: relative;
   top: -2px;
 }
+
+.badge.pending {
+  background-color: #fff3cd;
+  color: #856404;
+  white-space: nowrap;
+  position: relative;
+  top: -2px;
+}
+
+.badge.adopted {
+  background-color: #f8d7da;
+  color: #721c24;
+  white-space: nowrap;
+  position: relative;
+  top: -2px;
+}
+
 .animal-details {
   color: #6b6b6b;
   font-size: 14px;

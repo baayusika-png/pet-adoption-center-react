@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import heroImage from "../assets/images/happy_dogs.png";
 
 import {
@@ -6,42 +7,81 @@ import {
   FaSmile,
   FaHome,
   FaBandAid,
+  FaArrowRight,
   FaChevronRight,
+  FaChevronLeft,
 } from "react-icons/fa";
 
 import { getCategories } from "../services/categoryService";
 
 function Home() {
-  const [categories, setCategories] = useState([]); //To store category data
-  const petsGridRef = useRef(null); //To acess pet grid DOM element
+  //Stores the categories fetched from the API
+  const [categories, setCategories] = useState([]);
 
-  //To fetch categories when component loads
+  //Controls whether the left and right carousel are shown
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  //Gives access to the pets grid DOM element
+  const petsGridRef = useRef(null);
+
+  //Used to navigate to different pages
+  const navigate = useNavigate();
+
+  // To fetch categories when component loads
   useEffect(() => {
     getCategories()
-      //stores fetched categories in the state
       .then((data) => {
-        setCategories(data);
+        setCategories(data); //Stores the fetched categories in state
       })
-      //shows error if the request fails
       .catch((error) => {
         console.error(error);
       });
   }, []);
 
-  function handleWheel(e) {
-    //converts mouse wheel scrolling into horizontal scrolling
+  // Check whether left/right scrolling is possible
+  function checkScroll() {
+    //Check if the pet grid element exist
     if (petsGridRef.current) {
-      petsGridRef.current.scrollLeft += e.deltaY; //scroll the pets grid horizontally
+      //Get the current scroll information
+      const { scrollLeft, scrollWidth, clientWidth } = petsGridRef.current;
+
+      //Shows left arrow if the grid has already been scrolled
+      setCanScrollLeft(scrollLeft > 0);
+
+      //Shows right arrow if there is still more content in the right
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 1);
     }
   }
 
-  function scrollRight() {
-    //scroll the pets grid to right
+  // Check scroll after categories are loaded
+  useEffect(() => {
+    checkScroll();
+  }, [categories]);
 
-    //check if the pets grid element exists
+  //Converts mouse wheel scrolling into horizontalling scrolling
+  function handleWheel(e) {
     if (petsGridRef.current) {
-      //moves the grid 350 px to the right
+      //Move the grid horizontally based on mouse wheel movement
+      petsGridRef.current.scrollLeft += e.deltaY;
+      //Updated arrow visibility
+      checkScroll();
+    }
+  }
+
+  //Scrolls the pets grid to the right
+  function scrollRight() {
+    if (petsGridRef.current) {
       petsGridRef.current.scrollLeft += 350;
+      checkScroll();
+    }
+  }
+
+  //Scrolls the pets grid to the left
+  function scrollLeft() {
+    if (petsGridRef.current) {
+      petsGridRef.current.scrollLeft -= 350;
+      checkScroll();
     }
   }
 
@@ -87,14 +127,33 @@ function Home() {
 
           <a href="/pets" className="explore-pets">
             Explore More Pets
-            <i className="bx bx-right-arrow-alt"></i>
+            <FaArrowRight />
           </a>
         </div>
 
         <div className="pets-carousel">
-          <div className="pets-grid" ref={petsGridRef} onWheel={handleWheel}>
+          {/* Left Arrow */}
+          {canScrollLeft && (
+            <button
+              className="carousel-arrow carousel-left"
+              onClick={scrollLeft}
+            >
+              <FaChevronLeft />
+            </button>
+          )}
+
+          <div
+            className="pets-grid"
+            ref={petsGridRef}
+            onWheel={handleWheel}
+            onScroll={checkScroll}
+          >
             {categories.map((category) => (
-              <div className="pet-card" key={category.id}>
+              <div
+                className="pet-card"
+                key={category.id}
+                onClick={() => navigate("/pets")}
+              >
                 <img
                   src={category.image}
                   alt={category.name}
@@ -106,9 +165,14 @@ function Home() {
             ))}
           </div>
 
-          <button className="carousel-arrow" onClick={scrollRight}>
-            <FaChevronRight />
-          </button>
+          {canScrollRight && (
+            <button
+              className="carousel-arrow carousel-right"
+              onClick={scrollRight}
+            >
+              <FaChevronRight />
+            </button>
+          )}
         </div>
       </section>
 

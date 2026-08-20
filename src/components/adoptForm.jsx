@@ -57,6 +57,9 @@ function AdoptForm() {
                 <option value="rabbit">Rabbit</option>
                 <option value="hamster">Hamster</option>
                 <option value="guineaPig">Guinea Pig</option>
+                <option value="turtle">Turtle</option>
+                <option value="bird">Birds</option>
+                <option value="fish">Fish</option>
               </select>
             </div>
           </div>

@@ -9,6 +9,7 @@ import Footer from "./components/footer";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import History from "./pages/history";
+import Terms from "./pages/termsCondition";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/history" element={<History />} />
+        <Route path="/termsCondition" element={<Terms />} />
       </Routes>
 
       <Footer />

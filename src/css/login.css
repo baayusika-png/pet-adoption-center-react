@@ -98,7 +98,17 @@
   border-radius: 14px;
   padding: 7px;
 }
+.password-toggle {
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #777;
+  font-size: 16px;
+}
 
+.password-toggle:hover {
+  color: #98520b;
+}
 .login-input-box svg {
   color: #777;
   margin-right: 12px;
