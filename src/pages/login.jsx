@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { FaPaw, FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -21,6 +21,7 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
 
   async function handleLogin(e) {
@@ -51,8 +52,11 @@ function Login() {
         alert("Login successful!");
 
         login(result.data);
-        // Navigate to Home page
-        navigate("/");
+
+        // Adopt Me jasto page bata redirect vayeko ho bhane, tyahi ma pharkaune
+        // natra default Home page ma pathaune
+        const redirectTo = location.state?.from || "/";
+        navigate(redirectTo);
       } else {
         // Display error message returned by API
         alert(result.message);

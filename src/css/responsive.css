@@ -735,3 +735,93 @@
     padding-left: 20px;
   }
 }
+
+/* ==========================
+   Pet Detail Responsive Styles
+========================== */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .pet-details-container {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .pet-detail-image {
+    height: 300px;
+  }
+
+  .pet-right {
+    width: 100%;
+  }
+
+  .pet-title-row h1 {
+    font-size: 24px;
+  }
+
+  .pet-description p {
+    font-size: 14px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .pet-details-page {
+    padding: 15px 5%;
+  }
+
+  .pet-detail-image {
+    height: 260px;
+  }
+
+  .pet-description {
+    padding: 20px;
+  }
+
+  .pet-description h3 {
+    font-size: 17px;
+  }
+
+  .pet-description p {
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .pet-basic-card,
+  .pet-info-card {
+    padding: 17px;
+  }
+
+  .pet-title-row h1 {
+    font-size: 22px;
+  }
+
+  .pet-title-row p {
+    font-size: 12px;
+  }
+
+  .pet-tags span {
+    font-size: 11px;
+  }
+
+  .pet-adopt-btn {
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .pet-info-card h3 {
+    font-size: 14px;
+  }
+
+  .info-label {
+    font-size: 11px;
+  }
+
+  .info-row p {
+    font-size: 12px;
+  }
+
+  .meet-btn {
+    font-size: 12px;
+  }
+}

@@ -12,6 +12,7 @@ import History from "./pages/history";
 import Profile from "./pages/profile";
 import Terms from "./pages/termsCondition";
 import Wishlist from "./pages/wishlist";
+import PetDetail from "./pages/petDetail";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/termsCondition" element={<Terms />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/pet/:id" element={<PetDetail />} />
       </Routes>
 
       <Footer />

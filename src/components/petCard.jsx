@@ -1,18 +1,24 @@
-import { FaHome, FaHeart} from "react-icons/fa";
+import { FaPaw, FaRegHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
-function PetCard({ pet, onAdopt }) {
+function PetCard({ pet, onFavorite }) {
+  const navigate = useNavigate();
+
+  const handleAdopt = () => {
+    navigate(`/pet/${pet.id}`, { state: { pet } });
+  };
+
   return (
     <div className="animal-card">
       <div className="animal-image">
         <img src={pet.image} alt={pet.pet_name} className="animal-photo" />
 
-            <button
-      className={`heart-btn ${pet.isFavorite ? "liked" : ""}`}
-      onClick={() => onFavorite(pet)}
-    >
-      <FaHeart />
-    </button>
-
+        <button
+          className={`heart-btn ${pet.isFavorite ? "liked" : ""}`}
+          onClick={() => onFavorite(pet)}
+        >
+          <FaRegHeart />
+        </button>
 
         <span
           className={`badge ${pet.vaccinated ? "vaccinated" : "not-vaccinated"}`}
@@ -33,8 +39,8 @@ function PetCard({ pet, onAdopt }) {
           {pet.breed} • {pet.age} • {pet.gender}
         </p>
 
-        <button className="adopt-btn" onClick={() => onAdopt(pet)}>
-          <FaHome />
+        <button className="adopt-btn" onClick={handleAdopt}>
+          <FaPaw />
           Adopt Me
         </button>
       </div>
