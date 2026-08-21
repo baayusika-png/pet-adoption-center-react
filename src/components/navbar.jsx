@@ -1,9 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
 import { FaBars, FaPaw } from "react-icons/fa";
 import { useState } from "react";
+import { useAuth } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <header>
@@ -46,13 +50,21 @@ function Navbar() {
         </div>
 
         <div className="nav-buttons">
-          <Link to="/login" className="btn-nav">
-            Login
-          </Link>
+          {user ? (
+            <div className="user-avatar" onClick={() => navigate("/profile")}>
+              {user.name.charAt(0).toUpperCase()}
+            </div>
+          ) : (
+            <>
+              <Link to="/login" className="btn-nav">
+                Login
+              </Link>
 
-          <Link to="/register" className="btn-nav secondary">
-            Register
-          </Link>
+              <Link to="/register" className="btn-nav secondary">
+                Register
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </header>

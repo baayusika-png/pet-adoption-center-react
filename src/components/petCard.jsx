@@ -1,10 +1,19 @@
-import { FaHome } from "react-icons/fa";
+import { FaHome, FaHeart} from "react-icons/fa";
 
 function PetCard({ pet, onAdopt }) {
   return (
     <div className="animal-card">
       <div className="animal-image">
         <img src={pet.image} alt={pet.pet_name} className="animal-photo" />
+
+            <button
+      className={`heart-btn ${pet.isFavorite ? "liked" : ""}`}
+      onClick={() => onFavorite(pet)}
+    >
+      <FaHeart />
+    </button>
+
+
         <span
           className={`badge ${pet.vaccinated ? "vaccinated" : "not-vaccinated"}`}
         >

@@ -16,11 +16,16 @@ import "./css/login.css";
 import "./css/register.css";
 import "./css/history.css";
 import "./css/terms.css";
+import "./css/profile.css";
+import "./css/wishlist.css"
+import { AuthProvider } from "./context/authContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>,
 );

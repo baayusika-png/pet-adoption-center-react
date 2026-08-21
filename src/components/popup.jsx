@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 function Popup({ pet, onClose }) {
   return (
     <div className="popup-overlay" onClick={onClose}>
-      <div
-        className="popup-content"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="popup-content" onClick={(e) => e.stopPropagation()}>
         <span className="close-popup" onClick={onClose}>
           &times;
         </span>

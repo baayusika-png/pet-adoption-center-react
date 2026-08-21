@@ -9,7 +9,9 @@ import Footer from "./components/footer";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import History from "./pages/history";
+import Profile from "./pages/profile";
 import Terms from "./pages/termsCondition";
+import Wishlist from "./pages/wishlist";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/history" element={<History />} />
         <Route path="/termsCondition" element={<Terms />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/wishlist" element={<Wishlist />} />
       </Routes>
 
       <Footer />

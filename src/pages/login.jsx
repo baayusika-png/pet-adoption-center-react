@@ -8,6 +8,7 @@ import { FaFacebook } from "react-icons/fa";
 
 import petImage from "../assets/images/Cat&Dog.png";
 import { loginUser } from "../services/userService";
+import { useAuth } from "../context/authContext";
 
 function Login() {
   // Controls whether the password is visible or hidden
@@ -20,7 +21,8 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
-  
+  const { login } = useAuth();
+
   async function handleLogin(e) {
     // Prevent page refresh when form is submitted
     e.preventDefault();
@@ -48,6 +50,7 @@ function Login() {
       if (result.status === "success") {
         alert("Login successful!");
 
+        login(result.data);
         // Navigate to Home page
         navigate("/");
       } else {

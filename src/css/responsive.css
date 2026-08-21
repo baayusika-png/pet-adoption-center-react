@@ -574,37 +574,164 @@
 }
 
 /* ==========================
+   Profile Responsive Styles
+========================== */
+
+/* Tablet */
+@media (max-width: 900px) {
+  .profile-content {
+    padding: 35px 5%;
+  }
+
+  .profile-options {
+    grid-template-columns: repeat(2, 1fr);
+
+    margin: 0;
+  }
+
+  .user-card {
+    margin-bottom: 35px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .profile-content {
+    padding: 30px 25px 70px;
+  }
+
+  .user-card {
+    flex-wrap: wrap;
+    padding: 20px;
+    min-height: auto;
+  }
+
+  .profile-avatar {
+    width: 65px;
+    height: 65px;
+  }
+
+  .user-info p {
+    font-size: 14px;
+  }
+
+  .profile-actions {
+    width: 100%;
+    margin-top: 20px;
+    margin-left: 0;
+  }
+
+  .profile-actions button {
+    font-size: 11px;
+    padding: 9px 12px;
+  }
+
+  .profile-options {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .profile-option {
+    min-height: 110px;
+  }
+
+  .profile-option p {
+    font-size: 13px;
+  }
+
+  .logout-btn {
+    position: static;
+    margin-top: 30px;
+    font-size: 13px;
+  }
+}
+
+/* ==========================
    Terms Responsive Styles
 ========================== */
 
 /* Tablet */
-@media (min-width: 600px) {
+@media (max-width: 768px) {
   .terms-page {
-    padding-top: 45px;
+    padding: 35px 25px 60px;
+  }
+
+  .terms-header {
+    margin-bottom: 35px;
   }
 
   .terms-header h1 {
-    font-size: 30px;
+    font-size: 28px;
   }
 
   .terms-header p {
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .terms-container {
-    max-width: 600px;
+    max-width: 100%;
   }
 
   .terms-card {
-    padding: 25px 28px;
+    padding: 25px;
   }
 
   .terms-card h2 {
-    font-size: 15px;
+    font-size: 18px;
   }
 
   .terms-card p,
   .terms-card li {
-    font-size: 10px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .terms-page {
+    padding: 30px 18px 50px;
+  }
+
+  .terms-header {
+    margin-bottom: 30px;
+  }
+
+  .terms-header h1 {
+    font-size: 25px;
+  }
+
+  .terms-header p {
+    font-size: 12px;
+  }
+
+  .back-btn {
+    font-size: 15px;
+    margin-bottom: 20px;
+  }
+
+  .terms-card {
+    padding: 22px 20px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+  }
+
+  .terms-card h2 {
+    font-size: 17px;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .terms-icon {
+    font-size: 20px;
+  }
+
+  .terms-card p,
+  .terms-card li {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .terms-card ul {
+    padding-left: 20px;
   }
 }
