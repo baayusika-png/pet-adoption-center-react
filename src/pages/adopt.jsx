@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import heroAdopt1 from "../assets/images/Cat&Dog.png";
 import heroAdopt2 from "../assets/images/happyCat&Dog.png";
 
-import AdoptForm from "../components/AdoptForm";
+import AdoptForm from "../components/adoptForm";
 
 function Adopt() {
   return (

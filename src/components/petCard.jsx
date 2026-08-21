@@ -1,11 +1,25 @@
-import { FaPaw, FaRegHeart } from "react-icons/fa";
+import { FaPaw, FaRegHeart, FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { useWishlist } from "../context/wishlistContext";
 
-function PetCard({ pet, onFavorite }) {
+function PetCard({ pet }) {
   const navigate = useNavigate();
 
+  //Get wishlist function from WishlistContext
+  const { isInWishlist, toggleWishlist } = useWishlist();
+
+  //Check whether this pet is already in the wishlist
+  const liked = isInWishlist(pet.id);
+
+  //Navigate to the pet details page when Adopt Me is clicked
   const handleAdopt = () => {
     navigate(`/pet/${pet.id}`, { state: { pet } });
+  };
+
+  //Handle clicking the heart button
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation(); //Prevent the click from triggering the parent card's click event
+    toggleWishlist(pet); //Add or remove pet fro wishlist
   };
 
   return (
@@ -14,10 +28,10 @@ function PetCard({ pet, onFavorite }) {
         <img src={pet.image} alt={pet.pet_name} className="animal-photo" />
 
         <button
-          className={`heart-btn ${pet.isFavorite ? "liked" : ""}`}
-          onClick={() => onFavorite(pet)}
+          className={`heart-btn ${liked ? "liked" : ""}`}
+          onClick={handleFavoriteClick}
         >
-          <FaRegHeart />
+          {liked ? <FaHeart /> : <FaRegHeart />}
         </button>
 
         <span

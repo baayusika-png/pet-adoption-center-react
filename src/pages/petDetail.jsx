@@ -6,39 +6,42 @@ import { FaBirthdayCake, FaVenusMars, FaPaw } from "react-icons/fa";
 import { useAuth } from "../context/authContext";
 
 function PetDetails() {
-  const { id } = useParams();
+  const { id } = useParams(); //Get the pet ID from the URL
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user } = useAuth(); //Get the logged in user from AuthContext
 
-  const [pet, setPet] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [pet, setPet] = useState(null); //Stores the pet details
+  const [loading, setLoading] = useState(true); //Track whether the pet data is still loading
+  const [error, setError] = useState(null); //Store any error message
 
+  //Fetch pet details whenever the pet ID changes
   useEffect(() => {
     getPetById(id)
       .then((data) => {
         console.log("Pet data:", data);
-        setPet(data);
+        setPet(data); //Stores pet data in state
         setLoading(false);
       })
       .catch((error) => {
         console.log("Error fetching pet:", error);
-        setError("Pet data load huna sakena");
-        setLoading(false);
+        setError("Pet data could not load");
+        setLoading(false); //Stop the loading state
       });
   }, [id]);
 
+  //Handle the Adopt btn click
   const handleAdoptClick = () => {
     if (!user) {
+      //Redirect to login if not logged in
       navigate("/login", { state: { from: `/adopt` } });
     } else {
-      navigate(`/adopt`);
+      navigate(`/adopt`); //Go to adopt form if logged in
     }
   };
 
-  if (loading) return <p className="loading-text">Loading pet details...</p>;
-  if (error) return <p className="error-text">{error}</p>;
-  if (!pet) return <p className="error-text">Pet fela pareन</p>;
+  if (loading) return <p className="loading-text">Loading pet details...</p>; //Displays loading message while fetching pet data
+  if (error) return <p className="error-text">{error}</p>; //Display error message if fetching fails
+  if (!pet) return <p className="error-text">No pets found...</p>; //Display message if no pet data is available
 
   return (
     <div className="pet-details-page">

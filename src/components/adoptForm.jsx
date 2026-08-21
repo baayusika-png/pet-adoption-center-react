@@ -1,8 +1,32 @@
-function AdoptForm() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
+import { useEffect, useState } from "react";
+import { getPets } from "../services/petsService";
 
-    const form = event.target;
+function AdoptForm() {
+  //Store the pets fetched from API
+  const [pets, setPets] = useState([]);
+
+  //Fetch pets when the component loads
+  useEffect(() => {
+    const fetchPets = async () => {
+      try {
+        //Get pet data using the pet service
+        const data = await getPets();
+
+        //Store the fetched pet in state
+        setPets(data);
+      } catch (error) {
+        console.error("Failed to fetch pets:", error);
+      }
+    };
+
+    fetchPets(); //Call the function to fetch pets
+  }, []);
+
+  //Handle the adoption form submission
+  const handleSubmit = (event) => {
+    event.preventDefault(); //Prevents page from refreshing
+
+    const form = event.target; //Gets the submitted form
 
     const name = form.name.value.trim();
     const email = form.email.value.trim();
@@ -19,6 +43,7 @@ function AdoptForm() {
       alert("Please agree to the confirmation before submitting.");
       return;
     }
+
     alert("Your adoption application has been submitted successfully!");
 
     form.reset();
@@ -50,16 +75,15 @@ function AdoptForm() {
 
             <div className="form-group">
               <label htmlFor="pet">Preferred Pet</label>
+
               <select id="pet" name="pet">
                 <option value="">Select a pet</option>
-                <option value="dog">Dog</option>
-                <option value="cat">Cat</option>
-                <option value="rabbit">Rabbit</option>
-                <option value="hamster">Hamster</option>
-                <option value="guineaPig">Guinea Pig</option>
-                <option value="turtle">Turtle</option>
-                <option value="bird">Birds</option>
-                <option value="fish">Fish</option>
+
+                {pets.map((pet) => (
+                  <option key={pet.id} value={pet.id}>
+                    {pet.pet_name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

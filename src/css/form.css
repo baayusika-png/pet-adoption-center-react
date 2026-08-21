@@ -1,6 +1,7 @@
 /* ==========================
-  Adopt Page Form Section
+   Adopt Page Form Section
 ========================== */
+
 .adopt-form .form-card {
   background-color: #fdf1de;
   border-radius: 20px;
@@ -49,7 +50,26 @@
 
 .adopt-form .form-group select {
   width: 100%;
+  height: 44px;
   cursor: pointer;
+  appearance: auto;
+}
+
+.adopt-form .form-group select option {
+  padding: 10px;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+}
+
+.adopt-form .form-group select option:checked {
+  background-color: #f3dfc7;
+  color: #8a4a1f;
+}
+
+.adopt-form .form-group select:focus {
+  border-color: #8a4a1f;
+  box-shadow: 0 0 0 2px rgba(138, 74, 31, 0.1);
 }
 
 .adopt-form .form-group textarea {

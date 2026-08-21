@@ -53,8 +53,6 @@ function Login() {
 
         login(result.data);
 
-        // Adopt Me jasto page bata redirect vayeko ho bhane, tyahi ma pharkaune
-        // natra default Home page ma pathaune
         const redirectTo = location.state?.from || "/";
         navigate(redirectTo);
       } else {
