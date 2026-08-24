@@ -43,6 +43,12 @@ function Navbar() {
               Contact
             </NavLink>
           </li>
+
+          <li>
+            <NavLink to="/petFood" onClick={() => setIsOpen(false)}>
+              Pet Care
+            </NavLink>
+          </li>
         </ul>
 
         <div className="menu-icon" onClick={() => setIsOpen(!isOpen)}>

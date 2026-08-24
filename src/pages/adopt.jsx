@@ -11,9 +11,8 @@ function Adopt() {
         <h1>Give a Paw a Home</h1>
 
         <p>
-          Thank you for choosing adoption and giving a pet a second chance.
-          Fill out this form to begin your journey of adopting a loving
-          companion.
+          Thank you for choosing adoption and giving a pet a second chance. Fill
+          out this form to begin your journey of adopting a loving companion.
         </p>
       </section>
 
@@ -21,10 +20,6 @@ function Adopt() {
         <div className="adoptImage">
           <img src={heroAdopt1} alt="Cat and Dog" />
           <img src={heroAdopt2} alt="Happy Cat and Dog" />
-
-          <Link to="/history" className="history-btn">
-            View Adoption History
-          </Link>
         </div>
 
         <AdoptForm />

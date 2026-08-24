@@ -20,9 +20,7 @@ function Terms() {
         <h1>Terms and Conditions</h1>
       </div>
 
-      {/* Terms Content */}
       <div className="terms-container">
-        {/* Introduction */}
         <div className="terms-card">
           <h2>
             <FaHandPaper className="terms-icon green" />
@@ -43,7 +41,6 @@ function Terms() {
           </p>
         </div>
 
-        {/* User Eligibility */}
         <div className="terms-card">
           <h2>
             <FaUserCheck className="terms-icon green" />
@@ -59,7 +56,6 @@ function Terms() {
           </p>
         </div>
 
-        {/* Adoption Process */}
         <div className="terms-card highlighted">
           <h2>
             <FaHeart className="terms-icon orange" />
@@ -99,7 +95,6 @@ function Terms() {
           </ul>
         </div>
 
-        {/* User Conduct */}
         <div className="terms-card">
           <h2>
             <FaGavel className="terms-icon green" />

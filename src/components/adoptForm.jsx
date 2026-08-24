@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { getPets } from "../services/petsService";
+import { adoptionRequest } from "../services/adoptService";
+import { useAuth } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
 
 function AdoptForm() {
   //Store the pets fetched from API
   const [pets, setPets] = useState([]);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   //Fetch pets when the component loads
   useEffect(() => {
@@ -23,8 +28,13 @@ function AdoptForm() {
   }, []);
 
   //Handle the adoption form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault(); //Prevents page from refreshing
+
+    if (!user) {
+      navigate("/login");
+      return;
+    }
 
     const form = event.target; //Gets the submitted form
 
@@ -32,6 +42,10 @@ function AdoptForm() {
     const email = form.email.value.trim();
     const phone = form.phone.value.trim();
     const pet = form.pet.value;
+    const reason = form.reason.value.trim();
+    const ownedPet = form.ownedPet.value;
+    const currentPets = form.currentPets.value;
+    const space = form.space.value;
     const confirm = form.confirm.checked;
 
     if (name === "" || email === "" || phone === "" || pet === "") {
@@ -44,11 +58,29 @@ function AdoptForm() {
       return;
     }
 
-    alert("Your adoption application has been submitted successfully!");
+    const adoptionData = {
+      pet_id: pet,
+      reason,
+      owned_pet_before: ownedPet,
+      currently_have_pets: currentPets,
+      enough_space: space,
+      information_confirmed: confirm ? "yes" : "no",
+    };
+    console.log("Adoption data:", adoptionData);
 
-    form.reset();
+    try {
+      const result = await adoptionRequest(adoptionData);
+
+      console.log("Adoption response:", result);
+
+      alert("Your adoption application has been submitted successfully!");
+
+      form.reset();
+    } catch (error) {
+      console.error("Failed to submit adoption:", error);
+      alert("Failed to submit adoption application.");
+    }
   };
-
   return (
     <section className="adopt-form">
       <div className="form-card">

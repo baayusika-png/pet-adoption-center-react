@@ -1,6 +1,6 @@
 import ContactForm from "../components/contactForm";
 import { useEffect, useState } from "react";
-import { getAdoptionCenter } from "../services/contactService";
+import { getAdoptionCenter } from "../services/centerService";
 
 import {
   FaMapMarkerAlt,

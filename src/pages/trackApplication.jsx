@@ -11,11 +11,10 @@ function History() {
       </div>
 
       <div className="history-header">
-        <h1>Adoption History</h1>
+        <h1>Track Application</h1>
         <p>
-          Your adoption history shows the pets you've welcomed into your life,
-          along with the dates and details of each adoption. It's a record of
-          love, care, and the special companions you've chosen to bring home.
+          Track the status of your recent adoption requests and get ready to
+          welcome your new family member.
         </p>
       </div>
 
@@ -30,10 +29,9 @@ function History() {
             <div className="number">1</div>
 
             <div>
-              <h4>Application Review</h4>
+              <h4>Application Submitted</h4>
               <p>
-                Our team reviews your details to ensure your home is suitable
-                for the pet. (1–3 days)
+                Your adoption application submitted is now waiting for review.
               </p>
             </div>
           </div>
@@ -42,9 +40,10 @@ function History() {
             <div className="number">2</div>
 
             <div>
-              <h4>Meet & Greet</h4>
+              <h4>Application Review</h4>
               <p>
-                We'll schedule a time for you and your family to meet the pet.
+                Our team reviews your application and checks whether you are
+                suitable to adopt the selected pet.
               </p>
             </div>
           </div>
@@ -53,9 +52,10 @@ function History() {
             <div className="number">3</div>
 
             <div>
-              <h4>Home Check</h4>
+              <h4>Meet & Greet</h4>
               <p>
-                A quick virtual visit to make sure your home is safe and ready.
+                If your application is approved, you can meet the pet and spend
+                some time together.
               </p>
             </div>
           </div>
@@ -64,10 +64,22 @@ function History() {
             <div className="number">4</div>
 
             <div>
-              <h4>Final Approval</h4>
+              <h4>Home Check</h4>
               <p>
-                Sign the paperwork, complete the adoption fee, and bring your
-                new best friend home.
+                A quick home check may be arranged to make sure the environment
+                is safe and suitable for the pet.
+              </p>
+            </div>
+          </div>
+
+          <div className="step">
+            <div className="number">5</div>
+
+            <div>
+              <h4>Adoption Approved</h4>
+              <p>
+                Once everything is approved, complete the required paperwork and
+                adoption process to bring your new pet home.
               </p>
             </div>
           </div>

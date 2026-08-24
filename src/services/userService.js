@@ -1,6 +1,6 @@
-const REGISTER_URL = "http://localhost/pet-adoption-center/api/register.php";
+const REGISTER_URL = import.meta.env.VITE_REGISTER_URL;
 
-const LOGIN_URL = "http://localhost/pet-adoption-center/api/login.php";
+const LOGIN_URL = import.meta.env.VITE_LOGIN_URL;
 
 export async function registerUser(userData) {
   //Sends the registration data to API
@@ -27,18 +27,19 @@ export async function registerUser(userData) {
 }
 
 export async function loginUser(userData) {
-  const formData = new FormData(); //Create FormData to send login information
+  const formData = new FormData();
 
-  //Add data to FormData
+  // Add login information
   formData.append("email", userData.email);
   formData.append("password", userData.password);
 
-  //Send login information to the API
+  // Send login information to API
   const response = await fetch(LOGIN_URL, {
     method: "POST",
     body: formData,
   });
-  // Convert API response from JSON to JS object
+
+  // Convert API response to JavaScript object
   const result = await response.json();
 
   console.log("Login response:", result);
@@ -47,6 +48,9 @@ export async function loginUser(userData) {
     throw new Error(result.message || "Login failed");
   }
 
-  // Return the API response to login.jsx
+  // Save token for authenticated requests
+  localStorage.setItem("token", result.token);
+
+  // Return API response
   return result;
 }

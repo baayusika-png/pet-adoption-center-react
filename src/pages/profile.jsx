@@ -3,7 +3,7 @@ import {
   FaUser,
   FaHeart,
   FaFileAlt,
-  FaCalendarAlt,
+  FaBone,
   FaHistory,
   FaArrowRight,
   FaEdit,
@@ -79,19 +79,12 @@ function Profile() {
               <FaFileAlt />
             </div>
 
-            <p>My Applications</p>
+            <p>Track My Application</p>
 
-            <FaArrowRight className="option-arrow" />
-          </div>
-
-          <div className="profile-option">
-            <div className="option-icon">
-              <FaCalendarAlt />
-            </div>
-
-            <p>My Appointments</p>
-
-            <FaArrowRight className="option-arrow" />
+            <FaArrowRight
+              className="option-arrow"
+              onClick={() => navigate("/trackApplication")}
+            />
           </div>
 
           <div className="profile-option">
@@ -100,6 +93,16 @@ function Profile() {
             </div>
 
             <p>Adoption History</p>
+
+            <FaArrowRight className="option-arrow" />
+          </div>
+
+           <div className="profile-option">
+            <div className="option-icon">
+              <FaBone />
+            </div>
+
+            <p>My Order</p>
 
             <FaArrowRight className="option-arrow" />
           </div>

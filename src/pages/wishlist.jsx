@@ -1,6 +1,6 @@
 import PetCard from "../components/petCard";
 import { useWishlist } from "../context/wishlistContext";
-import { FaArrowLeft, FaHeart, FaHome } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 
 function Wishlist() {
   const { wishlist } = useWishlist(); // Get the wishlist data from WishlistContext

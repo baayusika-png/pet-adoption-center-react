@@ -8,11 +8,12 @@ import Contact from "./pages/contact";
 import Footer from "./components/footer";
 import Login from "./pages/login";
 import Register from "./pages/register";
-import History from "./pages/history";
+import TrackApplication from "./pages/trackApplication";
 import Profile from "./pages/profile";
 import Terms from "./pages/termsCondition";
 import Wishlist from "./pages/wishlist";
 import PetDetail from "./pages/petDetail";
+import PetFood from "./pages/petFood";
 
 function App() {
   return (
@@ -26,11 +27,12 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/history" element={<History />} />
+        <Route path="/trackApplication" element={<TrackApplication />} />
         <Route path="/termsCondition" element={<Terms />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/pet/:id" element={<PetDetail />} />
+        <Route path="/petFood" element={<PetFood />} />
       </Routes>
 
       <Footer />

@@ -170,19 +170,3 @@
   margin: 0;
   color: #292929;
 }
-
-.meet-btn {
-  width: 100%;
-  height: 34px;
-  border: 1px solid #98520b;
-  border-radius: 6px;
-  background-color: white;
-  color: #98520b;
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.meet-btn:hover {
-  background-color: #98520b;
-  color: white;
-}

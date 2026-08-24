@@ -108,8 +108,6 @@ function PetDetails() {
                 </p>
               </div>
             </div>
-
-            <button className="meet-btn">Book Meet &amp; Greet</button>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-const API_URL = "http://localhost/pet-adoption-center/api/adopt_center.php";
+const API_URL = import.meta.env.VITE_ADOPTION_CENTER_URL;
 
 // Function to fetch adoption center data from the API
 export async function getAdoptionCenter() {

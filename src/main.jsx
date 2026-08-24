@@ -14,7 +14,7 @@ import "./css/responsive.css";
 import "./css/form.css";
 import "./css/login.css";
 import "./css/register.css";
-import "./css/history.css";
+import "./css/trackApplication.css";
 import "./css/terms.css";
 import "./css/profile.css";
 import "./css/petDetail.css";

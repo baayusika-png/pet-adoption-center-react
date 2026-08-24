@@ -1,6 +1,5 @@
 import PetCard from "../components/petCard";
 import { useEffect, useState } from "react";
-import Popup from "../components/Popup";
 import { getPets } from "../services/petsService";
 import { getCategories } from "../services/categoryService";
 

@@ -158,7 +158,6 @@
   max-width: 1150px;
   margin: 0 auto 60px;
   padding: 0 20px;
-  align-items: flex-end;
 }
 
 .adoptImage {
@@ -173,25 +172,6 @@
   height: 230px;
   object-fit: cover;
   border-radius: 12px;
-}
-
-.history-btn {
-  width: 100%;
-  padding: 16px;
-  border: none;
-  border-radius: 30px;
-  background: #e3a15d;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 700;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  margin-top: 0;
-}
-
-.history-btn:hover {
-  background: #cf8a43;
 }
 
 /* ==========================

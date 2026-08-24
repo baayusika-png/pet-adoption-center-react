@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost/pet-adoption-center/api/categories.php";
+const BASE_URL = import.meta.env.VITE_CATEGORIES_URL;
 
 // Function to fetch  categories data from the API
 export async function getCategories() {
