@@ -16,7 +16,6 @@ function ForgotPassword() {
       return;
     }
 
-    // Later you can call your forgot password API here
     console.log("Reset password request for:", email);
   };
 

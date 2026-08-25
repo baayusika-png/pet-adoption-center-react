@@ -47,6 +47,11 @@ function Login() {
       // Display API response in console
       console.log("Login result:", result);
 
+      if (result.status === "success") {
+        console.log("Login Data:", result.data);
+        console.log("Login Token:", result.token);
+      }
+
       // Check whether login was successful
       if (result.status === "success") {
         alert("Login successful!");

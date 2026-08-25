@@ -22,11 +22,12 @@ import PetFoodDetail from "./pages/petFoodDetail";
 import AdoptionHistory from "./pages/adoptionHistory";
 
 function App() {
-  const location = useLocation();
-  const hideLayout = ["/forgetPassword"].includes(location.pathname);
+  const location = useLocation(); //Get current route path
+  const hideLayout = ["/forgetPassword"].includes(location.pathname); //Pages where component should be hidden
   return (
     <>
       {!hideLayout && <Navbar />}
+      {/*Shows Navbar on all pages except the ones in hideLayout */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pets" element={<Pets />} />
@@ -46,8 +47,8 @@ function App() {
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/forgetPassword" element={<ForgetPassword />} />
       </Routes>
-
       {!hideLayout && <Footer />}
+      {/*Shows Footer on all pages except the ones in hideLayout*/}
     </>
   );
 }
