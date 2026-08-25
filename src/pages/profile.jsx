@@ -15,8 +15,19 @@ import { useAuth } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 
 function Profile() {
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuth(); //Get logged-in user info and logout function from authContext
   const navigate = useNavigate();
+
+  //Handle user logout with confirmation
+  const handleLogout = async () => {
+    //Ask user to confirm before logging out
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+
+    if (confirmLogout) {
+      await logout(); //Call logout function and redirect to home page
+      navigate("/");
+    }
+  };
 
   return (
     <div className="profile-page">
@@ -94,10 +105,13 @@ function Profile() {
 
             <p>Adoption History</p>
 
-            <FaArrowRight className="option-arrow" />
+            <FaArrowRight
+              className="option-arrow"
+              onClick={() => navigate("/adoptionHistory")}
+            />
           </div>
 
-           <div className="profile-option">
+          <div className="profile-option">
             <div className="option-icon">
               <FaBone />
             </div>
@@ -108,18 +122,7 @@ function Profile() {
           </div>
         </div>
 
-        <button
-          className="logout-btn"
-          onClick={() => {
-            const confirmLogout = window.confirm(
-              "Are you sure you want to logout?",
-            );
-
-            if (confirmLogout) {
-              logout();
-            }
-          }}
-        >
+        <button className="logout-btn" onClick={handleLogout}>
           <FaSignOutAlt />
           Logout
         </button>

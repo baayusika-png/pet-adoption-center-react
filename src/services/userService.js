@@ -1,28 +1,28 @@
 const REGISTER_URL = import.meta.env.VITE_REGISTER_URL;
-
 const LOGIN_URL = import.meta.env.VITE_LOGIN_URL;
+const LOGOUT_URL = import.meta.env.VITE_LOGOUT_URL;
 
 export async function registerUser(userData) {
-  //Sends the registration data to API
+  // Sends the registration data to API
   const response = await fetch(REGISTER_URL, {
-    //Use POST method to send data
+    // Use POST method to send data
     method: "POST",
 
-    //Send the FormData received from register.jsx
+    // Send the FormData received from register.jsx
     body: userData,
   });
 
-  //Convert API response from JSON format to JS object
+  // Convert API response from JSON format to JS object
   const result = await response.json();
 
   console.log("Register response:", result);
 
-  //Check whether the HTTP request was sucessful
+  // Check whether the HTTP request was successful
   if (!response.ok) {
     throw new Error(result.message || "Registration failed");
   }
 
-  //Retrun the API response to register.jsx
+  // Return the API response to register.jsx
   return result;
 }
 
@@ -48,9 +48,33 @@ export async function loginUser(userData) {
     throw new Error(result.message || "Login failed");
   }
 
-  // Save token for authenticated requests
-  localStorage.setItem("token", result.token);
+  // Save token in sessionStorage
+  sessionStorage.setItem("token", result.token);
 
   // Return API response
+  return result;
+}
+
+export async function logoutUser() {
+  // Get token from sessionStorage
+  const token = sessionStorage.getItem("token");
+
+  // Send logout request to API
+  const response = await fetch(LOGOUT_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  // Convert API response to JavaScript object
+  const result = await response.json();
+
+  console.log("Logout response:", result);
+
+  if (!response.ok) {
+    throw new Error(result.message || "Logout failed");
+  }
+
   return result;
 }

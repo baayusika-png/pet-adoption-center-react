@@ -825,3 +825,199 @@
     font-size: 12px;
   }
 }
+
+/* ==========================
+   Pet Food Responsive Styles
+========================== */
+
+/* Tablet */
+@media (max-width: 1000px) {
+  .food-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .food-page {
+    padding: 55px 5%;
+  }
+
+  .food-header h1 {
+    font-size: 29px;
+  }
+
+  .food-header p {
+    font-size: 14px;
+  }
+
+  .food-header p br {
+    display: none;
+  }
+
+  .food-categories {
+    margin-bottom: 35px;
+    gap: 8px;
+  }
+
+  .category-btn {
+    padding: 9px 15px;
+    font-size: 13px;
+  }
+
+  .food-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .food-image {
+    height: 210px;
+  }
+}
+
+/* ==========================
+   Food Detail Responsive Styles
+========================== */
+
+/* Tablet */
+@media (max-width: 1000px) {
+  .food-detail-page {
+    padding: 30px 5% 60px;
+  }
+
+  .food-detail-container {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 40px;
+  }
+
+  .food-detail-image {
+    height: 420px;
+  }
+
+  .food-detail-content h1 {
+    font-size: 30px;
+  }
+
+  .detail-description {
+    font-size: 13px;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .food-detail-page {
+    padding: 20px 5% 50px;
+  }
+
+  .food-back-btn {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .food-detail-container {
+    gap: 28px;
+  }
+
+  .food-detail-image {
+    height: 300px;
+    border-radius: 8px;
+  }
+
+  .food-detail-content h1 {
+    font-size: 27px;
+    line-height: 1.25;
+  }
+
+  .detail-rating {
+    font-size: 12px;
+
+    margin-bottom: 15px;
+  }
+
+  .detail-rating small {
+    font-size: 11px;
+  }
+
+  .detail-price {
+    font-size: 22px;
+    margin-bottom: 17px;
+  }
+
+  .detail-description {
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .suitable-section {
+    margin-top: 24px;
+  }
+
+  .detail-actions {
+    gap: 15px;
+    justify-content: space-between;
+  }
+
+  .add-cart-btn {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+
+/* ==========================
+   History Responsive Styles
+========================== */
+/* Tablet */
+
+@media (max-width: 900px) {
+  .history-content {
+    flex-wrap: wrap;
+    margin-left: 0;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .adoption-history-page {
+    padding: 20px;
+  }
+
+  .history-header h1 {
+    font-size: 27px;
+  }
+
+  .history-header p {
+    font-size: 13px;
+  }
+
+  .history-header p br {
+    display: none;
+  }
+
+  .history-section-title {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .history-section-title h2 {
+    font-size: 17px;
+  }
+
+  .history-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .history-pet-card {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .browse-more-card {
+    width: 100%;
+    max-width: 350px;
+  }
+}

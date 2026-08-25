@@ -132,7 +132,6 @@ function Home() {
         </div>
 
         <div className="pets-carousel">
-          {/* Left Arrow */}
           {canScrollLeft && (
             <button
               className="carousel-arrow carousel-left"

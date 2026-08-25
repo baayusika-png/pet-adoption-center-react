@@ -1,26 +1,38 @@
 import { useContext, createContext, useState } from "react";
+import { logoutUser } from "../services/userService";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     const savedUser = sessionStorage.getItem("user");
+
     return savedUser ? JSON.parse(savedUser) : null;
   });
 
   const login = (userData) => {
-    const sessionData = {
-      user: userData,
-      expiresAt: Date.now() + 30 * 60 * 1000, //30 minute to expire session
-    };
-
     setUser(userData);
+
+    // Save user in sessionStorage
     sessionStorage.setItem("user", JSON.stringify(userData));
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      // Call logout API
+      await logoutUser();
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+
+    // Clear React user state
     setUser(null);
+
+    // Remove user from sessionStorage
     sessionStorage.removeItem("user");
+
+    // Remove token from sessionStorage
+    sessionStorage.removeItem("token");
   };
 
   return (

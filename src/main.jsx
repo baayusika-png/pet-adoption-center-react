@@ -18,6 +18,9 @@ import "./css/trackApplication.css";
 import "./css/terms.css";
 import "./css/profile.css";
 import "./css/petDetail.css";
+import "./css/petFood.css";
+import "./css/foodDetail.css"
+import "./css/adoptionHistory.css"
 import { AuthProvider } from "./context/authContext.jsx";
 import { WishlistProvider } from "./context/wishlistContext.jsx";
 

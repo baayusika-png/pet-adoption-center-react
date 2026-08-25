@@ -5,14 +5,14 @@ import { getCategories } from "../services/categoryService";
 
 function Pets() {
   const [pets, setPets] = useState([]);
-  const [petCategories, setPetCategories] = useState([]);
-  const [search, setSearch] = useState("");
-  const [breed, setBreed] = useState("");
-  const [selectedPet, setSelectedPet] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [petCategories, setPetCategories] = useState([]); //Stores list of pet categories used for filter dropdown
+  const [search, setSearch] = useState(""); //Stores search input value used to filter pets by breed
+  const [selectedPet, setSelectedPet] = useState(null); //Store currently selected pet
+  const [breed, setBreed] = useState(""); //Stores selected cateory/breed filter value
+  const [loading, setLoading] = useState(true); //Loading state while feteching pets
 
   useEffect(() => {
-    getPets()
+    getPets() //Fetch all pets from API
       .then((data) => {
         setPets(data);
         setLoading(false);
@@ -22,7 +22,7 @@ function Pets() {
         setLoading(false);
       });
 
-    getCategories()
+    getCategories() //Fetch pet categories from API
       .then((data) => {
         setPetCategories(data);
       })
@@ -31,9 +31,12 @@ function Pets() {
       });
   }, []);
 
+  //Filter pets based on search text (Breed) and selected category
   const filteredPets = pets.filter((pet) => {
+    //Check if pet's breed matched the search input
     const matchSearch = pet.breed.toLowerCase().includes(search.toLowerCase());
 
+    //Check if pet's category matches selected filter
     const matchCategory = breed === "" || pet.category.name === breed;
 
     return matchSearch && matchCategory;

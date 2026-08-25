@@ -1,14 +1,44 @@
-import { Link } from "react-router-dom";
-import { FaArrowLeft } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { FaArrowLeft, FaClock } from "react-icons/fa";
+import { getAdoptionHistory } from "../services/adoptService";
 
-function History() {
+function TrackApplication() {
+  const [pendingAdoptions, setPendingAdoptions] = useState([]); //Stores pending adoption request
+  const [loading, setLoading] = useState(true); //Tracks whether the data is being fetched from APi
+  const [error, setError] = useState(""); //Stores error message if API call fails
+
+  useEffect(() => {
+    const fetchPendingAdoptions = async () => {
+      try {
+        const result = await getAdoptionHistory(); //Fetch adoption request from API
+
+        console.log("Adoption Requests:", result);
+        if (result.status === "success") {
+          //Only shows pending adoption
+          const pending = result.data.filter(
+            (adoption) => adoption.status === "Pending",
+          );
+
+          setPendingAdoptions(pending);
+        } else {
+          setError(result.message || "Failed to fetch adoption requests");
+        }
+      } catch (error) {
+        console.error("Pending adoption error:", error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPendingAdoptions();
+  }, []);
+
   return (
     <div className="history-page">
-      <div className="back-btn">
-        <Link to="/adopt">
-          <FaArrowLeft />
-        </Link>
-      </div>
+      <button className="back-btn" onClick={() => window.history.back()}>
+        <FaArrowLeft />
+      </button>
 
       <div className="history-header">
         <h1>Track Application</h1>
@@ -21,7 +51,39 @@ function History() {
       <div className="history-content">
         <div className="application-section">
           <h2>Your Adoption Application</h2>
+
+          {loading && <p>Loading your applications...</p>}
+          {!loading && error && <p className="history-error">{error}</p>}
+          {!loading && !error && pendingAdoptions.length === 0 && (
+            <p className="no-adoption">
+              You don't have any pending adoption applications right now.
+            </p>
+          )}
+
+          {!loading &&
+            !error &&
+            pendingAdoptions.map((adoption) => (
+              <div className="pending-pet-card" key={adoption.id}>
+                <div className="pending-pet-image">
+                  <img src={adoption.pet.image} alt={adoption.pet.pet_name} />
+                </div>
+
+                <div className="pending-pet-info">
+                  <h3>{adoption.pet.pet_name}</h3>
+                  <p>
+                    {adoption.pet.breed} • {adoption.pet.age} •{" "}
+                    {adoption.pet.gender}
+                  </p>
+                  <p className="pending-reason-text">{adoption.reason}</p>
+                </div>
+
+                <span className="pending-status-badge">
+                  <FaClock /> {adoption.status}
+                </span>
+              </div>
+            ))}
         </div>
+
         <div className="next-section">
           <h3>What Happens Next?</h3>
 
@@ -89,4 +151,4 @@ function History() {
   );
 }
 
-export default History;
+export default TrackApplication;

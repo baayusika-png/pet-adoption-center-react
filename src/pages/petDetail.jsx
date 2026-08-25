@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaArrowLeft, FaRegHeart } from "react-icons/fa";
+import { FaArrowLeft,FaHeart, FaRegHeart } from "react-icons/fa";
 import { getPetById } from "../services/petsService";
 import { FaBirthdayCake, FaVenusMars, FaPaw } from "react-icons/fa";
 import { useAuth } from "../context/authContext";
+import { useWishlist } from "../context/wishlistContext";
 
 function PetDetails() {
   const { id } = useParams(); //Get the pet ID from the URL
   const navigate = useNavigate();
   const { user } = useAuth(); //Get the logged in user from AuthContext
+  const { isInWishlist, toggleWishlist } = useWishlist(); //get wishlist from WishlistContext
 
   const [pet, setPet] = useState(null); //Stores the pet details
   const [loading, setLoading] = useState(true); //Track whether the pet data is still loading
@@ -39,9 +41,17 @@ function PetDetails() {
     }
   };
 
+  //Handle clicking the heart button
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation();
+    toggleWishlist(pet);
+  };
+
   if (loading) return <p className="loading-text">Loading pet details...</p>; //Displays loading message while fetching pet data
   if (error) return <p className="error-text">{error}</p>; //Display error message if fetching fails
   if (!pet) return <p className="error-text">No pets found...</p>; //Display message if no pet data is available
+
+  const liked = isInWishlist(pet.id); //Check whether this pet is already in the wishlist
 
   return (
     <div className="pet-details-page">
@@ -69,7 +79,13 @@ function PetDetails() {
                 <p>{pet.breed}</p>
               </div>
 
-              <FaRegHeart className="pet-heart" />
+              <button className="pet-heart-btn" onClick={handleFavoriteClick}>
+                {liked ? (
+                  <FaHeart className="pet-heart liked" />
+                ) : (
+                  <FaRegHeart className="pet-heart" />
+                )}
+              </button>
             </div>
 
             <div className="pet-tags">

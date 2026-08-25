@@ -14,6 +14,8 @@ import Terms from "./pages/termsCondition";
 import Wishlist from "./pages/wishlist";
 import PetDetail from "./pages/petDetail";
 import PetFood from "./pages/petFood";
+import PetFoodDetail from "./pages/petFoodDetail";
+import AdoptionHistory from "./pages/adoptionHistory";
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/pet/:id" element={<PetDetail />} />
         <Route path="/petFood" element={<PetFood />} />
+        <Route path="/food/:id" element={<PetFoodDetail />} />
+        <Route path="/adoptionHistory" element={<AdoptionHistory />} />
       </Routes>
 
       <Footer />

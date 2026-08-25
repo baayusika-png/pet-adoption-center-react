@@ -46,7 +46,7 @@ function Navbar() {
 
           <li>
             <NavLink to="/petFood" onClick={() => setIsOpen(false)}>
-              Pet Care
+              Pet Food
             </NavLink>
           </li>
         </ul>

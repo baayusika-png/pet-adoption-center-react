@@ -96,10 +96,22 @@
   color: #777;
 }
 
+.pet-heart-btn {
+  border: none;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 .pet-heart {
   font-size: 20px;
-  color: #777;
-  cursor: pointer;
+  color: #000;
+}
+
+.pet-heart.liked {
+  color: red;
 }
 
 .pet-tags {

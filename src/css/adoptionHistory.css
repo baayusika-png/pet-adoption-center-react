@@ -1,0 +1,154 @@
+.adoption-history-page {
+  min-height: 100vh;
+  background-color: #fdf9f4;
+  padding: 25px 5%;
+  color: #3f2717;
+}
+
+.history-back-btn {
+  border: none;
+  background: transparent;
+  color: #98520b;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.history-back-btn:hover {
+  color: #713b08;
+}
+
+.history-header {
+  text-align: center;
+  margin-top: -8px;
+}
+
+.history-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #98520b;
+}
+
+.history-header p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #665d56;
+  line-height: 1.5;
+}
+
+.history-section-title {
+  width: 325px;
+  margin-top: 38px;
+  margin-left: 4%;
+  border-bottom: 1px solid #999;
+}
+
+.history-section-title h2 {
+  margin: 0 0 8px;
+  color: #a15e24;
+  font-size: 21px;
+  font-weight: 600;
+}
+
+.history-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-top: 30px;
+  margin-left: 2%;
+  justify-content: flex-start;
+}
+
+.history-pet-card {
+  width: 270px;
+  background-color: #ffffff;
+  border-radius: 13px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.history-pet-image {
+  width: 100%;
+  height: 175px;
+  background-color: #d5d5d5;
+}
+
+.history-pet-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.history-pet-info {
+  padding: 14px 17px;
+  min-height: 75px;
+}
+
+.history-pet-info h3 {
+  margin: 0 0 8px;
+  color: #222;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.history-pet-info p {
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+}
+
+.browse-more-card {
+  width: 200px;
+  min-height: 250px;
+  background-color: #fff1dc;
+  border-radius: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px 15px;
+}
+
+.browse-heart {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #f5dfc2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a7682d;
+  font-size: 21px;
+  margin-bottom: 14px;
+}
+
+.browse-more-card h3 {
+  margin: 0;
+  color: #98520b;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.browse-more-card p {
+  margin: 9px 0 16px;
+  color: #70675f;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.browse-pets-btn {
+  border: none;
+  background-color: #a45b18;
+  color: white;
+  padding: 9px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.browse-pets-btn:hover {
+  background-color: #7f4210;
+}

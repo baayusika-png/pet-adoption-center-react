@@ -1,8 +1,12 @@
 const API_URL = import.meta.env.VITE_ADOPTION_REQUEST_URL;
 
+const ADOPTION_HISTORY = import.meta.env.VITE_ADOPTION_HISTORY;
+
+//Submit new adoption request
 export async function adoptionRequest(adoptionData) {
   const token = localStorage.getItem("token");
 
+  //Use form data
   const formData = new FormData();
 
   formData.append("pet_id", adoptionData.pet_id);
@@ -24,5 +28,29 @@ export async function adoptionRequest(adoptionData) {
 
   console.log("Adoption response:", result);
 
+  return result;
+}
+
+//Fetch adoption history/request for user
+export async function getAdoptionHistory() {
+  const token = sessionStorage.getItem("token");
+
+  //No token means user is not logged in
+  if (!token) {
+    throw new Error("No token found");
+  }
+
+  const response = await fetch(ADOPTION_HISTORY, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failde to fetch adoption history");
+  }
+
+  const result = await response.json();
   return result;
 }
