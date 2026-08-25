@@ -13,10 +13,39 @@ import {
 
 import { useAuth } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
+import { getProfile } from "../services/profileService";
+import { useEffect, useState } from "react";
 
 function Profile() {
   const { user, logout } = useAuth(); //Get logged-in user info and logout function from authContext
   const navigate = useNavigate();
+  const [avatarError, setAvatarError] = useState(false);
+
+  const [profile, setProfile] = useState(null); //Store fetched profile data
+  const [loading, setLoading] = useState(true); //Loading state while fetching profile
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const result = await getProfile(); //Fetch profile from API
+        console.log("Profile:", result);
+
+        if (result.status === "success") {
+          setProfile(result.data);
+        } else {
+          setError(result.message || "Failed to fetch profile");
+        }
+      } catch (error) {
+        console.error("Profile fetch error:", error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   //Handle user logout with confirmation
   const handleLogout = async () => {
@@ -41,35 +70,53 @@ function Profile() {
           <h2>My Profile</h2>
         </div>
 
-        <div className="user-card">
-          <div className="profile-avatar">
-            {user?.name?.charAt(0).toUpperCase()}
-          </div>
+        {loading && <p>Loading profile...</p>}
+        {!loading && error && <p className="profile-error">{error}</p>}
+        {!loading && !error && profile && (
+          <div className="user-card">
+            <div className="profile-avatar">
+              {profile?.profile_pic && !avatarError ? (
+                <img
+                  src={profile.profile_pic}
+                  alt={profile.name}
+                  onError={() => setAvatarError(true)}
+                />
+              ) : (
+                profile?.name?.charAt(0).toUpperCase()
+              )}
+            </div>
 
-          <div className="user-info">
-            <p>
-              <strong>{user?.name}</strong>
-            </p>
-            <p>
-              <strong>{user?.email}</strong>
-            </p>
-            <p>
-              <strong>{user?.phone}</strong>
-            </p>
-          </div>
+            <div className="user-info">
+              <p>
+                <strong>{profile?.name}</strong>
+              </p>
+              <p>
+                <strong>{profile?.email}</strong>
+              </p>
+              <p>
+                <strong>{profile?.phone}</strong>
+              </p>
+            </div>
 
-          <div className="profile-actions">
-            <button className="edit-btn">
-              <FaEdit />
-              Edit Profile
-            </button>
+            <div className="profile-actions">
+              <button
+                className="edit-btn"
+                onClick={() => navigate("/editProfile")}
+              >
+                <FaEdit />
+                Edit Profile
+              </button>
 
-            <button className="password-btn">
-              <FaKey />
-              Change Password
-            </button>
+              <button
+                className="password-btn"
+                onClick={() => navigate("/changePassword")}
+              >
+                <FaKey />
+                Change Password
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="profile-options">
           <div className="profile-option">

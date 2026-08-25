@@ -107,7 +107,12 @@ function Login() {
               <div className="password-top">
                 <label>Password</label>
 
-                <span>Forgot password?</span>
+                <span
+                  onClick={() => navigate("/forgetPassword")}
+                  style={{ cursor: "pointer" }}
+                >
+                  Forgot password?
+                </span>
               </div>
 
               <div className="login-input-box">

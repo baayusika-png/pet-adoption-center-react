@@ -8,6 +8,7 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [avatarError, setAvatarError] = useState(false);
 
   return (
     <header>
@@ -58,7 +59,15 @@ function Navbar() {
         <div className="nav-buttons">
           {user ? (
             <div className="user-avatar" onClick={() => navigate("/profile")}>
-              {user.name.charAt(0).toUpperCase()}
+              {user?.profile_pic && !avatarError ? (
+                <img
+                  src={user.profile_pic}
+                  alt={user.name}
+                  onError={() => setAvatarError(true)}
+                />
+              ) : (
+                user?.name?.charAt(0).toUpperCase()
+              )}
             </div>
           ) : (
             <>

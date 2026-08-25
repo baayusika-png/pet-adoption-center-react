@@ -1,5 +1,6 @@
 import Navbar from "./components/navbar";
 import { Routes, Route } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import Home from "./pages/home";
 import Pets from "./pages/pets";
@@ -14,14 +15,18 @@ import Terms from "./pages/termsCondition";
 import Wishlist from "./pages/wishlist";
 import PetDetail from "./pages/petDetail";
 import PetFood from "./pages/petFood";
+import ChangePassword from "./pages/changePassword";
+import EditProfile from "./pages/editProfile";
+import ForgetPassword from "./pages/forgetPassword";
 import PetFoodDetail from "./pages/petFoodDetail";
 import AdoptionHistory from "./pages/adoptionHistory";
 
 function App() {
+  const location = useLocation();
+  const hideLayout = ["/forgetPassword"].includes(location.pathname);
   return (
     <>
-      <Navbar />
-
+      {!hideLayout && <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pets" element={<Pets />} />
@@ -35,11 +40,14 @@ function App() {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/pet/:id" element={<PetDetail />} />
         <Route path="/petFood" element={<PetFood />} />
+        <Route path="/changePassword" element={<ChangePassword />} />
         <Route path="/food/:id" element={<PetFoodDetail />} />
         <Route path="/adoptionHistory" element={<AdoptionHistory />} />
+        <Route path="/editProfile" element={<EditProfile />} />
+        <Route path="/forgetPassword" element={<ForgetPassword />} />
       </Routes>
 
-      <Footer />
+      {!hideLayout && <Footer />}
     </>
   );
 }
