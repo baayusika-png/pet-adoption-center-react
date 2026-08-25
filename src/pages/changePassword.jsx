@@ -50,7 +50,6 @@ function ChangePassword() {
   return (
     <div className="change-password-page">
 
-      {/* Back Button */}
       <button
         className="change-password-back"
         onClick={() => navigate(-1)}
@@ -58,7 +57,6 @@ function ChangePassword() {
         <FaArrowLeft />
       </button>
 
-      {/* Password Card */}
       <div className="change-password-card">
 
         <h1>Change Password</h1>
@@ -68,33 +66,6 @@ function ChangePassword() {
         </p>
 
         <form onSubmit={handleSubmit}>
-
-          {/* Current Password */}
-          <div className="password-field">
-            <label>Current Password</label>
-
-            <div className="password-input-wrapper">
-              <FaKey className="password-left-icon" />
-
-              <input
-                type={showCurrent ? "text" : "password"}
-                name="currentPassword"
-                placeholder="Enter your current password"
-                value={formData.currentPassword}
-                onChange={handleChange}
-              />
-
-              <button
-                type="button"
-                className="password-eye"
-                onClick={() => setShowCurrent(!showCurrent)}
-              >
-                {showCurrent ? <FaEye /> : <FaEyeSlash />}
-              </button>
-            </div>
-          </div>
-
-          {/* New Password */}
           <div className="password-field">
             <label>New Password</label>
 
@@ -121,7 +92,6 @@ function ChangePassword() {
             <small>Must be at least 8 characters long.</small>
           </div>
 
-          {/* Confirm Password */}
           <div className="password-field">
             <label>Confirm New Password</label>
 
@@ -146,7 +116,6 @@ function ChangePassword() {
             </div>
           </div>
 
-          {/* Buttons */}
           <div className="change-password-buttons">
 
             <button

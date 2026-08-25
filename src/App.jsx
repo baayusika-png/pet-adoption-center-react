@@ -20,6 +20,7 @@ import EditProfile from "./pages/editProfile";
 import ForgetPassword from "./pages/forgetPassword";
 import PetFoodDetail from "./pages/petFoodDetail";
 import AdoptionHistory from "./pages/adoptionHistory";
+import VerifyOTP from "./pages/verifyOTP";
 
 function App() {
   const location = useLocation(); //Get current route path
@@ -46,6 +47,7 @@ function App() {
         <Route path="/adoptionHistory" element={<AdoptionHistory />} />
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/forgetPassword" element={<ForgetPassword />} />
+        <Route path="/verify-otp" element={<VerifyOTP />} />
       </Routes>
       {!hideLayout && <Footer />}
       {/*Shows Footer on all pages except the ones in hideLayout*/}
