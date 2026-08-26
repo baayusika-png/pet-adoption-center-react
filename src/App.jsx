@@ -21,10 +21,16 @@ import ForgetPassword from "./pages/forgetPassword";
 import PetFoodDetail from "./pages/petFoodDetail";
 import AdoptionHistory from "./pages/adoptionHistory";
 import VerifyOTP from "./pages/verifyOTP";
+import ResetPassword from "./pages/resetPassword";
 
 function App() {
   const location = useLocation(); //Get current route path
-  const hideLayout = ["/forgetPassword"].includes(location.pathname); //Pages where component should be hidden
+  const hideLayout = [
+    "/forgetPassword",
+    "/resetPassword",
+    "/changePassword",
+  ].includes(location.pathname); //Pages where component should be hidden
+  
   return (
     <>
       {!hideLayout && <Navbar />}
@@ -48,6 +54,7 @@ function App() {
         <Route path="/editProfile" element={<EditProfile />} />
         <Route path="/forgetPassword" element={<ForgetPassword />} />
         <Route path="/verify-otp" element={<VerifyOTP />} />
+        <Route path="/resetPassword" element={<ResetPassword />} />
       </Routes>
       {!hideLayout && <Footer />}
       {/*Shows Footer on all pages except the ones in hideLayout*/}

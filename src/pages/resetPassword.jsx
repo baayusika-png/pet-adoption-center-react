@@ -1,21 +1,23 @@
 import { useState } from "react";
-import { FaArrowLeft, FaKey, FaEyeSlash, FaLock, FaEye } from "react-icons/fa";
+import { FaArrowLeft, FaEyeSlash, FaLock, FaEye } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { resetPassword } from "../services/passwordService";
 
-
-function ChangePassword() {
+function ResetPassword() {
   const navigate = useNavigate();
 
-  const [showCurrent, setShowCurrent] = useState(false);
-  const [showNew, setShowNew] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
+  const [showNew, setShowNew] = useState(false); //Control whether new password is visible 
+  const [showConfirm, setShowConfirm] = useState(false); //Control whether confirm password is visible
+  const [loading, setLoading] = useState(false); //Track the loading state while API request is running
 
+  //Store the password in form data
   const [formData, setFormData] = useState({
-    currentPassword: "",
+    customerId: "",
     newPassword: "",
     confirmPassword: "",
   });
 
+  //Handle changes in password input fields
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -23,62 +25,82 @@ function ChangePassword() {
     });
   };
 
-  const handleSubmit = (e) => {
+  //Handle reset password form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.newPassword !== formData.confirmPassword) {
-      alert("New password and confirm password do not match.");
-      return;
-    }
-
+    //Check whether new password has atleast 8 character
     if (formData.newPassword.length < 8) {
       alert("Password must be at least 8 characters long.");
       return;
     }
 
-    console.log("Password data:", formData);
+    //Check if both password match
+    if (formData.newPassword !== formData.confirmPassword) {
+      alert("New password and confirm password do not match.");
+      return;
+    }
 
-    // API call will go here
+    //Get customer Id after sucessful OTP verification
+    const customerId = sessionStorage.getItem("customerId");
+
+    console.log("Customer ID:", customerId);
+
+    //Stops if customer Id is not available
+    if (!customerId) {
+      alert("Customer ID not found. Please verify OTP again.");
+      navigate("/forgetPassword");
+      return;
+    }
+
+    setLoading(true);//Start loading state while calling the API 
+
+    try {
+    //Send customer Id and new password details to the reset password API
+      const result = await resetPassword(
+        customerId,
+        formData.newPassword,
+        formData.confirmPassword,
+      );
+
+      console.log("Reset Password Result:", result);
+
+      //Check whether the password was sucessfully reset
+      if (result.status === "success") {
+        alert("Password reset successfully.");
+
+        //Remove customer ID after sucessful password reset
+        sessionStorage.removeItem("customerId");
+
+        navigate("/login");
+      } else {
+        alert(result.message || "Failed to reset password.");
+      }
+    } catch (error) {
+      console.error("Reset password error:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="change-password-page">
-      <button className="change-password-back" onClick={() => navigate(-1)}>
+      <button
+        className="change-password-back"
+        onClick={() => window.history.back()}
+      >
         <FaArrowLeft />
       </button>
 
       <div className="change-password-card">
-        <h1>Change Password</h1>
+        <h1>Reset Password</h1>
 
         <p className="change-password-subtitle">
           Ensure your account stays secure by using a strong password.
         </p>
 
         <form onSubmit={handleSubmit}>
-          <div className="password-field">
-            <label>Current Password</label>
-
-            <div className="password-input-wrapper">
-              <FaKey className="password-left-icon" />
-
-              <input
-                type={showCurrent ? "text" : "password"}
-                name="currentPassword"
-                placeholder="Enter your current password"
-                value={formData.currentPassword}
-                onChange={handleChange}
-              />
-
-              <button
-                type="button"
-                className="password-eye"
-                onClick={() => setShowCurrent(!showCurrent)}
-              >
-                {showCurrent ? <FaEye /> : <FaEyeSlash />}
-              </button>
-            </div>
-          </div>
-
           <div className="password-field">
             <label>New Password</label>
 
@@ -133,13 +155,17 @@ function ChangePassword() {
             <button
               type="button"
               className="cancel-password-btn"
-              onClick={() => navigate(-1)}
+              onClick={() => window.history.back()}
             >
               Cancel
             </button>
 
-            <button type="submit" className="update-password-btn">
-              Update Password
+            <button
+              type="submit"
+              className="update-password-btn"
+              disabled={loading}
+            >
+              {loading ? "Updating..." : "Update Password"}
             </button>
           </div>
         </form>
@@ -148,4 +174,4 @@ function ChangePassword() {
   );
 }
 
-export default ChangePassword;
+export default ResetPassword;

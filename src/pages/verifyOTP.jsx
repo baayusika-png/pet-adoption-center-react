@@ -5,42 +5,44 @@ import { verifyOtp } from "../services/passwordService";
 
 function VerifyOTP() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const email = location.state?.email || "";
+  const location = useLocation(); //Used to access the current route's state
+  const email = location.state?.email || ""; //Get email from fogetPassword if no email then empty string
+  const [otp, setOtp] = useState(""); //Stores the OTP entered by user
 
-  const [otp, setOtp] = useState("");
-
+  //Handle OTP form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    //Check if OTP field is empty
     if (!otp) {
       alert("Please enter the OTP.");
       return;
     }
 
+    //OTP must contain excatly 6 digits
     if (otp.length !== 6) {
       alert("OTP must be 6 digits.");
       return;
     }
-
     try {
+      //Send email and OTP to backend for verification
       const result = await verifyOtp(email, otp);
 
-      console.log("Verify Result:", result);
+      console.log("Verify Result:", JSON.stringify(result, null, 2));
 
+      //Check whether OTP verification was sucessfull
       if (result.status === "success") {
         alert("OTP verified successfully!");
 
-        navigate("/changePassword", {
-          state: {
-            email: email,
-            customerId: result.customer_id,
-          },
-        });
+        //Store the customer ID in session storage
+        sessionStorage.setItem("customerId", result.customer_id);
+
+        navigate("/resetPassword");
       } else {
         alert(result.message);
       }
     } catch (error) {
+      console.error("Verify OTP Error:", error);
       alert("Something went wrong. Please try again.");
     }
   };
