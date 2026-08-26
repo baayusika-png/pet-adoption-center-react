@@ -165,7 +165,10 @@ function Profile() {
 
             <p>My Order</p>
 
-            <FaArrowRight className="option-arrow" />
+            <FaArrowRight
+              className="option-arrow"
+              onClick={() => navigate("/order")}
+            />
           </div>
         </div>
 

@@ -37,13 +37,11 @@ function PetFoodDetail() {
 
   return (
     <div className="food-detail-page">
-      {/* Back Button */}
       <button className="food-back-btn" onClick={() => navigate(-1)}>
         <FaArrowLeft />
       </button>
 
       <div className="food-detail-container">
-        {/* Left - Image */}
         <div className="food-detail-image">
           {food.image ? (
             <img src={food.image} alt={food.name} />
@@ -52,41 +50,34 @@ function PetFoodDetail() {
           )}
         </div>
 
-        {/* Right - Details */}
         <div className="food-detail-content">
           <h1>{food.name}</h1>
 
-          {/* Rating */}
           <div className="detail-rating">
             <FaStar className="rating-star" />
             <span>{food.rating || 4.8}</span>
           </div>
 
-          {/* Price */}
           <h2 className="detail-price">${food.price}</h2>
 
-          {/* Description */}
           <p className="detail-description">
             Provide your furry companion with the balanced nutrition they
             deserve. {food.name} is crafted with real ingredients and essential
             nutrients to support a healthy, happy, and active pet.
           </p>
 
-          {/* Suitable For */}
           <div className="suitable-section">
             <h4>Suitable For</h4>
 
             <div className="suitable-tags">
-              <span>🐶 Adult Dogs</span>
-              <span>🐾 All Breeds</span>
+              <span>Adult Dogs</span>
+              <span>All Breeds</span>
             </div>
           </div>
 
           <div className="detail-divider"></div>
 
-          {/* Bottom Actions */}
           <div className="detail-actions">
-            {/* Quantity */}
             <div className="quantity-box">
               <button onClick={decreaseQuantity}>
                 <FaMinus />
@@ -99,7 +90,6 @@ function PetFoodDetail() {
               </button>
             </div>
 
-            {/* Add Cart */}
             <button className="add-cart-btn">
               <FaCartShopping />
               Add to Cart

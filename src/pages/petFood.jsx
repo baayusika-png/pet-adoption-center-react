@@ -79,6 +79,11 @@ function Food() {
           </p>
         </div>
 
+        <button className="top-cart-btn" onClick={() => navigate("/cart")}>
+          <FaCartShopping />
+          <span>Cart</span>
+        </button>
+
         <div className="food-categories">
           {categories.map((category) => (
             <button

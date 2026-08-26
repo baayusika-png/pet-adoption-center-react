@@ -22,6 +22,10 @@ import PetFoodDetail from "./pages/petFoodDetail";
 import AdoptionHistory from "./pages/adoptionHistory";
 import VerifyOTP from "./pages/verifyOTP";
 import ResetPassword from "./pages/resetPassword";
+import ChatBot from "./components/chatBot";
+import Cart from "./pages/cart";
+import Checkout from "./pages/checkout";
+import Orders from "./pages/order";
 
 function App() {
   const location = useLocation(); //Get current route path
@@ -29,8 +33,24 @@ function App() {
     "/forgetPassword",
     "/resetPassword",
     "/changePassword",
+    "/editProfile",
   ].includes(location.pathname); //Pages where component should be hidden
-  
+
+  const hideChat = [
+    "/login",
+    "/register",
+    "/termsCondition",
+    "/profile",
+    "/editProfile",
+    "/forgetPassword",
+    "/resetPassword",
+    "/changePassword",
+    "/wishlist",
+    "/trackApplication",
+    "/adoptionHistory",
+    "/order",
+  ].includes(location.pathname);
+
   return (
     <>
       {!hideLayout && <Navbar />}
@@ -55,7 +75,12 @@ function App() {
         <Route path="/forgetPassword" element={<ForgetPassword />} />
         <Route path="/verify-otp" element={<VerifyOTP />} />
         <Route path="/resetPassword" element={<ResetPassword />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order" element={<Orders />} />
       </Routes>
+
+      {!hideChat && <ChatBot />}
       {!hideLayout && <Footer />}
       {/*Shows Footer on all pages except the ones in hideLayout*/}
     </>
