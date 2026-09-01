@@ -73,17 +73,6 @@
   margin-bottom: 18px;
 }
 
-.rating-star {
-  color: #99500d;
-  font-size: 13px;
-}
-
-.detail-rating span {
-  color: #99500d;
-  font-size: 13px;
-  font-weight: 600;
-}
-
 .detail-price {
   margin: 0 0 20px;
   color: #99500d;
@@ -221,4 +210,25 @@
   font-size: 14px;
   cursor: pointer;
 }
+.detail-rating .available-badge {
+  margin-left: 0px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #2e7d32;
+  background: #e6f4ea;
+}
 
+.detail-rating .available-badge.inactive {
+  color: #6b6b6b;
+  background: #ececec;
+}
+
+.detail-rating .available-badge.out_of_stock {
+  color: #c62828;
+  background: #fdecea;
+}

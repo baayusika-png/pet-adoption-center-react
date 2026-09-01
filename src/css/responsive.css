@@ -827,55 +827,6 @@
 }
 
 /* ==========================
-   Pet Food Responsive Styles
-========================== */
-
-/* Tablet */
-@media (max-width: 1000px) {
-  .food-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-  }
-}
-
-/* Mobile */
-@media (max-width: 600px) {
-  .food-page {
-    padding: 55px 5%;
-  }
-
-  .food-header h1 {
-    font-size: 29px;
-  }
-
-  .food-header p {
-    font-size: 14px;
-  }
-
-  .food-header p br {
-    display: none;
-  }
-
-  .food-categories {
-    margin-bottom: 35px;
-    gap: 8px;
-  }
-
-  .category-btn {
-    padding: 9px 15px;
-    font-size: 13px;
-  }
-
-  .food-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .food-image {
-    height: 210px;
-  }
-}
-
-/* ==========================
    Food Detail Responsive Styles
 ========================== */
 
@@ -964,7 +915,6 @@
     min-width: 0;
   }
 }
-
 
 /* ==========================
    History Responsive Styles

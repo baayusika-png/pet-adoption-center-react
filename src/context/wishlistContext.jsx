@@ -1,45 +1,92 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-const WishlistContext = createContext(); //Creates a context for managing wishlist data
+import {
+  getWishlist,
+  addToWishlist,
+  removeFromWishlist,
+} from "../services/wishlistService";
 
-//Provider components
+import { useAuth } from "./authContext";
+
+const WishlistContext = createContext();
+
 export function WishlistProvider({ children }) {
-  const [wishlist, setWishlist] = useState(() => {
-    //Stores wishlist items in state
-    const saved = localStorage.getItem("wishlist"); //Load saved wishlist from localStorage
-    return saved ? JSON.parse(saved) : []; //Return saved wishlish otherwise start with an empty array
-  });
+  const [wishlist, setWishlist] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  //Save wishlist to localStorage whenever list changers
+  const { user } = useAuth();
+  const token = sessionStorage.getItem("token");
+
   useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  }, [wishlist]);
+    const loadWishlist = async () => {
+      if (!user || !token) {
+        setWishlist([]);
+        return;
+      }
+
+      try {
+        setLoading(true);
+
+        const data = await getWishlist(token);
+
+        setWishlist(data);
+      } catch (error) {
+        setWishlist([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadWishlist();
+  }, [user, token]);
 
   const isInWishlist = (petId) => {
-    //Check whether pet already exist in wishlist
-    return wishlist.some((item) => item.id === petId);
+    return wishlist.some((item) => Number(item.id) === Number(petId));
   };
 
-  //Add or remove pet from wishlist
-  const toggleWishlist = (pet) => {
-    setWishlist((prev) => {
-      //Check if selected pet is already in the wishlist
-      const exists = prev.some((item) => item.id === pet.id);
+  const toggleWishlist = async (pet) => {
+    if (!user || !token) {
+      alert("Please login first.");
+      return;
+    }
 
-      //If pet exist then remove
-      if (exists) {
-        return prev.filter((item) => item.id !== pet.id);
+    const liked = isInWishlist(pet.id);
+
+    try {
+      if (liked) {
+        const wishlistItem = wishlist.find(
+          (item) => Number(item.id) === Number(pet.id),
+        );
+
+        if (!wishlistItem) {
+          return;
+        }
+
+        await removeFromWishlist(wishlistItem.wishlist_id, token);
+
+        setWishlist((previousWishlist) =>
+          previousWishlist.filter((item) => Number(item.id) !== Number(pet.id)),
+        );
       } else {
-        //If it doesn't then add
-        return [...prev, pet];
+        await addToWishlist(pet.id, token);
+
+        const updatedWishlist = await getWishlist(token);
+
+        setWishlist(updatedWishlist);
       }
-    });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
-  //Provide wishlist data and functions to child components
   return (
     <WishlistContext.Provider
-      value={{ wishlist, isInWishlist, toggleWishlist }}
+      value={{
+        wishlist,
+        loading,
+        isInWishlist,
+        toggleWishlist,
+      }}
     >
       {children}
     </WishlistContext.Provider>

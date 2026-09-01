@@ -1,6 +1,6 @@
 const API_URL = import.meta.env.VITE_PETS_URL;
 
-//Function to fetct pet data from the APi
+//Function to fetct pet data from the API
 export async function getPets() {
   //Send GET request to the API
   const response = await fetch(API_URL);
@@ -16,7 +16,7 @@ export async function getPets() {
   return result.data;
 }
 
-//Function to fetct pet data by id from the APi
+//Function to fetct pet data by id from the API
 export async function getPetById(id) {
   const response = await fetch(API_URL);
 

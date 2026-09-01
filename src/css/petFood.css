@@ -79,6 +79,9 @@
     transform 0.25s ease,
     box-shadow 0.25s ease;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .food-card:hover {
@@ -108,6 +111,9 @@
 
 .food-content {
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .food-content h3 {
@@ -120,7 +126,7 @@
 
 .food-description {
   margin: 0;
-  min-height: 60px;
+  flex: 1;
   color: #746b63;
   font-size: 13px;
   line-height: 1.6;
@@ -129,6 +135,7 @@
 .food-rating {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 6px;
   margin-top: 12px;
   padding-bottom: 12px;
@@ -145,7 +152,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 12px;
+  margin-top: auto;
+  padding-top: 12px;
 }
 
 .food-price {
@@ -166,6 +174,11 @@
   justify-content: center;
   cursor: pointer;
   transition: background-color 0.2s ease;
+}
+
+.cart-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .cart-btn:hover {
@@ -201,4 +214,74 @@
 .top-cart-btn:hover {
   background-color: #6f3b08;
   transform: translateY(-1px);
+}
+
+.food-rating .available-badge {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #2e7d32;
+  background: #d3ead9;
+}
+
+.food-rating .available-badge.inactive {
+  color: #5a5a5a;
+  background: #e2e2e2;
+}
+
+.food-rating .available-badge.out_of_stock {
+  color: #b31f3a;
+  background: #f7d8de;
+}
+
+/* =========================
+RESPONSIVE 
+========================= */
+
+@media (max-width: 1024px) {
+  .food-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 760px) {
+  .food-page {
+    padding: 60px 5%;
+  }
+
+  .food-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .food-image {
+    height: 150px;
+    padding: 12px;
+  }
+
+  .food-content {
+    padding: 15px;
+  }
+
+  .food-content h3 {
+    font-size: 16px;
+  }
+
+  .food-description {
+    font-size: 12px;
+  }
+
+  .food-price {
+    font-size: 16px;
+  }
+
+  .cart-btn {
+    width: 32px;
+    height: 32px;
+  }
 }

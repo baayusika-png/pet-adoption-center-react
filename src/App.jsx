@@ -1,12 +1,13 @@
-import Navbar from "./components/navbar";
 import { Routes, Route } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Footer from "./components/footer";
+import Navbar from "./components/navbar";
+
 
 import Home from "./pages/home";
 import Pets from "./pages/pets";
 import Adopt from "./pages/adopt";
 import Contact from "./pages/contact";
-import Footer from "./components/footer";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import TrackApplication from "./pages/trackApplication";
