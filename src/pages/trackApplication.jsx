@@ -16,7 +16,8 @@ function TrackApplication() {
         if (result.status === "success") {
           //Only shows pending adoption
           const pending = result.data.filter(
-            (adoption) => adoption.status === "Pending",
+            (adoption) =>
+              adoption.status === "Pending" || adoption.status === "Rejected",
           );
 
           setPendingAdoptions(pending);
@@ -77,7 +78,15 @@ function TrackApplication() {
                   <p className="pending-reason-text">{adoption.reason}</p>
                 </div>
 
-                <span className="pending-status-badge">
+                <span
+                  className={`pending-status-badge ${
+                    adoption.status === "Rejected"
+                      ? "rejected-badge"
+                      : adoption.status === "Pending"
+                        ? "approved-badge"
+                        : ""
+                  }`}
+                >
                   <FaClock /> {adoption.status}
                 </span>
               </div>

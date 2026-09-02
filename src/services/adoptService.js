@@ -4,7 +4,7 @@ const ADOPTION_HISTORY = import.meta.env.VITE_ADOPTION_HISTORY;
 
 //Submit new adoption request
 export async function adoptionRequest(adoptionData) {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   //Use form data
   const formData = new FormData();

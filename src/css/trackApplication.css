@@ -194,10 +194,202 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  background: #fbe6c4;
-  color: #b26a00;
   font-size: 13px;
   font-weight: 500;
   padding: 6px 12px;
   border-radius: 20px;
+}
+
+.rejected-badge {
+  background: #fde2e2;
+  color: #d32f2f;
+}
+
+.approved-badge {
+  background: #dff5e3;
+  color: #2e7d32;
+}
+/* =========================================
+   RESPONSIVE DESIGN 
+========================================= */
+/* Tablet */
+@media (max-width: 1024px) {
+  .history-page {
+    width: 92%;
+    padding: 45px 0;
+  }
+
+  .history-header {
+    margin-bottom: 45px;
+  }
+
+  .history-header h1 {
+    font-size: 40px;
+  }
+
+  .history-header p {
+    width: 80%;
+    font-size: 14px;
+  }
+
+  .history-content {
+    gap: 30px;
+  }
+
+  .application-section {
+    flex: 1.6;
+  }
+
+  .next-section {
+    flex: 1;
+    padding: 25px;
+  }
+
+  .application-section h2 {
+    font-size: 28px;
+  }
+
+  .history-card {
+    padding: 18px;
+  }
+
+  .history-card img {
+    width: 95px;
+    height: 95px;
+  }
+
+  .history-info {
+    margin-left: 18px;
+  }
+
+  .pending-pet-card {
+    padding: 18px;
+    gap: 14px;
+  }
+
+  .pending-pet-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .pending-status-badge {
+    top: 18px;
+    right: 18px;
+  }
+}
+
+/*Mobile*/
+@media (max-width: 764px) {
+  .history-page {
+    width: 90%;
+    padding: 35px 0;
+  }
+
+  .back-btn {
+    margin-bottom: 25px;
+  }
+
+  .back-btn a {
+    font-size: 16px;
+    gap: 8px;
+  }
+
+  .history-header {
+    margin-bottom: 35px;
+  }
+
+  .history-header h1 {
+    font-size: 34px;
+    margin-bottom: 10px;
+  }
+
+  .history-header p {
+    width: 100%;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .history-content {
+    flex-direction: column;
+    gap: 35px;
+  }
+
+  .application-section,
+  .next-section {
+    width: 100%;
+  }
+
+  .application-section h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+
+  .history-card {
+    padding: 16px;
+    margin-bottom: 18px;
+  }
+
+  .history-card img {
+    width: 85px;
+    height: 85px;
+  }
+
+  .history-info {
+    margin-left: 15px;
+  }
+
+  .history-info h3 {
+    font-size: 17px;
+  }
+
+  .details {
+    font-size: 13px;
+  }
+
+  .status {
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
+  .next-section {
+    padding: 25px;
+  }
+
+  .next-section h3 {
+    margin-bottom: 22px;
+  }
+
+  .step {
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .step p {
+    font-size: 13px;
+  }
+
+  .pending-pet-card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .pending-pet-image {
+    width: 75px;
+    height: 75px;
+  }
+
+  .pending-pet-info h3 {
+    font-size: 15px;
+  }
+
+  .pending-pet-info p {
+    font-size: 13px;
+  }
+
+  .pending-status-badge {
+    top: 16px;
+    right: 16px;
+    font-size: 12px;
+    padding: 5px 10px;
+  }
 }

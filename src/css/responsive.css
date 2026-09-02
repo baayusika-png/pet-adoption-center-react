@@ -921,7 +921,7 @@
 ========================== */
 /* Tablet */
 
-@media (max-width: 900px) {
+@media (max-width: 900px) { 
   .history-content {
     flex-wrap: wrap;
     margin-left: 0;
