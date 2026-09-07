@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { FaArrowLeft, FaMinus, FaPlus, FaCartShopping } from "react-icons/fa6";
-
-import { FaStar } from "react-icons/fa";
-
 import { getFoodById } from "../services/foodService";
+import { addToCart } from "../services/cartServices";
 
 function PetFoodDetail() {
   const navigate = useNavigate();
@@ -14,10 +12,6 @@ function PetFoodDetail() {
   const [food, setFood] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
-
-  // =====================================
-  // FETCH FOOD BY ID
-  // =====================================
 
   useEffect(() => {
     const fetchFood = async () => {
@@ -30,7 +24,7 @@ function PetFoodDetail() {
           setFood(result);
         }
       } catch (error) {
-        console.error("Food Detail API Error:", error);
+        return;
       } finally {
         setLoading(false);
       }
@@ -55,6 +49,28 @@ function PetFoodDetail() {
     });
   };
 
+  const handleAddToCart = async () => {
+    const token = sessionStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login first.");
+      navigate("/login");
+      return;
+    }
+
+    if (food.status !== "Available") {
+      return;
+    }
+
+    try {
+      const result = await addToCart(food.id, quantity, token);
+
+      alert(result.message || "Food added to cart successfully!");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   if (loading) {
     return (
       <div className="food-not-found">
@@ -62,6 +78,7 @@ function PetFoodDetail() {
       </div>
     );
   }
+
   if (!food) {
     return (
       <div className="food-not-found">
@@ -115,7 +132,6 @@ function PetFoodDetail() {
 
             <div className="suitable-tags">
               <span>{food.category?.name || "All Pets"}</span>
-
               <span>All Breeds</span>
             </div>
           </div>
@@ -138,20 +154,17 @@ function PetFoodDetail() {
             <button
               className="add-cart-btn"
               disabled={food.status !== "Available"}
-              onClick={() => {
-                if (food.status !== "Available") {
-                  return;
-                }
-
-                console.log("Add to cart:", {
-                  food,
-                  quantity,
-                });
-              }}
+              onClick={handleAddToCart}
             >
               <FaCartShopping />
-
               {food.status === "Available" ? "Add to Cart" : "Unavailable"}
+            </button>
+
+            <button
+              className="buy-now-btn"
+              disabled={food.status !== "Available"}
+            >
+              Buy Now
             </button>
           </div>
         </div>

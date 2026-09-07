@@ -50,8 +50,6 @@
   background-color: #d3d3d3;
 }
 
-/* ================= CONTENT ================= */
-
 .food-detail-content {
   padding-top: 5px;
   max-width: 520px;
@@ -123,6 +121,7 @@
 
 .detail-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 25px;
 }
@@ -134,6 +133,7 @@
   border: 1px solid #dfd2c0;
   border-radius: 6px;
   background-color: #ffffff;
+  order: 1;
 }
 
 .quantity-box button {
@@ -175,6 +175,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  order: 2;
 }
 
 .add-cart-btn:hover {
@@ -184,6 +185,38 @@
 
 .add-cart-btn svg {
   font-size: 14px;
+}
+
+.buy-now-btn {
+  height: 40px;
+  min-width: 160px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 6px;
+  background-color: #99500d;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  order: 3;
+  flex-basis: 56%;
+  margin-top: 15px;
+}
+
+.buy-now-btn:hover {
+  background-color: #713800;
+  transform: translateY(-1px);
+}
+
+.buy-now-btn:disabled {
+  background-color: #ccc;
+  color: #777;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .food-not-found {

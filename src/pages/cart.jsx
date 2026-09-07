@@ -1,31 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaArrowLeft, FaArrowRight, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import {
+  getCart,
+  deleteCartItem,
+  clearCartItems,
+} from "../services/cartServices";
 
 function Cart() {
   const navigate = useNavigate();
 
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "NutriPaws Premium Feast",
-      price: 4500,
-      quantity: 1,
-      image: "",
-    },
-    {
-      id: 2,
-      name: "NutriPaws Premium Feast",
-      price: 1200,
-      quantity: 2,
-      image: "",
-    },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const increaseQuantity = (id) => {
     setCartItems((items) =>
       items.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
+        item.cart_item_id === id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item,
       ),
     );
   };
@@ -33,15 +26,34 @@ function Cart() {
   const decreaseQuantity = (id) => {
     setCartItems((items) =>
       items.map((item) =>
-        item.id === id && item.quantity > 1
+        item.cart_item_id === id && item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
           : item,
       ),
     );
   };
 
-  const removeItem = (id) => {
-    setCartItems((items) => items.filter((item) => item.id !== id));
+  const removeItem = async (id) => {
+    const token = sessionStorage.getItem("token");
+
+    try {
+      await deleteCartItem(id, token);
+
+      setCartItems((items) => items.filter((item) => item.cart_item_id !== id));
+    } catch (error) {
+      return;
+    }
+  };
+
+  const clearCart = async () => {
+    const token = sessionStorage.getItem("token");
+
+    try {
+      await clearCartItems(token);
+      setCartItems([]);
+    } catch (error) {
+      return;
+    }
   };
 
   const subtotal = cartItems.reduce(
@@ -49,8 +61,38 @@ function Cart() {
     0,
   );
 
-  const deliveryFee = cartItems.length > 0 ? 250 : 0;
-  const total = subtotal + deliveryFee;
+  useEffect(() => {
+    const fetchCart = async () => {
+      const token = sessionStorage.getItem("token");
+
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      try {
+        const result = await getCart(token);
+
+        setCartItems(result.data?.items || []);
+      } catch (error) {
+        return;
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCart();
+  }, [navigate]);
+
+  if (loading) {
+    return (
+      <section className="cart-page">
+        <div className="cart-container">
+          <h2>Loading cart ....</h2>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="cart-page">
@@ -61,7 +103,14 @@ function Cart() {
 
         <div className="cart-header">
           <h1>My Cart</h1>
-          <p>Review your items before proceeding to checkout.</p>
+
+          <div className="cart-header-row">
+            <p>Review your items before proceeding to checkout.</p>
+
+            <button className="cart-header-empty" onClick={clearCart}>
+              Empty Cart <FaTrash />
+            </button>
+          </div>
         </div>
 
         <div className="cart-layout">
@@ -71,13 +120,13 @@ function Cart() {
                 <h2>Your cart is empty</h2>
                 <p>Add some products to your cart.</p>
 
-                <button onClick={() => navigate("/food")}>
+                <button onClick={() => navigate("/petFood")}>
                   Continue Shopping
                 </button>
               </div>
             ) : (
               cartItems.map((item) => (
-                <div className="cart-item" key={item.id}>
+                <div className="cart-item" key={item.cart_item_id}>
                   <div className="cart-item-image">
                     {item.image ? (
                       <img src={item.image} alt={item.name} />
@@ -96,17 +145,21 @@ function Cart() {
 
                   <button
                     className="cart-delete-btn"
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => removeItem(item.cart_item_id)}
                   >
                     <FaTrash />
                   </button>
 
                   <div className="cart-quantity-control">
-                    <button onClick={() => decreaseQuantity(item.id)}>−</button>
+                    <button onClick={() => decreaseQuantity(item.cart_item_id)}>
+                      −
+                    </button>
 
                     <span>{item.quantity}</span>
 
-                    <button onClick={() => increaseQuantity(item.id)}>+</button>
+                    <button onClick={() => increaseQuantity(item.cart_item_id)}>
+                      +
+                    </button>
                   </div>
                 </div>
               ))
@@ -121,16 +174,11 @@ function Cart() {
               <span>Rs. {subtotal.toLocaleString()}</span>
             </div>
 
-            <div className="summary-row">
-              <span>Delivery Fee</span>
-              <span>Rs. {deliveryFee.toLocaleString()}</span>
-            </div>
-
             <div className="summary-divider"></div>
 
             <div className="summary-total">
               <span>Total</span>
-              <span>Rs. {total.toLocaleString()}</span>
+              <span>Rs. {subtotal.toLocaleString()}</span>
             </div>
 
             <button

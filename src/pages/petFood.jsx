@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { FaStar } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { getAllFood } from "../services/foodService";
+import { addToCart } from "../services/cartServices";
 
 function Food() {
   const [selectedCategory, setSelectedCategory] = useState("All Foods");
@@ -23,16 +23,13 @@ function Food() {
     "Turtles",
   ];
 
-  // Get all foods from API
   useEffect(() => {
     const fetchFoods = async () => {
       try {
         const result = await getAllFood();
-
-        // API directly returns an array
         setFoods(result);
       } catch (error) {
-        console.error("Food API Error:", error);
+        return;
       } finally {
         setLoading(false);
       }
@@ -41,16 +38,36 @@ function Food() {
     fetchFoods();
   }, []);
 
-  // Filter foods by category
   const filteredFoods =
     selectedCategory === "All Foods"
       ? foods
       : foods.filter((food) => food.category?.name === selectedCategory);
 
+  const handleAddToCart = async (food) => {
+    const token = sessionStorage.getItem("token");
+
+    if (!token) {
+      alert("Please login first.");
+      navigate("/login");
+      return;
+    }
+
+    if (food.status !== "Available") {
+      return;
+    }
+
+    try {
+      const result = await addToCart(food.id, 1, token);
+
+      alert(result.message || "Food added to cart successfully!");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <section className="food-page">
       <div className="food-container">
-        {/* Header */}
         <div className="food-header">
           <h1>Nourish Your Companion</h1>
 
@@ -62,13 +79,11 @@ function Food() {
           </p>
         </div>
 
-        {/* Cart */}
         <button className="top-cart-btn" onClick={() => navigate("/cart")}>
           <FaCartShopping />
           <span>Cart</span>
         </button>
 
-        {/* Categories */}
         <div className="food-categories">
           {categories.map((category) => (
             <button
@@ -85,7 +100,6 @@ function Food() {
           ))}
         </div>
 
-        {/* Loading */}
         {loading && (
           <div className="food-loading">
             <p>Loading foods...</p>
@@ -105,7 +119,6 @@ function Food() {
                     })
                   }
                 >
-                  {/* Image */}
                   <div className="food-image">
                     {food.image ? (
                       <img src={food.image} alt={food.food_name} />
@@ -114,7 +127,6 @@ function Food() {
                     )}
                   </div>
 
-                  {/* Content */}
                   <div className="food-content">
                     <h3>{food.food_name}</h3>
 
@@ -142,9 +154,7 @@ function Food() {
                         disabled={food.status !== "Available"}
                         onClick={(e) => {
                           e.stopPropagation();
-
-                          // Cart functionality later
-                          console.log("Add to cart:", food);
+                          handleAddToCart(food);
                         }}
                       >
                         <FaCartShopping />
