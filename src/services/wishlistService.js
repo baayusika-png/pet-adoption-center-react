@@ -55,7 +55,7 @@ export async function addToWishlist(petId, token) {
   const response = await fetch(ADD_WISHLIST, {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${token}`,  //Authticates user using token
+      Authorization: `Bearer ${token}`, //Authticates user using token
     },
     body: formData, //Send pet ID as FormData
   });
@@ -71,7 +71,7 @@ export async function addToWishlist(petId, token) {
   return result;
 }
 
-//Remove a wishlist item using its wishlist ID 
+//Remove a wishlist item using its wishlist ID
 export async function removeFromWishlist(wishlistId, token) {
   const url = new URL(DELETE_WISHLIST); //Creates URL object from the DELETE API URL
 
@@ -86,7 +86,7 @@ export async function removeFromWishlist(wishlistId, token) {
     },
   });
 
-  //Convert API response into JS object 
+  //Convert API response into JS object
   const result = await response.json();
 
   //Check if request failed or API returned an error

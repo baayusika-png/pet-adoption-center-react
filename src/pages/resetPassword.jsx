@@ -6,7 +6,7 @@ import { resetPassword } from "../services/passwordService";
 function ResetPassword() {
   const navigate = useNavigate();
 
-  const [showNew, setShowNew] = useState(false); //Control whether new password is visible 
+  const [showNew, setShowNew] = useState(false); //Control whether new password is visible
   const [showConfirm, setShowConfirm] = useState(false); //Control whether confirm password is visible
   const [loading, setLoading] = useState(false); //Track the loading state while API request is running
 
@@ -44,8 +44,6 @@ function ResetPassword() {
     //Get customer Id after sucessful OTP verification
     const customerId = sessionStorage.getItem("customerId");
 
-    console.log("Customer ID:", customerId);
-
     //Stops if customer Id is not available
     if (!customerId) {
       alert("Customer ID not found. Please verify OTP again.");
@@ -53,17 +51,15 @@ function ResetPassword() {
       return;
     }
 
-    setLoading(true);//Start loading state while calling the API 
+    setLoading(true); //Start loading state while calling the API
 
     try {
-    //Send customer Id and new password details to the reset password API
+      //Send customer Id and new password details to the reset password API
       const result = await resetPassword(
         customerId,
         formData.newPassword,
         formData.confirmPassword,
       );
-
-      console.log("Reset Password Result:", result);
 
       //Check whether the password was sucessfully reset
       if (result.status === "success") {
@@ -77,7 +73,6 @@ function ResetPassword() {
         alert(result.message || "Failed to reset password.");
       }
     } catch (error) {
-      console.error("Reset password error:", error);
       alert("Something went wrong. Please try again.");
     } finally {
       setLoading(false);

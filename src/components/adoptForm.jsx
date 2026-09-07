@@ -66,12 +66,9 @@ function AdoptForm() {
       enough_space: space,
       information_confirmed: confirm ? "yes" : "no",
     };
-    console.log("Adoption data:", adoptionData);
 
     try {
       const result = await adoptionRequest(adoptionData);
-
-      console.log("Adoption response:", result);
 
       alert("Your adoption application has been submitted successfully!");
 
@@ -81,6 +78,7 @@ function AdoptForm() {
       alert("Failed to submit adoption application.");
     }
   };
+
   return (
     <section className="adopt-form">
       <div className="form-card">

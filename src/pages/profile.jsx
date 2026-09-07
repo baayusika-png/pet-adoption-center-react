@@ -17,7 +17,7 @@ import { getProfile } from "../services/profileService";
 import { useEffect, useState } from "react";
 
 function Profile() {
-  const { user, logout } = useAuth(); //Get logged-in user info and logout function from authContext
+  const { logout } = useAuth(); //Get logged-in user info and logout function from authContext
   const navigate = useNavigate();
   const [avatarError, setAvatarError] = useState(false);
 

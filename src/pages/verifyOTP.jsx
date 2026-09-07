@@ -24,11 +24,10 @@ function VerifyOTP() {
       alert("OTP must be 6 digits.");
       return;
     }
+
     try {
       //Send email and OTP to backend for verification
       const result = await verifyOtp(email, otp);
-
-      console.log("Verify Result:", JSON.stringify(result, null, 2));
 
       //Check whether OTP verification was sucessfull
       if (result.status === "success") {
@@ -42,7 +41,6 @@ function VerifyOTP() {
         alert(result.message);
       }
     } catch (error) {
-      console.error("Verify OTP Error:", error);
       alert("Something went wrong. Please try again.");
     }
   };

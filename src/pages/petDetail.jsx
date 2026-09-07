@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FaArrowLeft,FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaArrowLeft, FaHeart, FaRegHeart } from "react-icons/fa";
 import { getPetById } from "../services/petsService";
 import { FaBirthdayCake, FaVenusMars, FaPaw } from "react-icons/fa";
 import { useAuth } from "../context/authContext";
@@ -20,12 +20,10 @@ function PetDetails() {
   useEffect(() => {
     getPetById(id)
       .then((data) => {
-        console.log("Pet data:", data);
         setPet(data); //Stores pet data in state
         setLoading(false);
       })
       .catch((error) => {
-        console.log("Error fetching pet:", error);
         setError("Pet data could not load");
         setLoading(false); //Stop the loading state
       });

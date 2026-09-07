@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaArrowLeft,
   FaTruck,
@@ -8,10 +8,13 @@ import {
   FaArrowRight,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { getCart, getCities } from "../services/cartServices";
 
 function Checkout() {
   const navigate = useNavigate();
 
+  const [cities, setCities] = useState([]);
+  const [items, setItems] = useState([]);
   const [paymentMethod, setPaymentMethod] = useState("online");
 
   const [formData, setFormData] = useState({
@@ -22,22 +25,25 @@ function Checkout() {
     city: "",
   });
 
-  const items = [
-    {
-      id: 1,
-      name: "NutriPaws Premium Feast",
-      price: 850,
-      quantity: 1,
-      image: "",
-    },
-    {
-      id: 2,
-      name: "NutriPaws Premium Feast",
-      price: 2400,
-      quantity: 1,
-      image: "",
-    },
-  ];
+  useEffect(() => {
+    const fetchCart = async () => {
+      const token = sessionStorage.getItem("token");
+
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      try {
+        const result = await getCart(token);
+        setItems(result.data?.items || []);
+      } catch (error) {
+        setItems([]);
+      }
+    };
+
+    fetchCart();
+  }, [navigate]);
 
   const subtotal = items.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -56,13 +62,6 @@ function Checkout() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log({
-      ...formData,
-      paymentMethod,
-      items,
-      total,
-    });
 
     alert("Order placed successfully!");
   };
@@ -197,7 +196,7 @@ function Checkout() {
 
             <div className="checkout-items">
               {items.map((item) => (
-                <div className="checkout-item" key={item.id}>
+                <div className="checkout-item" key={item.cart_item_id}>
                   <div className="checkout-item-image">
                     {item.image ? (
                       <img src={item.image} alt={item.name} />

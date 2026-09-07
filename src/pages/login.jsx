@@ -44,15 +44,6 @@ function Login() {
       // Send login data to the API
       const result = await loginUser(userData);
 
-      // Display API response in console
-      console.log("Login result:", result);
-
-      if (result.status === "success") {
-        console.log("Login Data:", result.data);
-        console.log("Login Token:", result.token);
-      }
-
-      // Check whether login was successful
       if (result.status === "success") {
         alert("Login successful!");
 
@@ -66,7 +57,6 @@ function Login() {
       }
     } catch (error) {
       // Handle API/network errors
-      console.error("Login error:", error);
       alert("Login failed.");
     }
   }
@@ -126,7 +116,6 @@ function Login() {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  
                 />
 
                 <button

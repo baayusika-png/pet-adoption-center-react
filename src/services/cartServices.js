@@ -2,6 +2,7 @@ const ADD_TO_CART = import.meta.env.VITE_ADD_TO_CART;
 const GET_CART = import.meta.env.VITE_GET_CART;
 const DELETE_CART = import.meta.env.VITE_DELETE_CART;
 const CLEAR_CART = import.meta.env.VITE_CLEAR_CART;
+const CITY = import.meta.env.VITE_CITY;
 
 export async function addToCart(foodId, quantity, token) {
   const formData = new FormData();
@@ -78,3 +79,13 @@ export const clearCartItems = async (token) => {
 
   return result;
 };
+
+export async function getCities() {
+  const response = await fetch(CITY, { method: "GET" });
+  const result = await response.json();
+
+  if (!response.ok || result.status !== "sucess") {
+    new Error(result.message || "Failed to fetch delivery cities");
+  }
+  return result;
+}

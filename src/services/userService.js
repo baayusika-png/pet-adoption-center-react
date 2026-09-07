@@ -15,8 +15,6 @@ export async function registerUser(userData) {
   // Convert API response from JSON format to JS object
   const result = await response.json();
 
-  console.log("Register response:", result);
-
   // Check whether the HTTP request was successful
   if (!response.ok) {
     throw new Error(result.message || "Registration failed");
@@ -41,8 +39,6 @@ export async function loginUser(userData) {
 
   // Convert API response to JavaScript object
   const result = await response.json();
-
-  console.log("Login response:", result);
 
   if (!response.ok) {
     throw new Error(result.message || "Login failed");
@@ -69,8 +65,6 @@ export async function logoutUser() {
 
   // Convert API response to JavaScript object
   const result = await response.json();
-
-  console.log("Logout response:", result);
 
   if (!response.ok) {
     throw new Error(result.message || "Logout failed");

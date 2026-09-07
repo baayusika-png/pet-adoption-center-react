@@ -68,9 +68,7 @@ function Register() {
     userData.append("confirm_password", confirmPassword);
 
     try {
-      const result = await registerUser(userData); //Send registration data to the API
-
-      console.log("Register result:", result);
+      const result = await registerUser(userData);
 
       //Check whether registration was sucessful
       if (result.status === "success") {
@@ -80,7 +78,6 @@ function Register() {
         alert(result.message);
       }
     } catch (error) {
-      console.error("Registration error:", error);
       alert("Registration failed.");
     }
   }

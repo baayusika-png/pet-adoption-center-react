@@ -1,7 +1,5 @@
 const FORGOT_PASSWORD_URL = import.meta.env.VITE_FORGET_PASSWORD;
-
 const VERIFY_OTP_URL = import.meta.env.VITE_OTP;
-
 const RESET_PASSWORD = import.meta.env.VITE_RESET_PASSWORD;
 
 //Sends the user's email to request an OTP
@@ -24,11 +22,8 @@ export const forgotPassword = async (email) => {
     //Convert API response into JS object
     const result = await response.json();
 
-    console.log("Forgot Password API Response:", result);
-
     return result;
   } catch (error) {
-    console.error("Forgot Password API Error:", error);
     throw error;
   }
 };
@@ -39,7 +34,7 @@ export const verifyOtp = async (email, otp) => {
     const response = await fetch(VERIFY_OTP_URL, {
       method: "POST",
 
-       //Tell backend that JSON data is being sent
+      //Tell backend that JSON data is being sent
       headers: {
         "Content-Type": "application/json",
       },
@@ -55,11 +50,8 @@ export const verifyOtp = async (email, otp) => {
     //Convert API response into JS object
     const result = await response.json();
 
-    console.log("Verify OTP Response:", result);
-
     return result;
   } catch (error) {
-    console.error("Verify OTP API Error:", JSON.stringify(result, null, 2));
     throw error;
   }
 };
@@ -74,7 +66,7 @@ export const resetPassword = async (
     const response = await fetch(RESET_PASSWORD, {
       method: "PATCH",
 
-       //Tell backend that JSON data is being sent
+      //Tell backend that JSON data is being sent
       headers: {
         "Content-Type": "application/json",
       },
@@ -90,11 +82,8 @@ export const resetPassword = async (
     //Converts API response into JS object
     const result = await response.json();
 
-    console.log("Reset Password Response:", JSON.stringify(result, null, 2));
-
     return result;
   } catch (error) {
-    console.error("Reset Password API Error:", error);
     throw error;
   }
 };

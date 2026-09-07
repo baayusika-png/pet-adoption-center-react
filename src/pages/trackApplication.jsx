@@ -12,7 +12,6 @@ function TrackApplication() {
       try {
         const result = await getAdoptionHistory(); //Fetch adoption request from API
 
-        console.log("Adoption Requests:", result);
         if (result.status === "success") {
           //Only shows pending adoption
           const pending = result.data.filter(
@@ -25,7 +24,6 @@ function TrackApplication() {
           setError(result.message || "Failed to fetch adoption requests");
         }
       } catch (error) {
-        console.error("Pending adoption error:", error);
         setError(error.message);
       } finally {
         setLoading(false);
