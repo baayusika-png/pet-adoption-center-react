@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 
-
 import Home from "./pages/home";
 import Pets from "./pages/pets";
 import Adopt from "./pages/adopt";
@@ -27,6 +26,7 @@ import ChatBot from "./components/chatBot";
 import Cart from "./pages/cart";
 import Checkout from "./pages/checkout";
 import Orders from "./pages/order";
+import MyAddresses from "./pages/myAddress";
 
 function App() {
   const location = useLocation(); //Get current route path
@@ -79,6 +79,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order" element={<Orders />} />
+        <Route path="/myAddresses" element={<MyAddresses />} />
       </Routes>
 
       {!hideChat && <ChatBot />}

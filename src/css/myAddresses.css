@@ -1,0 +1,142 @@
+.addresses-page {
+  min-height: 100vh;
+  background-color: #fdfaf5;
+  padding: 55px 7%;
+  font-family: Arial, sans-serif;
+  color: #2d241d;
+}
+
+.addresses-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.addresses-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 24px;
+  color: #99500d;
+}
+
+.addresses-title h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: #2b211a;
+}
+
+.add-new-address-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: 25px;
+  padding: 11px 20px;
+  background-color: #99500d;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 24px;
+  transition: background-color 0.2s ease;
+}
+
+.add-new-address-btn:hover {
+  background-color: #753b08;
+}
+
+.addresses-empty {
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  color: #81776d;
+  box-shadow: 0 5px 18px rgba(70, 45, 20, 0.06);
+}
+
+.addresses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.address-card {
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 5px 18px rgba(70, 45, 20, 0.06);
+}
+
+.default-badge {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #fdf0e0;
+  color: #99500d;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.address-name {
+  margin: 0 0 4px;
+  font-weight: 700;
+  color: #2b211a;
+  font-size: 15px;
+}
+
+.address-phone {
+  margin: 0 0 6px;
+  color: #756b62;
+  font-size: 13px;
+}
+
+.address-line {
+  margin: 0 0 14px;
+  color: #574b40;
+  font-size: 13px;
+}
+
+.address-card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.address-edit-btn,
+.address-delete-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.address-edit-btn {
+  border: 1px solid #99500d;
+  background: transparent;
+  color: #99500d;
+}
+
+.address-edit-btn:hover {
+  background-color: #fdf0e0;
+}
+
+.address-delete-btn {
+  border: 1px solid #c0392b;
+  background: transparent;
+  color: #c0392b;
+}
+
+.address-delete-btn:hover {
+  background-color: #fdeceb;
+}

@@ -8,13 +8,17 @@ import {
   FaArrowRight,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { getCart, getCities } from "../services/cartServices";
+import { getCart, getSavedAddresses } from "../services/cartServices";
 
 function Checkout() {
   const navigate = useNavigate();
 
-  const [cities, setCities] = useState([]);
+  // Stores the logged-in user's saved delivery addresses
+  const [addresses, setAddresses] = useState([]);
+
+  // Stores cart items
   const [items, setItems] = useState([]);
+
   const [paymentMethod, setPaymentMethod] = useState("online");
 
   const [formData, setFormData] = useState({
@@ -26,31 +30,49 @@ function Checkout() {
   });
 
   useEffect(() => {
-    const fetchCart = async () => {
+    const fetchCheckoutData = async () => {
       const token = sessionStorage.getItem("token");
 
+      // Redirect user to login if there is no token
       if (!token) {
         navigate("/login");
         return;
       }
 
       try {
-        const result = await getCart(token);
-        setItems(result.data?.items || []);
+        // Fetch cart items
+        const cartResult = await getCart(token);
+        setItems(cartResult.data?.items || []);
+
+        // Fetch saved delivery addresses from the backend
+        const addressResult = await getSavedAddresses(token);
+        setAddresses(addressResult.data || []);
       } catch (error) {
+        console.error("Checkout data error:", error);
+
         setItems([]);
+        setAddresses([]);
       }
     };
 
-    fetchCart();
+    fetchCheckoutData();
   }, [navigate]);
 
+  // Calculate cart subtotal
   const subtotal = items.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
 
-  const deliveryFee = 150;
+  // Find the selected address from backend addresses (matched by city)
+  const selectedCity = addresses.find((addr) => addr.city === formData.city);
+
+  // Get delivery charge of selected address's city
+  const deliveryFee = selectedCity
+    ? Number(selectedCity.delivery_charge?.amount || 0)
+    : 0;
+
+  // Calculate final total
   const total = subtotal + deliveryFee;
 
   const handleChange = (e) => {
@@ -86,6 +108,7 @@ function Checkout() {
 
                 <div className="form-group">
                   <label>Full Name</label>
+
                   <input
                     type="text"
                     name="fullName"
@@ -98,6 +121,7 @@ function Checkout() {
                 <div className="form-row">
                   <div className="form-group">
                     <label>Email Address</label>
+
                     <input
                       type="email"
                       name="email"
@@ -109,6 +133,7 @@ function Checkout() {
 
                   <div className="form-group">
                     <label>Phone Number</label>
+
                     <input
                       type="tel"
                       name="phone"
@@ -121,6 +146,7 @@ function Checkout() {
 
                 <div className="form-group">
                   <label>Street Address</label>
+
                   <input
                     type="text"
                     name="street"
@@ -132,13 +158,34 @@ function Checkout() {
 
                 <div className="form-group">
                   <label>City</label>
-                  <input
-                    type="text"
+
+                  <select
                     name="city"
                     value={formData.city}
                     onChange={handleChange}
                     required
-                  />
+                  >
+                    <option value="">Select a city</option>
+
+                    {addresses
+                      .filter(
+                        (addr, index, self) =>
+                          index ===
+                          self.findIndex((item) => item.city === addr.city),
+                      )
+                      .map((addr) => (
+                        <option key={addr.id} value={addr.city}>
+                          {addr.city}
+                        </option>
+                      ))}
+                  </select>
+
+                  {addresses.length === 0 && (
+                    <p style={{ color: "red", marginTop: "6px" }}>
+                      Delivery address not available. Please add a delivery
+                      address from your profile first.
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -221,16 +268,19 @@ function Checkout() {
 
             <div className="checkout-summary-row">
               <span>Subtotal</span>
+
               <span>Rs. {subtotal.toLocaleString()}</span>
             </div>
 
             <div className="checkout-summary-row">
               <span>Delivery Fee</span>
+
               <span>Rs. {deliveryFee.toLocaleString()}</span>
             </div>
 
             <div className="checkout-total">
               <span>Total</span>
+
               <span>Rs. {total.toLocaleString()}</span>
             </div>
 

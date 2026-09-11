@@ -9,6 +9,7 @@ import {
   FaEdit,
   FaKey,
   FaSignOutAlt,
+  FaMapMarkerAlt,
 } from "react-icons/fa";
 
 import { useAuth } from "../context/authContext";
@@ -17,18 +18,18 @@ import { getProfile } from "../services/profileService";
 import { useEffect, useState } from "react";
 
 function Profile() {
-  const { logout } = useAuth(); //Get logged-in user info and logout function from authContext
+  const { logout } = useAuth();
   const navigate = useNavigate();
   const [avatarError, setAvatarError] = useState(false);
 
-  const [profile, setProfile] = useState(null); //Store fetched profile data
-  const [loading, setLoading] = useState(true); //Loading state while fetching profile
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const result = await getProfile(); //Fetch profile from API
+        const result = await getProfile();
         console.log("Profile:", result);
 
         if (result.status === "success") {
@@ -47,13 +48,11 @@ function Profile() {
     fetchProfile();
   }, []);
 
-  //Handle user logout with confirmation
   const handleLogout = async () => {
-    //Ask user to confirm before logging out
     const confirmLogout = window.confirm("Are you sure you want to logout?");
 
     if (confirmLogout) {
-      await logout(); //Call logout function and redirect to home page
+      await logout();
       navigate("/");
     }
   };
@@ -98,22 +97,34 @@ function Profile() {
               </p>
             </div>
 
-            <div className="profile-actions">
-              <button
-                className="edit-btn"
-                onClick={() => navigate("/editProfile")}
-              >
-                <FaEdit />
-                Edit Profile
-              </button>
+            <div className="profile-actions-wrap">
+              <div className="profile-actions">
+                <button
+                  className="edit-btn"
+                  onClick={() => navigate("/editProfile")}
+                >
+                  <FaEdit />
+                  Edit Profile
+                </button>
 
-              <button
-                className="password-btn"
-                onClick={() => navigate("/changePassword")}
-              >
-                <FaKey />
-                Change Password
-              </button>
+                <button
+                  className="password-btn"
+                  onClick={() => navigate("/changePassword")}
+                >
+                  <FaKey />
+                  Change Password
+                </button>
+              </div>
+
+              <div className="profile-actions-secondary">
+                <button
+                  className="address-btn"
+                  onClick={() => navigate("/myAddresses")}
+                >
+                  <FaMapMarkerAlt />
+                  View My Delivery Addresses
+                </button>
+              </div>
             </div>
           </div>
         )}

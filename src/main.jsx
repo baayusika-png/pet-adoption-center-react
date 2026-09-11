@@ -24,10 +24,11 @@ import "./css/adoptionHistory.css";
 import "./css/changePassword.css";
 import "./css/editProfile.css";
 import "./css/forgetPassword.css";
-import "./css/ChatBot.css"
-import "./css/cart.css"
-import "./css/checkout.css"
-import "./css/order.css"
+import "./css/ChatBot.css";
+import "./css/cart.css";
+import "./css/checkout.css";
+import "./css/order.css";
+import "./css/myAddresses.css";
 import { AuthProvider } from "./context/authContext.jsx";
 import { WishlistProvider } from "./context/wishlistContext.jsx";
 
