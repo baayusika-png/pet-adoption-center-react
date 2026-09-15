@@ -13,6 +13,7 @@ function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  //Increase the quantity of cart item
   const increaseQuantity = (id) => {
     setCartItems((items) =>
       items.map((item) =>
@@ -23,6 +24,7 @@ function Cart() {
     );
   };
 
+  //Decrese the quantity of cart item
   const decreaseQuantity = (id) => {
     setCartItems((items) =>
       items.map((item) =>
@@ -33,57 +35,67 @@ function Cart() {
     );
   };
 
+  //Remove one item from cart
   const removeItem = async (id) => {
     const token = sessionStorage.getItem("token");
 
     try {
       await deleteCartItem(id, token);
 
+      //Remove the item from the cart on the screen
       setCartItems((items) => items.filter((item) => item.cart_item_id !== id));
     } catch (error) {
-      return;
+      return; //Stop if removing the item fails
     }
   };
 
+  //Remove all items from the cart
   const clearCart = async () => {
     const token = sessionStorage.getItem("token");
 
     try {
       await clearCartItems(token);
-      setCartItems([]);
+      setCartItems([]); //Clear all items from the screen
     } catch (error) {
-      return;
+      return;  //Stop if clearing the cart fails
     }
   };
 
+  //Calculate the total price of all cart items
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0,
   );
 
+  //Fetch the cart items when the age loads
   useEffect(() => {
+    //Get the cart items from backend
     const fetchCart = async () => {
       const token = sessionStorage.getItem("token");
 
+      //Redirect to login if the user is not looged in
       if (!token) {
         navigate("/login");
         return;
       }
 
       try {
+        //Get the user's cart from the backend
         const result = await getCart(token);
 
-        setCartItems(result.data?.items || []);
+        setCartItems(result.data?.items || []); //Store the cart items in state
       } catch (error) {
-        return;
-      } finally {
-        setLoading(false);
+        return; //Stop if loading the cart fails
+      } finally { 
+        setLoading(false); //Stop showing the loading message
       }
     };
-
+  
+    //Call the function to fetch the cart
     fetchCart();
   }, [navigate]);
 
+  //Show loading mesaage while the cart is being fetched
   if (loading) {
     return (
       <section className="cart-page">
@@ -183,7 +195,14 @@ function Cart() {
 
             <button
               className="cart-checkout-btn"
-              onClick={() => navigate("/checkout")}
+              disabled={cartItems.length === 0}
+              onClick={() => {
+                if (cartItems.length === 0) {
+                  return;
+                }
+
+                navigate("/checkout");
+              }}
             >
               Proceed to Checkout
               <FaArrowRight />

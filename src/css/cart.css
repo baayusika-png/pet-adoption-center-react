@@ -240,6 +240,11 @@
   font-size: 13px;
 }
 
+.cart-checkout-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .secure-text {
   margin: 16px 0 0;
   text-align: center;

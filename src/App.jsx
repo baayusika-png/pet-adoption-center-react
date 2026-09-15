@@ -27,6 +27,7 @@ import Cart from "./pages/cart";
 import Checkout from "./pages/checkout";
 import Orders from "./pages/order";
 import MyAddresses from "./pages/myAddress";
+import OrderSucess from "./pages/orderSucess";
 
 function App() {
   const location = useLocation(); //Get current route path
@@ -80,6 +81,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order" element={<Orders />} />
         <Route path="/myAddresses" element={<MyAddresses />} />
+        <Route path="/orderSucess" element={<OrderSucess />} />
       </Routes>
 
       {!hideChat && <ChatBot />}

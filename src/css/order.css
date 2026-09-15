@@ -72,13 +72,6 @@
   border-bottom: 1px solid #eadfce;
 }
 
-.order-number {
-  margin: 0 0 6px;
-  color: #756b62;
-  font-size: 12px;
-  font-weight: 600;
-}
-
 .order-date {
   margin: 0;
   color: #81776d;
@@ -150,31 +143,6 @@
   color: #99500d;
   font-size: 19px;
   font-weight: 700;
-}
-
-.order-details-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 17px;
-  border: 1.5px solid #99500d;
-  border-radius: 8px;
-  background-color: #ffffff;
-  color: #99500d;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.order-details-btn:hover {
-  background-color: #99500d;
-  color: #ffffff;
-}
-
-.order-details-btn span {
-  font-size: 16px;
 }
 
 @media (max-width: 768px) {

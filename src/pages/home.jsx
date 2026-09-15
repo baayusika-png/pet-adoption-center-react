@@ -102,11 +102,11 @@ function Home() {
             </p>
 
             <div className="hero-buttons">
-              <a href="/adopt" className="btn btn-primary">
+              <a href="/adopt" className="btn-hero btn-primary-hero">
                 Adopt Now
               </a>
 
-              <a href="/pets" className="btn btn-secondary">
+              <a href="/pets" className="btn-hero btn-secondary-hero">
                 View Pets
               </a>
             </div>

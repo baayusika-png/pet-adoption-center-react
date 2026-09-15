@@ -13,64 +13,78 @@ function PetFoodDetail() {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
 
+  //Fetch the food details when the food ID changes
   useEffect(() => {
+    //Get the selected food
     const fetchFood = async () => {
       try {
-        const result = await getFoodById(id);
+        const result = await getFoodById(id); //REquest food details using the foof ID
 
+        //Check if the response contains food data
         if (result?.data) {
           setFood(result.data);
         } else {
           setFood(result);
         }
       } catch (error) {
-        return;
+        return; //Stop if loading the food fails
       } finally {
-        setLoading(false);
+        setLoading(false); //Stop showing the loading message
       }
     };
 
+    //Fetch food only when a Food ID is available
     if (id) {
       fetchFood();
     }
   }, [id]);
 
+  //Increase the selected food quantity
   const increaseQuantity = () => {
     setQuantity((prev) => prev + 1);
   };
 
+  //Decrease the selected food quantity
   const decreaseQuantity = () => {
     setQuantity((prev) => {
       if (prev > 1) {
+        //Make sure the quntity does not go below 1
         return prev - 1;
       }
-
+      //Keep the quantity at 1
       return prev;
     });
   };
 
+  //Add the selected food to the cart
   const handleAddToCart = async () => {
-    const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("token"); //Get the user's login token
 
+    //Redirect to login if the user is not logged in
     if (!token) {
       alert("Please login first.");
       navigate("/login");
       return;
     }
 
+    //Stop if the food is not available
     if (food.status !== "Available") {
       return;
     }
 
     try {
+      //Send the food and quantity to the backend
       const result = await addToCart(food.id, quantity, token);
 
+      //Show a sucess message to the user
       alert(result.message || "Food added to cart successfully!");
     } catch (error) {
+      //Show an error message if adding to cart fails
       alert(error.message);
     }
   };
 
+  //Show a loading message while food details are being fetched
   if (loading) {
     return (
       <div className="food-not-found">
@@ -79,11 +93,13 @@ function PetFoodDetail() {
     );
   }
 
+  //Show a message if the foof does not exist
   if (!food) {
     return (
       <div className="food-not-found">
         <h2>Food not found</h2>
 
+        {/* Go back to the food listing page */}
         <button onClick={() => navigate("/food")}>Back to Food</button>
       </div>
     );
@@ -163,6 +179,15 @@ function PetFoodDetail() {
             <button
               className="buy-now-btn"
               disabled={food.status !== "Available"}
+              onClick={() =>
+                navigate("/checkout", {
+                  state: {
+                    buyNow: true,
+                    food: food,
+                    quantity: quantity,
+                  },
+                })
+              }
             >
               Buy Now
             </button>

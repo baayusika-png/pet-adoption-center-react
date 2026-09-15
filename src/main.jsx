@@ -29,6 +29,7 @@ import "./css/cart.css";
 import "./css/checkout.css";
 import "./css/order.css";
 import "./css/myAddresses.css";
+import "./css/orderSucess.css";
 import { AuthProvider } from "./context/authContext.jsx";
 import { WishlistProvider } from "./context/wishlistContext.jsx";
 

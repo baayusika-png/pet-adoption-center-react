@@ -11,6 +11,24 @@
   margin: 0 auto;
 }
 
+.back-btn {
+  border: none;
+  background: transparent;
+  color: #99500d;
+  font-size: 22px;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 12px;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
+}
+
+.back-btn:hover {
+  color: #753b08;
+  transform: translateX(-3px);
+}
+
 .addresses-title {
   display: flex;
   align-items: center;
@@ -44,6 +62,11 @@
 
 .add-new-address-btn:hover {
   background-color: #753b08;
+}
+
+.addresses-error {
+  color: #c0392b;
+  font-size: 14px;
 }
 
 .addresses-empty {
@@ -110,6 +133,7 @@
 
 .address-edit-btn,
 .address-delete-btn {
+  border: none;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -139,4 +163,178 @@
 
 .address-delete-btn:hover {
   background-color: #fdeceb;
+}
+
+/* ===== Form groups (used inside the modal) ===== */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 17px;
+}
+
+.form-group label {
+  margin-bottom: 7px;
+  color: #574b40;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 42px;
+  border: 1.5px solid #b9b9b9;
+  border-radius: 10px;
+  background-color: #ffffff;
+  padding: 0 13px;
+  color: #2d241d;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #99500d;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.address-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(45, 36, 29, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: addressFadeIn 0.15s ease-out;
+}
+
+@keyframes addressFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.address-modal {
+  background-color: #ffffff;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 26px;
+  box-shadow: 0 10px 35px rgba(70, 45, 20, 0.2);
+}
+
+.address-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eadfce;
+}
+
+.address-modal-header h2 {
+  margin: 0;
+  color: #99500d;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.address-modal-close {
+  background-color: #fdf0e0;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #99500d;
+  font-size: 13px;
+  transition: background-color 0.2s ease;
+}
+
+.address-modal-close:hover {
+  background-color: #f5dcb8;
+}
+
+.address-modal-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.address-default-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 3px 0 20px;
+  color: #574b40;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.address-default-check input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #99500d;
+  cursor: pointer;
+  margin: 0;
+}
+
+.address-modal-form .place-order-btn {
+  width: 100%;
+  border: none;
+  border-radius: 25px;
+  padding: 13px 18px;
+  background-color: #99500d;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 6px;
+}
+
+.address-modal-form .place-order-btn:hover {
+  background-color: #753b08;
+}
+
+.address-modal-form .place-order-btn:disabled {
+  background-color: #cba57c;
+  cursor: not-allowed;
+}
+
+@media (max-width: 550px) {
+  .addresses-page {
+    padding: 30px 4%;
+  }
+
+  .address-modal {
+    padding: 20px;
+  }
+
+  .address-modal-form .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
 }

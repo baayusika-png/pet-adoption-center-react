@@ -7,16 +7,26 @@ import {
   FaMoneyBillWave,
   FaArrowRight,
 } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import { getCart, getSavedAddresses } from "../services/cartServices";
+import { createOrder, getCheckoutDetails } from "../services/orderService";
 
 function Checkout() {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Check whether the user came here through the Buy Now button
+  const buyNow = location.state?.buyNow || false;
+
+  // Food ID and quantity passed from PetFoodDetail
+  const buyNowFood = location.state?.food || null;
+  const buyNowQuantity = location.state?.quantity || 1;
 
   // Stores the logged-in user's saved delivery addresses
   const [addresses, setAddresses] = useState([]);
 
-  // Stores cart items
+  // Stores items that will be displayed in the checkout summary
   const [items, setItems] = useState([]);
 
   const [paymentMethod, setPaymentMethod] = useState("online");
@@ -40,34 +50,64 @@ function Checkout() {
       }
 
       try {
-        // Fetch cart items
-        const cartResult = await getCart(token);
-        setItems(cartResult.data?.items || []);
+        /*
+         * If the user clicked Buy Now,
+         * get checkout information for only that food item.
+         */
+        if (buyNow && buyNowFood) {
+          const checkoutResult = await getCheckoutDetails(
+            buyNowFood.id,
+            buyNowQuantity,
+            token,
+          );
 
-        // Fetch saved delivery addresses from the backend
+          /*
+           * checkout.php returns the selected item
+           * inside the "items" array.
+           */
+          setItems(checkoutResult.items || []);
+        } else {
+          /*
+           * Normal cart checkout.
+           * Get all cart items.
+           */
+          const cartResult = await getCart(token);
+
+          setItems(cartResult.data?.items || []);
+        }
+
+        // Fetch saved delivery addresses
         const addressResult = await getSavedAddresses(token);
+
         setAddresses(addressResult.data || []);
       } catch (error) {
         console.error("Checkout data error:", error);
 
         setItems([]);
         setAddresses([]);
+
+        alert(error.message || "Failed to load checkout details");
       }
     };
 
     fetchCheckoutData();
-  }, [navigate]);
+  }, [navigate, buyNow, buyNowFood, buyNowQuantity]);
 
-  // Calculate cart subtotal
+  /*
+   * Calculate subtotal.
+   *
+   * Number() is used because API prices can come
+   * as strings such as "500.00".
+   */
   const subtotal = items.reduce(
-    (total, item) => total + item.price * item.quantity,
+    (total, item) => total + Number(item.price) * Number(item.quantity),
     0,
   );
 
-  // Find the selected address from backend addresses (matched by city)
+  // Find the selected address from saved addresses
   const selectedCity = addresses.find((addr) => addr.city === formData.city);
 
-  // Get delivery charge of selected address's city
+  // Get delivery charge based on selected city
   const deliveryFee = selectedCity
     ? Number(selectedCity.delivery_charge?.amount || 0)
     : 0;
@@ -75,6 +115,7 @@ function Checkout() {
   // Calculate final total
   const total = subtotal + deliveryFee;
 
+  // Update the form data when the user changes an input
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -82,10 +123,75 @@ function Checkout() {
     });
   };
 
-  const handleSubmit = (e) => {
+  // Handle the order submission
+  const handleSubmit = async (e) => {
+    // Prevent the page from refreshing
     e.preventDefault();
 
-    alert("Order placed successfully!");
+    // Get the logged-in user's token
+    const token = sessionStorage.getItem("token");
+
+    // Redirect to login if the user is not logged in
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    try {
+      // Find the selected saved address
+      const selectedAddress = addresses.find(
+        (addr) => addr.city === formData.city,
+      );
+
+      // Make sure an address has been selected
+      if (!selectedAddress) {
+        alert("Please select a delivery address.");
+        return;
+      }
+
+      // Create an object to store the order information
+      let orderData;
+
+      // Check if the user is buying one item directly
+      if (buyNow) {
+        // Make sure the selected food item exists
+        if (!buyNowFood) {
+          alert("Buy Now item not found.");
+          return;
+        }
+
+        // Store the Buy Now order information
+        orderData = {
+          food_id: buyNowFood.id,
+          quantity: buyNowQuantity,
+          delivery_address_id: selectedAddress.id,
+        };
+      } else {
+        // Get the IDs of all items in the cart
+        const cartItemIds = items.map((item) => item.cart_item_id);
+
+        // Make sure the cart contains items
+        if (cartItemIds.length === 0) {
+          alert("Your cart is empty.");
+          return;
+        }
+
+        // Store the cart order information
+        orderData = {
+          delivery_address_id: selectedAddress.id,
+          cart_item_ids: cartItemIds,
+        };
+      }
+
+      // Send the order data to the backend
+      const result = await createOrder(orderData, token);
+
+      // Go to the Order Success page after creating the order
+      navigate("/orderSucess");
+    } catch (error) {
+      // Show an error message if placing the order fails
+      alert(error.message || "Failed to place order");
+    }
   };
 
   return (
@@ -181,7 +287,12 @@ function Checkout() {
                   </select>
 
                   {addresses.length === 0 && (
-                    <p style={{ color: "red", marginTop: "6px" }}>
+                    <p
+                      style={{
+                        color: "red",
+                        marginTop: "6px",
+                      }}
+                    >
                       Delivery address not available. Please add a delivery
                       address from your profile first.
                     </p>
@@ -242,8 +353,11 @@ function Checkout() {
             <h2>Order Summary</h2>
 
             <div className="checkout-items">
-              {items.map((item) => (
-                <div className="checkout-item" key={item.cart_item_id}>
+              {items.map((item, index) => (
+                <div
+                  className="checkout-item"
+                  key={item.cart_item_id || item.food_id || index}
+                >
                   <div className="checkout-item-image">
                     {item.image ? (
                       <img src={item.image} alt={item.name} />
@@ -254,11 +368,12 @@ function Checkout() {
 
                   <div className="checkout-item-info">
                     <h3>{item.name}</h3>
+
                     <p>Qty: {item.quantity}</p>
                   </div>
 
                   <span className="checkout-item-price">
-                    Rs. {item.price.toLocaleString()}
+                    Rs. {Number(item.price).toLocaleString()}
                   </span>
                 </div>
               ))}
