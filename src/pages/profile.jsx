@@ -26,25 +26,31 @@ function Profile() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // Fetch the user's profile when the page loads
   useEffect(() => {
+    // Get the profile data from the backend
     const fetchProfile = async () => {
       try {
+        // Request the user's profile
         const result = await getProfile();
-        console.log("Profile:", result);
 
+        // Check if the profile was fetched successfully
         if (result.status === "success") {
           setProfile(result.data);
         } else {
+          // Show the error message from the backend
           setError(result.message || "Failed to fetch profile");
         }
       } catch (error) {
-        console.error("Profile fetch error:", error);
+        // Store the error message if the request fails
         setError(error.message);
       } finally {
+        // Stop showing the loading state
         setLoading(false);
       }
     };
 
+    // Call the function to fetch the profile
     fetchProfile();
   }, []);
 

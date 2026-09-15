@@ -1,5 +1,4 @@
 const API_URL = import.meta.env.VITE_ADOPTION_REQUEST_URL;
-
 const ADOPTION_HISTORY = import.meta.env.VITE_ADOPTION_HISTORY;
 
 //Submit new adoption request
@@ -26,8 +25,7 @@ export async function adoptionRequest(adoptionData) {
 
   const result = await response.json();
 
-  console.log("Adoption response:", result);
-
+  // Return the adoption response
   return result;
 }
 

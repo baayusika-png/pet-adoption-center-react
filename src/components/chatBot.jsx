@@ -5,10 +5,12 @@ function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
 
+  // Handle sending a message
   const handleSend = () => {
+    // Do not send an empty message
     if (message.trim() === "") return;
 
-    console.log("Message:", message);
+    // Clear the message input after sending
     setMessage("");
   };
 

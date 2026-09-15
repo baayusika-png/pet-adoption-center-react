@@ -19,34 +19,42 @@ function EditProfile() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
+  // Fetch the user's profile when the page loads
   useEffect(() => {
+    // Get the profile data from the backend
     const fetchProfile = async () => {
       try {
+        // Request the user's profile
         const result = await getProfile();
-        console.log("Profile:", result);
 
+        // Check if the profile was fetched successfully
         if (result.status === "success") {
           const data = result.data;
 
+          // Set the user's existing profile information
           setFormData({
             fullName: data.name || "",
             phone: data.phone || "",
           });
 
+          // Set the existing profile image if available
           if (data.profile_pic) {
             setProfileImage(data.profile_pic);
           }
         } else {
+          // Show the error message from the backend
           setError(result.message || "Failed to fetch profile");
         }
       } catch (error) {
-        console.error("Profile fetch error:", error);
+        // Store the error message if fetching the profile fails
         setError(error.message);
       } finally {
+        // Stop showing the loading state
         setLoading(false);
       }
     };
 
+    // Call the function to fetch the profile
     fetchProfile();
   }, []);
 
@@ -58,47 +66,70 @@ function EditProfile() {
     });
   };
 
-  // Open file picker
+  // Open the file picker to select a new profile photo
   const handleChangePhoto = () => {
     fileInputRef.current.click();
   };
 
-  // Handle selected photo
+  // Handle the selected profile photo
   const handlePhotoChange = (e) => {
+    // Get the selected file
     const file = e.target.files[0];
 
+    // Check if a file was selected
     if (file) {
+      // Create a temporary URL to display the selected image
       const imageUrl = URL.createObjectURL(file);
+
+      // Show the selected image
       setProfileImage(imageUrl);
+
+      // Store the selected file for uploading
       setSelectedFile(file);
     }
   };
 
+  // Handle profile form submission
   const handleSubmit = async (e) => {
+    // Prevent the page from refreshing
     e.preventDefault();
+
+    // Show the saving state
     setSaving(true);
+
+    // Clear any previous error message
     setError("");
 
     try {
+      // Create FormData to send text and image data
       const data = new FormData();
+
+      // Add the user's name
       data.append("name", formData.fullName);
+
+      // Add the user's phone number
       data.append("phone", formData.phone);
 
+      // Add the new profile image if one was selected
       if (selectedFile) {
         data.append("image", selectedFile);
       }
-      const result = await updateProfile(data);
-      console.log("Update result:", result);
 
+      // Send the updated profile to the backend
+      const result = await updateProfile(data);
+
+      // Check if the profile was updated successfully
       if (result.status === "success") {
         navigate("/profile");
       } else {
+        // Show the error message from the backend
         setError(result.message || "Failed to update profile");
       }
     } catch (error) {
-      console.error("Update profile error:", error);
+      // Store the error message if updating the profile fails
       setError(error.message);
     } finally {
+      // Stop showing the saving state
       setSaving(false);
     }
   };

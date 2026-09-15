@@ -10,29 +10,35 @@ function AdoptionHistory() {
   const [error, setError] = useState(""); //Stores error message if  API call fails
 
   useEffect(() => {
+    // Fetch the user's adoption history from the API
     const fetchAdoptionHistory = async () => {
       try {
-        const result = await getAdoptionHistory(); //Fetch adoption request from the API
-        console.log(result);
+        // Get adoption requests from the backend
+        const result = await getAdoptionHistory();
 
+        // Check if the request was successful
         if (result.status === "success") {
-          //Only shows approved adoption
+          // Show only approved adoptions
           const approvedAdoptions = result.data.filter(
             (adoption) => adoption.status === "Approved",
           );
 
+          // Store the approved adoptions
           setAdoptions(approvedAdoptions);
         } else {
+          // Show the error message from the backend
           setError(result.message || "Failed to fetch adoption history");
         }
       } catch (error) {
-        console.error(error);
+        // Store the error message if fetching fails
         setError(error.message);
       } finally {
+        // Stop showing the loading state
         setLoading(false);
       }
     };
 
+    // Call the function to fetch adoption history
     fetchAdoptionHistory();
   }, []);
 
