@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import {
   FaArrowLeft,
   FaTruck,
@@ -12,25 +12,31 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { getCart, getSavedAddresses } from "../services/cartServices";
 import { createOrder, getCheckoutDetails } from "../services/orderService";
 
+import { createPayment, createStripePayment } from "../services/paymentService";
+
 function Checkout() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Check whether the user came here through the Buy Now button
+  // Check if the checkout page was opened using the BuyNow button
   const buyNow = location.state?.buyNow || false;
 
-  // Food ID and quantity passed from PetFoodDetail
+  // Get the food details passed from BuyNow button
   const buyNowFood = location.state?.food || null;
+
+  // Get the number of items selected from BuyNow
   const buyNowQuantity = location.state?.quantity || 1;
 
-  // Stores the logged-in user's saved delivery addresses
+  // Keep the user's saved addresses here
   const [addresses, setAddresses] = useState([]);
 
-  // Stores items that will be displayed in the checkout summary
+  // Keep the product that are being purchases here
   const [items, setItems] = useState([]);
 
+  // Set the payment option selected by the user
   const [paymentMethod, setPaymentMethod] = useState("online");
 
+  // Store delivery information
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -39,53 +45,57 @@ function Checkout() {
     city: "",
   });
 
+  //Save the orderId in state afte order is created
+  const [orderId, setOrderId] = useState(null);
+  //Save the paymentId in state after payment is created
+  const [paymentId, setPaymentId] = useState(null);
+
+  // Prevent double submits / re-entrant submits while a request is in flight
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  //Get the information needed for the checkout page
   useEffect(() => {
     const fetchCheckoutData = async () => {
+      // Get logged-in user's token
       const token = sessionStorage.getItem("token");
 
-      // Redirect user to login if there is no token
+      // Redirect to login if token is missing
       if (!token) {
         navigate("/login");
         return;
       }
 
       try {
-        /*
-         * If the user clicked Buy Now,
-         * get checkout information for only that food item.
-         */
+        // Check whether this is a Buy Now checkout
         if (buyNow && buyNowFood) {
+          // Get Buy Now checkout details
           const checkoutResult = await getCheckoutDetails(
             buyNowFood.id,
             buyNowQuantity,
             token,
           );
 
-          /*
-           * checkout.php returns the selected item
-           * inside the "items" array.
-           */
+          // Store Buy Now items
           setItems(checkoutResult.items || []);
         } else {
-          /*
-           * Normal cart checkout.
-           * Get all cart items.
-           */
+          // Get cart items
           const cartResult = await getCart(token);
 
+          // Store cart items
           setItems(cartResult.data?.items || []);
         }
 
-        // Fetch saved delivery addresses
+        // Get saved addresses
         const addressResult = await getSavedAddresses(token);
 
+        // Store addresses
         setAddresses(addressResult.data || []);
       } catch (error) {
-        console.error("Checkout data error:", error);
-
+        // Clear checkout data
         setItems([]);
         setAddresses([]);
 
+        // Show error message
         alert(error.message || "Failed to load checkout details");
       }
     };
@@ -93,29 +103,26 @@ function Checkout() {
     fetchCheckoutData();
   }, [navigate, buyNow, buyNowFood, buyNowQuantity]);
 
-  /*
-   * Calculate subtotal.
-   *
-   * Number() is used because API prices can come
-   * as strings such as "500.00".
-   */
+  // Calculate subtotal
   const subtotal = items.reduce(
     (total, item) => total + Number(item.price) * Number(item.quantity),
     0,
   );
 
-  // Find the selected address from saved addresses
-  const selectedCity = addresses.find((addr) => addr.city === formData.city);
+  // Find selected address
+  const selectedAddress = addresses.find(
+    (address) => address.city === formData.city,
+  );
 
-  // Get delivery charge based on selected city
-  const deliveryFee = selectedCity
-    ? Number(selectedCity.delivery_charge?.amount || 0)
+  // Get delivery charge
+  const deliveryFee = selectedAddress
+    ? Number(selectedAddress.delivery_charge?.amount || 0)
     : 0;
 
   // Calculate final total
   const total = subtotal + deliveryFee;
 
-  // Update the form data when the user changes an input
+  // Handle form input changes
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -123,147 +130,223 @@ function Checkout() {
     });
   };
 
-  // Handle the order submission
+  // Handle order submission
   const handleSubmit = async (e) => {
-    // Prevent the page from refreshing
     e.preventDefault();
 
-    // Get the logged-in user's token
+    // Guard against double-clicks / re-entrant submits
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    // Get authentication token
     const token = sessionStorage.getItem("token");
 
-    // Redirect to login if the user is not logged in
+    // Redirect to login if token is missing
     if (!token) {
       navigate("/login");
+      setIsSubmitting(false);
       return;
     }
 
     try {
-      // Find the selected saved address
+      // Find selected delivery address
       const selectedAddress = addresses.find(
-        (addr) => addr.city === formData.city,
+        (address) => address.city === formData.city,
       );
 
-      // Make sure an address has been selected
+      // Check selected address
       if (!selectedAddress) {
         alert("Please select a delivery address.");
+
+        setIsSubmitting(false);
         return;
       }
 
-      // Create an object to store the order information
-      let orderData;
+      let currentOrderId = orderId;
 
-      // Check if the user is buying one item directly
-      if (buyNow) {
-        // Make sure the selected food item exists
-        if (!buyNowFood) {
-          alert("Buy Now item not found.");
-          return;
+      if (!currentOrderId) {
+        let orderData;
+
+        // Prepare Buy Now order
+        if (buyNow) {
+          // Check Buy Now item
+          if (!buyNowFood) {
+            alert("Buy Now item not found.");
+
+            setIsSubmitting(false);
+            return;
+          }
+
+          // Create Buy Now order data
+          orderData = {
+            food_id: buyNowFood.id,
+            quantity: buyNowQuantity,
+            delivery_address_id: selectedAddress.id,
+          };
+        } else {
+          // Get cart item IDs
+          const cartItemIds = items.map((item) => item.cart_item_id);
+
+          // Check cart
+          if (cartItemIds.length === 0) {
+            alert("Your cart is empty.");
+
+            setIsSubmitting(false);
+            return;
+          }
+
+          // Create cart order data
+          orderData = {
+            delivery_address_id: selectedAddress.id,
+            cart_item_ids: cartItemIds,
+          };
         }
 
-        // Store the Buy Now order information
-        orderData = {
-          food_id: buyNowFood.id,
-          quantity: buyNowQuantity,
-          delivery_address_id: selectedAddress.id,
-        };
-      } else {
-        // Get the IDs of all items in the cart
-        const cartItemIds = items.map((item) => item.cart_item_id);
+        // Create order
+        const orderResult = await createOrder(orderData, token);
 
-        // Make sure the cart contains items
-        if (cartItemIds.length === 0) {
-          alert("Your cart is empty.");
-          return;
+        // Get order ID
+        currentOrderId = orderResult.order?.order_id;
+
+        // Check order ID
+        if (!currentOrderId) {
+          throw new Error("Order ID was not returned.");
         }
 
-        // Store the cart order information
-        orderData = {
-          delivery_address_id: selectedAddress.id,
-          cart_item_ids: cartItemIds,
-        };
+        // Remember it so a retry after this point doesn't re-create the order
+        setOrderId(currentOrderId);
       }
 
-      // Send the order data to the backend
-      const result = await createOrder(orderData, token);
+      // Convert frontend payment method to backend payment method
+      const selectedPaymentMethod =
+        paymentMethod === "online" ? "Stripe" : "Cash";
 
-      // Go to the Order Success page after creating the order
-      navigate("/orderSucess");
+      let currentPaymentId = paymentId;
+
+      if (!currentPaymentId) {
+        const paymentResult = await createPayment(
+          currentOrderId,
+          selectedPaymentMethod,
+          token,
+        );
+
+        currentPaymentId = paymentResult.payment?.id;
+
+        // Check payment ID
+        if (!currentPaymentId) {
+          throw new Error("Payment ID was not returned.");
+        }
+
+        setPaymentId(currentPaymentId);
+      }
+
+      if (selectedPaymentMethod === "Stripe") {
+        // Call Stripe API
+        const stripeResult = await createStripePayment(currentPaymentId, token);
+
+        // Get Stripe Checkout URL
+        const stripeUrl = stripeResult.payment?.payment_url;
+
+        // Check Stripe URL
+        if (!stripeUrl) {
+          throw new Error("Stripe Checkout URL was not returned.");
+        }
+        window.location.href = stripeUrl;
+
+        return;
+      }
+
+      navigate("/orderSucess", {
+        state: {
+          total: total,
+        },
+      });
     } catch (error) {
-      // Show an error message if placing the order fails
       alert(error.message || "Failed to place order");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <section className="checkout-page">
+    <div className="checkout-page">
       <div className="checkout-container">
-        <button className="checkout-back-btn" onClick={() => navigate(-1)}>
+        <button
+          type="button"
+          className="checkout-back-btn"
+          onClick={() => navigate(-1)}
+        >
           <FaArrowLeft />
         </button>
 
         <h1 className="checkout-title">Checkout</h1>
 
-        <div className="checkout-layout">
-          <div className="checkout-left">
-            <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
+          <div className="checkout-layout">
+            <div className="checkout-left">
               <div className="checkout-card">
                 <h2>
                   <FaTruck />
                   Delivery Information
                 </h2>
 
-                <div className="form-group">
-                  <label>Full Name</label>
-
-                  <input
-                    type="text"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
                 <div className="form-row">
                   <div className="form-group">
-                    <label>Email Address</label>
+                    <label>Full Name</label>
+
+                    <input
+                      type="text"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Email</label>
 
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      required
+                      placeholder="Enter your email"
                     />
                   </div>
+                </div>
 
+                <div className="form-row">
                   <div className="form-group">
                     <label>Phone Number</label>
 
                     <input
-                      type="tel"
+                      type="text"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      required
+                      placeholder="Enter your phone number"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Street Address</label>
+
+                    <input
+                      type="text"
+                      name="street"
+                      value={formData.street}
+                      onChange={handleChange}
+                      placeholder="Enter your street address"
                     />
                   </div>
                 </div>
 
                 <div className="form-group">
-                  <label>Street Address</label>
-
-                  <input
-                    type="text"
-                    name="street"
-                    value={formData.street}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>City</label>
+                  <label>Delivery City</label>
 
                   <select
                     name="city"
@@ -271,32 +354,14 @@ function Checkout() {
                     onChange={handleChange}
                     required
                   >
-                    <option value="">Select a city</option>
+                    <option value="">Select your city</option>
 
-                    {addresses
-                      .filter(
-                        (addr, index, self) =>
-                          index ===
-                          self.findIndex((item) => item.city === addr.city),
-                      )
-                      .map((addr) => (
-                        <option key={addr.id} value={addr.city}>
-                          {addr.city}
-                        </option>
-                      ))}
+                    {addresses.map((address) => (
+                      <option key={address.id} value={address.city}>
+                        {address.city}
+                      </option>
+                    ))}
                   </select>
-
-                  {addresses.length === 0 && (
-                    <p
-                      style={{
-                        color: "red",
-                        marginTop: "6px",
-                      }}
-                    >
-                      Delivery address not available. Please add a delivery
-                      address from your profile first.
-                    </p>
-                  )}
                 </div>
               </div>
 
@@ -307,106 +372,118 @@ function Checkout() {
                 </h2>
 
                 <label
-                  className={
-                    paymentMethod === "online"
-                      ? "payment-option selected"
-                      : "payment-option"
-                  }
+                  className={`payment-option ${
+                    paymentMethod === "online" ? "selected" : ""
+                  }`}
                 >
                   <input
                     type="radio"
-                    name="payment"
+                    name="paymentMethod"
                     value="online"
                     checked={paymentMethod === "online"}
-                    onChange={() => setPaymentMethod("online")}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
                   />
 
-                  <FaWallet />
+                  <FaCreditCard />
 
-                  <span>Online Payment</span>
+                  <span>Online Payment — Pay securely using Stripe</span>
                 </label>
 
                 <label
-                  className={
-                    paymentMethod === "cash"
-                      ? "payment-option selected"
-                      : "payment-option"
-                  }
+                  className={`payment-option ${
+                    paymentMethod === "cash" ? "selected" : ""
+                  }`}
                 >
                   <input
                     type="radio"
-                    name="payment"
+                    name="paymentMethod"
                     value="cash"
                     checked={paymentMethod === "cash"}
-                    onChange={() => setPaymentMethod("cash")}
+                    onChange={(e) => setPaymentMethod(e.target.value)}
                   />
 
                   <FaMoneyBillWave className="cash-icon" />
 
-                  <span>Cash on Delivery</span>
+                  <span>Cash on Delivery — Pay when your order arrives</span>
                 </label>
               </div>
-            </form>
-          </div>
+            </div>
 
-          <div className="checkout-summary">
-            <h2>Order Summary</h2>
+            <div className="checkout-summary">
+              <h2>
+                <FaWallet style={{ marginRight: "8px" }} />
+                Order Summary
+              </h2>
 
-            <div className="checkout-items">
-              {items.map((item, index) => (
-                <div
-                  className="checkout-item"
-                  key={item.cart_item_id || item.food_id || index}
-                >
-                  <div className="checkout-item-image">
-                    {item.image ? (
-                      <img src={item.image} alt={item.name} />
-                    ) : (
-                      <div className="checkout-placeholder"></div>
-                    )}
+              <div className="checkout-items">
+                {items.map((item) => (
+                  <div
+                    className="checkout-item"
+                    key={item.cart_item_id || item.food_id || item.id}
+                  >
+                    <div className="checkout-item-image">
+                      {item.image ? (
+                        <img
+                          src={item.image}
+                          alt={item.food_name || item.name}
+                        />
+                      ) : (
+                        <div className="checkout-placeholder" />
+                      )}
+                    </div>
+
+                    <div className="checkout-item-info">
+                      <h3>{item.food_name || item.name}</h3>
+
+                      <p>Quantity: {item.quantity}</p>
+                    </div>
+
+                    <div className="checkout-item-price">
+                      Rs.{" "}
+                      {(Number(item.price) * Number(item.quantity)).toFixed(2)}
+                    </div>
                   </div>
+                ))}
+              </div>
 
-                  <div className="checkout-item-info">
-                    <h3>{item.name}</h3>
+              <div className="checkout-divider" />
 
-                    <p>Qty: {item.quantity}</p>
-                  </div>
+              <div className="checkout-summary-row">
+                <span>Subtotal</span>
 
-                  <span className="checkout-item-price">
-                    Rs. {Number(item.price).toLocaleString()}
-                  </span>
-                </div>
-              ))}
+                <span>Rs. {subtotal.toFixed(2)}</span>
+              </div>
+
+              <div className="checkout-summary-row">
+                <span>Delivery Charge</span>
+
+                <span>Rs. {deliveryFee.toFixed(2)}</span>
+              </div>
+
+              <div className="checkout-total">
+                <span>Total</span>
+
+                <span>Rs. {total.toFixed(2)}</span>
+              </div>
+
+              <button
+                type="submit"
+                className="place-order-btn"
+                disabled={isSubmitting}
+              >
+                {isSubmitting
+                  ? "Processing..."
+                  : paymentMethod === "online"
+                    ? "Proceed to Payment"
+                    : "Place Order"}
+
+                <FaArrowRight />
+              </button>
             </div>
-
-            <div className="checkout-divider"></div>
-
-            <div className="checkout-summary-row">
-              <span>Subtotal</span>
-
-              <span>Rs. {subtotal.toLocaleString()}</span>
-            </div>
-
-            <div className="checkout-summary-row">
-              <span>Delivery Fee</span>
-
-              <span>Rs. {deliveryFee.toLocaleString()}</span>
-            </div>
-
-            <div className="checkout-total">
-              <span>Total</span>
-
-              <span>Rs. {total.toLocaleString()}</span>
-            </div>
-
-            <button className="place-order-btn" onClick={handleSubmit}>
-              Place Order
-              <FaArrowRight />
-            </button>
           </div>
-        </div>
+        </form>
       </div>
-    </section>
+    </div>
   );
 }
 

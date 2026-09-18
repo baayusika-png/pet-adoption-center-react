@@ -15,6 +15,10 @@ function Orders() {
   // Stores error message
   const [error, setError] = useState("");
 
+  // Stores current page and pagination info returned by the API
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   useEffect(() => {
     const fetchOrders = async () => {
       const token = sessionStorage.getItem("token");
@@ -30,10 +34,13 @@ function Orders() {
         setError("");
 
         // Get orders from backend
-        const result = await getOrders(token);
+        const result = await getOrders(token, page);
 
         // Store orders returned by API
         setOrders(result.orders || []);
+
+        // Store pagination info returned by API
+        setTotalPages(result.pagination?.total_pages || 1);
       } catch (error) {
         console.error("Fetch orders error:", error);
 
@@ -45,7 +52,7 @@ function Orders() {
     };
 
     fetchOrders();
-  }, [navigate]);
+  }, [navigate, page]);
 
   // Format backend date for displaying
   const formatDate = (date) => {
@@ -102,7 +109,7 @@ function Orders() {
 
             <button
               className="btn btn-primary"
-              onClick={() => navigate("/pet-food")}
+              onClick={() => navigate("/petFood")}
             >
               Continue Shopping
             </button>
@@ -110,53 +117,81 @@ function Orders() {
         )}
 
         {!loading && !error && orders.length > 0 && (
-          <div className="order-list">
-            {orders.map((order) => (
-              <div className="order-card" key={order.order_id}>
-                <div className="order-top">
-                  <div>
-                    <p className="order-date">Order #{order.order_id}</p>
+          <>
+            <div className="order-list">
+              {orders.map((order) => (
+                <div className="order-card" key={order.order_id}>
+                  <div className="order-top">
+                    <div>
+                      <p className="order-date">Order #{order.order_id}</p>
 
-                    <p className="order-date">
-                      Placed on {formatDate(order.created_at)}
-                    </p>
-                  </div>
-
-                  <div
-                    className={`order-status ${getStatusClass(order.status)}`}
-                  >
-                    {order.status?.toLowerCase() === "delivered" ? (
-                      <FaCheckCircle />
-                    ) : (
-                      <FaTruck />
-                    )}
-
-                    {order.status}
-                  </div>
-                </div>
-
-                <div className="order-items">
-                  {order.items.map((item) => (
-                    <div className="order-item" key={item.order_item_id}>
-                      <span>{item.name}</span>
-
-                      <span>Qty: {item.quantity}</span>
+                      <p className="order-date">
+                        Placed on {formatDate(order.created_at)}
+                      </p>
                     </div>
-                  ))}
-                </div>
 
-                <div className="order-bottom">
-                  <div className="order-total">
-                    <span>Total Amount</span>
+                    <div
+                      className={`order-status ${getStatusClass(order.status)}`}
+                    >
+                      {order.status?.toLowerCase() === "delivered" ? (
+                        <FaCheckCircle />
+                      ) : (
+                        <FaTruck />
+                      )}
 
-                    <strong>
-                      Rs. {Number(order.total_amount).toLocaleString()}
-                    </strong>
+                      {order.status}
+                    </div>
+                  </div>
+
+                  <div className="order-items">
+                    {order.items.map((item) => (
+                      <div className="order-item" key={item.order_item_id}>
+                        <span>{item.name}</span>
+
+                        <span>Qty: {item.quantity}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="order-bottom">
+                    <div className="order-total">
+                      <span>Total Amount</span>
+
+                      <strong>
+                        Rs. {Number(order.total_amount).toLocaleString()}
+                      </strong>
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
+
+            {totalPages > 1 && (
+              <div className="order-pagination">
+                <button
+                  type="button"
+                  disabled={page <= 1}
+                  onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                >
+                  Previous
+                </button>
+
+                <span>
+                  Page {page} of {totalPages}
+                </span>
+
+                <button
+                  type="button"
+                  disabled={page >= totalPages}
+                  onClick={() =>
+                    setPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                >
+                  Next
+                </button>
               </div>
-            ))}
-          </div>
+            )}
+          </>
         )}
       </div>
     </section>
