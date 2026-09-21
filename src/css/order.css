@@ -42,7 +42,7 @@
 
 .order-list {
   width: 100%;
-  max-width: 500px;
+  max-width: 750px;
   display: flex;
   flex-direction: column;
   gap: 22px;
@@ -125,6 +125,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 15px;
+  width: 100%;
   padding-top: 15px;
 }
 
@@ -132,6 +134,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  flex-shrink: 0;
 }
 
 .order-total span {
@@ -143,6 +146,53 @@
   color: #99500d;
   font-size: 19px;
   font-weight: 700;
+  white-space: nowrap;
+}
+
+.order-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex: 1;
+  margin-left: auto;
+}
+
+.order-details-btn,
+.order-cancel-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  border-radius: 8px;
+  background-color: #ffffff;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.order-details-btn {
+  color: #99500d;
+  border: 1px solid #99500d;
+}
+
+.order-details-btn:hover {
+  background-color: #99500d;
+  color: #ffffff;
+}
+
+.order-cancel-btn {
+  color: #d9534f;
+  border: 1px solid #d9534f;
+}
+
+.order-cancel-btn:hover {
+  background-color: #d9534f;
+  color: #ffffff;
 }
 
 /* Order pagination container */
@@ -186,6 +236,41 @@
   font-weight: 500;
   min-width: 90px;
   text-align: center;
+}
+
+.order-pending {
+  background-color: #fff7e6;
+  color: #d97706;
+}
+
+.order-confirmed {
+  background-color: #eaf2ff;
+  color: #2563eb;
+}
+
+.order-processing {
+  background-color: #f3e8ff;
+  color: #7c3aed;
+}
+
+.order-shipped {
+  background-color: #e6f7fa;
+  color: #0891b2;
+}
+
+.order-delivered {
+  background-color: #eaf8ef;
+  color: #16a34a;
+}
+
+.order-cancelled {
+  background-color: #fef0f0;
+  color: #dc2626;
+}
+
+.order-default {
+  background-color: #f1f1f1;
+  color: #555555;
 }
 
 @media (max-width: 768px) {
@@ -241,10 +326,18 @@
   }
 
   .order-bottom {
-    align-items: flex-end;
+    flex-wrap: wrap;
+    align-items: flex-start;
   }
 
-  .order-details-btn {
+  .order-actions {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .order-details-btn,
+  .order-cancel-btn {
+    flex: 1;
     padding: 9px 12px;
     font-size: 12px;
   }

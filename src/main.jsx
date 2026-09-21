@@ -21,7 +21,6 @@ import "./css/petDetail.css";
 import "./css/petFood.css";
 import "./css/foodDetail.css";
 import "./css/adoptionHistory.css";
-import "./css/changePassword.css";
 import "./css/editProfile.css";
 import "./css/forgetPassword.css";
 import "./css/ChatBot.css";
@@ -30,6 +29,7 @@ import "./css/checkout.css";
 import "./css/order.css";
 import "./css/myAddresses.css";
 import "./css/orderSucess.css";
+import "./css/orderDetail.css";
 import { AuthProvider } from "./context/authContext.jsx";
 import { WishlistProvider } from "./context/wishlistContext.jsx";
 

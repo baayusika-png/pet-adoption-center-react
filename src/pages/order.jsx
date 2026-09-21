@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
-import { FaArrowLeft, FaTruck, FaCheckCircle } from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaTruck,
+  FaCheckCircle,
+  FaTimesCircle,
+} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { getOrders } from "../services/orderService";
+import { getOrders, cancelOrder } from "../services/orderService";
 
 function Orders() {
   const navigate = useNavigate();
@@ -69,11 +74,77 @@ function Orders() {
   const getStatusClass = (status) => {
     const formattedStatus = status?.toLowerCase();
 
+    if (formattedStatus === "pending") {
+      return "order-pending";
+    }
+
+    if (formattedStatus === "confirmed") {
+      return "order-confirmed";
+    }
+
+    if (formattedStatus === "processing") {
+      return "order-processing";
+    }
+
+    if (formattedStatus === "shipped") {
+      return "order-shipped";
+    }
+
     if (formattedStatus === "delivered") {
       return "order-delivered";
     }
 
-    return "order-delivery";
+    if (formattedStatus === "cancelled") {
+      return "order-cancelled";
+    }
+
+    return "order-default";
+  };
+
+  // Check whether order can be cancelled
+  const canCancelOrder = (status) => {
+    return status?.toLowerCase() === "pending";
+  };
+
+  // Handle order cancellation
+  const handleCancelOrder = async (orderId) => {
+    const confirmCancel = window.confirm(
+      "Are you sure you want to cancel this order?",
+    );
+
+    if (!confirmCancel) {
+      return;
+    }
+
+    try {
+      const token = sessionStorage.getItem("token");
+
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      // Call backend PATCH API
+      const result = await cancelOrder(token, orderId);
+
+      // Update order only after backend successfully cancels it
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.order_id === orderId
+            ? {
+                ...order,
+                status: result.order.status,
+              }
+            : order,
+        ),
+      );
+
+      alert(result.message || "Order cancelled successfully.");
+    } catch (error) {
+      console.error("Cancel order error:", error);
+
+      alert(error.message || "Failed to cancel order");
+    }
   };
 
   return (
@@ -135,6 +206,8 @@ function Orders() {
                     >
                       {order.status?.toLowerCase() === "delivered" ? (
                         <FaCheckCircle />
+                      ) : order.status?.toLowerCase() === "cancelled" ? (
+                        <FaTimesCircle />
                       ) : (
                         <FaTruck />
                       )}
@@ -160,6 +233,31 @@ function Orders() {
                       <strong>
                         Rs. {Number(order.total_amount).toLocaleString()}
                       </strong>
+                    </div>
+
+                    <div className="order-actions">
+                      <button
+                        type="button"
+                        className="order-details-btn"
+                        onClick={() =>
+                          navigate(`/order-details/${order.order_id}`, {
+                            state: { order },
+                          })
+                        }
+                      >
+                        View Details
+                      </button>
+
+                      {canCancelOrder(order.status) && (
+                        <button
+                          type="button"
+                          className="order-cancel-btn"
+                          onClick={() => handleCancelOrder(order.order_id)}
+                        >
+                          <FaTimesCircle />
+                          Cancel Order
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

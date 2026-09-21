@@ -15,7 +15,6 @@ import Terms from "./pages/termsCondition";
 import Wishlist from "./pages/wishlist";
 import PetDetail from "./pages/petDetail";
 import PetFood from "./pages/petFood";
-import ChangePassword from "./pages/changePassword";
 import EditProfile from "./pages/editProfile";
 import ForgetPassword from "./pages/forgetPassword";
 import PetFoodDetail from "./pages/petFoodDetail";
@@ -28,6 +27,7 @@ import Checkout from "./pages/checkout";
 import Orders from "./pages/order";
 import MyAddresses from "./pages/myAddress";
 import OrderSucess from "./pages/orderSucess";
+import OrderDetails from "./pages/orderDetail";
 
 function App() {
   const location = useLocation(); //Get current route path
@@ -46,7 +46,6 @@ function App() {
     "/editProfile",
     "/forgetPassword",
     "/resetPassword",
-    "/changePassword",
     "/wishlist",
     "/trackApplication",
     "/adoptionHistory",
@@ -70,7 +69,7 @@ function App() {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/pet/:id" element={<PetDetail />} />
         <Route path="/petFood" element={<PetFood />} />
-        <Route path="/changePassword" element={<ChangePassword />} />
+
         <Route path="/food/:id" element={<PetFoodDetail />} />
         <Route path="/adoptionHistory" element={<AdoptionHistory />} />
         <Route path="/editProfile" element={<EditProfile />} />
@@ -82,6 +81,7 @@ function App() {
         <Route path="/order" element={<Orders />} />
         <Route path="/myAddresses" element={<MyAddresses />} />
         <Route path="/orderSucess" element={<OrderSucess />} />
+        <Route path="/order-details/:orderId" element={<OrderDetails />} />
       </Routes>
 
       {!hideChat && <ChatBot />}

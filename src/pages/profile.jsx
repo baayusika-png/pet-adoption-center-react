@@ -7,7 +7,6 @@ import {
   FaHistory,
   FaArrowRight,
   FaEdit,
-  FaKey,
   FaSignOutAlt,
   FaMapMarkerAlt,
 } from "react-icons/fa";
@@ -111,14 +110,6 @@ function Profile() {
                 >
                   <FaEdit />
                   Edit Profile
-                </button>
-
-                <button
-                  className="password-btn"
-                  onClick={() => navigate("/changePassword")}
-                >
-                  <FaKey />
-                  Change Password
                 </button>
               </div>
 

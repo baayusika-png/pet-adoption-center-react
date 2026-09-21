@@ -93,8 +93,9 @@
 
 .profile-actions {
   display: flex;
+  justify-content: flex-end;
   gap: 10px;
-  align-self: flex-start;
+  align-self: flex-end;
   margin-top: 5px;
 }
 
@@ -117,16 +118,6 @@
 
 .edit-btn:hover {
   background-color: #7c4107;
-}
-
-.password-btn {
-  background-color: white;
-  color: #75451e;
-  border: 1px solid #98520b;
-}
-
-.password-btn:hover {
-  background-color: #fff5e8;
 }
 
 .profile-options {
@@ -163,7 +154,6 @@
   color: #98520b;
   font-size: 17px;
 }
-
 
 .profile-option p {
   font-size: 14px;

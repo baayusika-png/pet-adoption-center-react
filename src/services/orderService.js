@@ -1,6 +1,7 @@
 const CREATE_ORDER = import.meta.env.VITE_CREATE_ORDER;
 const GET_ORDER = import.meta.env.VITE_GET_ORDER;
 const CHECKOUT = import.meta.env.VITE_CHECKOUT;
+const CANCELORDER = import.meta.env.VITE_CANCEL_ORDER;
 
 //Create a new order
 export async function createOrder(orderData, token) {
@@ -25,24 +26,25 @@ export async function createOrder(orderData, token) {
 }
 
 //Get all order of the logged in user
-export async function getOrders(token) {
-  //Request the user's orders
-  const response = await fetch(GET_ORDER, {
+export const getOrders = async (token, page = 1) => {
+  //Send GET request to the order API
+  const response = await fetch(`${GET_ORDER}?page=${page}&limit=10`, { //Only 10 order per page
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
-  const result = await response.json();
+  //Convert server response from JSON format to JS object
+  const data = await response.json();
 
-  //Check if order were fetched sucessfully
-  if (!response.ok || result.status !== "success") {
-    throw new Error(result.message || "Failed to fetch orders");
+  //Check whether the request was sucessful
+  if (!response.ok || data.status !== "success") {
+    throw new Error(data.message || "Failed to fetch orders");
   }
 
-  return result; //Return the orders data
-}
+  return data; //Return the order data
+};
 
 //Get the details needed for checkout
 export async function getCheckoutDetails(foodId, quantity, token) {
@@ -70,3 +72,21 @@ export async function getCheckoutDetails(foodId, quantity, token) {
 
   return result; //Return the checkout details
 }
+
+// Cancel an order
+export const cancelOrder = async (token, orderId) => {
+  const response = await fetch(`${CANCELORDER}?order_id=${orderId}`, {
+    method: "PATCH",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = await response.json();
+
+  if (!response.ok || data.status !== "success") {
+    throw new Error(data.message || "Failed to cancel order");
+  }
+
+  return data;
+};
