@@ -28,7 +28,8 @@ export async function createOrder(orderData, token) {
 //Get all order of the logged in user
 export const getOrders = async (token, page = 1) => {
   //Send GET request to the order API
-  const response = await fetch(`${GET_ORDER}?page=${page}&limit=10`, { //Only 10 order per page
+  const response = await fetch(`${GET_ORDER}?page=${page}&limit=10`, {
+    //Only 10 order per page
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -75,6 +76,7 @@ export async function getCheckoutDetails(foodId, quantity, token) {
 
 // Cancel an order
 export const cancelOrder = async (token, orderId) => {
+  //Send PATCH request to cancel the selected order
   const response = await fetch(`${CANCELORDER}?order_id=${orderId}`, {
     method: "PATCH",
     headers: {
@@ -82,11 +84,13 @@ export const cancelOrder = async (token, orderId) => {
     },
   });
 
+  //Convert the server response into JSON data
   const data = await response.json();
 
+  //Check if the request failed
   if (!response.ok || data.status !== "success") {
     throw new Error(data.message || "Failed to cancel order");
   }
 
-  return data;
+  return data; //Return sucessful cancellation response
 };
